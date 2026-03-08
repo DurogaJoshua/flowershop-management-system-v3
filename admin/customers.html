@@ -1,0 +1,479 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Customer Management - Maria's Floral Fantasy</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="../assets/css/main.css">
+    <link rel="stylesheet" href="../assets/css/admin.css">
+    <link rel="stylesheet" href="../assets/css/responsive.css">
+    <style>.sidebar {
+            position: fixed;
+            left: 0;
+            top: 0;
+            width: 260px;
+            height: 100vh;
+            background: white;
+            border-right: 1px solid var(--neutral-200);
+            padding: 24px 0;
+            z-index: 100;
+            transition: transform 0.3s ease;
+        }
+
+        .sidebar-logo {
+            padding: var(--space-5);
+            display: flex;
+            align-items: center;
+            gap: var(--space-3);
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--primary-500);
+            border-bottom: 1px solid var(--neutral-200);
+        }
+
+        .sidebar-logo i {
+            font-size: 24px;
+            color: var(--primary-500);
+        }
+
+
+        .sidebar-nav {
+            list-style: none;
+            padding: 0 12px;
+        }
+
+        .sidebar-nav li {
+            margin-bottom: 4px;
+        }
+
+        .sidebar-link {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px 16px;
+            color: var(--neutral-600);
+            text-decoration: none;
+            border-radius: var(--radius-md);
+            transition: all 0.2s;
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        .sidebar-link:hover {
+            background: var(--neutral-50);
+            color: var(--neutral-800);
+        }
+
+        .sidebar-link.active {
+            background: var(--primary-100);
+            color: var(--primary-500);
+        }
+
+        .sidebar-icon {
+            width: 20px;
+            text-align: center;
+        }
+
+        .sidebar-section {
+            margin-top: 32px;
+            padding-top: 24px;
+            border-top: 1px solid var(--neutral-100);
+        }
+
+        .sidebar-section-title {
+            padding: 0 24px;
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--neutral-500);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 12px;
+        }
+
+        /* Mobile Toggle */
+        .sidebar-toggle {
+            display: none;
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            z-index: 101;
+            background: white;
+            border: 1px solid var(--neutral-200);
+            padding: 12px;
+            border-radius: var(--radius-md);
+            cursor: pointer;
+            box-shadow: var(--shadow-md);
+        }</style>
+</head>
+<body class="admin-layout">
+    <!-- Sidebar -->
+    <aside class="sidebar">
+        <div class="sidebar-logo">
+            <i class="fas fa-spa"></i>
+            <span>Admin Portal</span>
+        </div>
+        
+        <nav>
+            <ul class="sidebar-nav">
+                <li>
+                    <a href="index.html" class="sidebar-link">
+                        <i class="fas fa-chart-pie sidebar-icon"></i>
+                        Dashboard
+                    </a>
+                </li>
+                <li>
+                    <a href="orders.html" class="sidebar-link">
+                        <i class="fas fa-shopping-bag sidebar-icon"></i>
+                        Orders
+                    </a>
+                </li>
+                <li>
+                    <a href="products.html" class="sidebar-link">
+                        <i class="fas fa-box-open sidebar-icon"></i>
+                        Products
+                    </a>
+                </li>
+                <li>
+                    <a href="customers.html" class="sidebar-link active">
+                        <i class="fas fa-users sidebar-icon"></i>
+                        Customers
+                    </a>
+                </li>
+                <li>
+                    <a href="delivery.html" class="sidebar-link">
+                        <i class="fas fa-truck sidebar-icon"></i>
+                        Delivery
+                    </a>
+                </li>
+                <li>
+                    <a href="reports.html" class="sidebar-link">
+                        <i class="fas fa-chart-bar sidebar-icon"></i>
+                        Reports
+                    </a>
+                </li>
+            </ul>
+            
+            <div class="sidebar-section">
+                <div class="sidebar-section-title">Settings</div>
+                <ul class="sidebar-nav">
+                    <li>
+                        <a href="settings.html" class="sidebar-link">
+                            <i class="fas fa-cog sidebar-icon"></i>
+                            General Settings
+                        </a>
+                    </li>
+                    <li>
+                        <a href="../index.html" class="sidebar-link">
+                            <i class="fas fa-sign-out-alt sidebar-icon"></i>
+                            Exit to Store
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+    </aside>
+
+    <!-- Mobile Sidebar Toggle -->
+    <button class="sidebar-toggle" onclick="toggleSidebar()">
+        <i class="fas fa-bars"></i>
+    </button>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <div class="admin-header">
+            <div>
+                <h1 class="admin-title">Customer Management</h1>
+                <p style="color: var(--neutral-600); font-size: 14px;">Manage your customer base and view purchase history</p>
+            </div>
+            <div class="admin-actions">
+                <button class="btn btn-primary btn-sm" onclick="openModal('addCustomerModal')">
+                    <i class="fas fa-plus"></i>
+                    Add Customer
+                </button>
+            </div>
+        </div>
+
+        <!-- Stats - ALL ZERO -->
+        <div class="stats-grid" style="grid-template-columns: repeat(4, 1fr); margin-bottom: var(--space-5);">
+            <div class="stat-card">
+                <div class="stat-header">
+                    <div class="stat-icon primary">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <span class="stat-label">Total Customers</span>
+                </div>
+                <div class="stat-value">0</div>
+                <div class="stat-change" style="color: var(--neutral-500);">
+                    <i class="fas fa-minus"></i> 0% this month
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-header">
+                    <div class="stat-icon success">
+                        <i class="fas fa-user-check"></i>
+                    </div>
+                    <span class="stat-label">Active Customers</span>
+                </div>
+                <div class="stat-value">0</div>
+                <div class="stat-change" style="color: var(--neutral-500);">
+                    <i class="fas fa-minus"></i> 0% this month
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-header">
+                    <div class="stat-icon warning">
+                        <i class="fas fa-shopping-cart"></i>
+                    </div>
+                    <span class="stat-label">Avg. Orders/Customer</span>
+                </div>
+                <div class="stat-value">0.0</div>
+                <div class="stat-change" style="color: var(--neutral-500);">
+                    <i class="fas fa-minus"></i> 0% this month
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-header">
+                    <div class="stat-icon info">
+                        <i class="fas fa-peso-sign"></i>
+                    </div>
+                    <span class="stat-label">Customer Lifetime Value</span>
+                </div>
+                <div class="stat-value">₱0</div>
+                <div class="stat-change" style="color: var(--neutral-500);">
+                    <i class="fas fa-minus"></i> 0% this month
+                </div>
+            </div>
+        </div>
+
+        <!-- Filters -->
+        <div class="card" style="padding: var(--space-4); margin-bottom: var(--space-5);">
+            <div class="filter-bar">
+                <div class="filter-group">
+                    <input type="text" class="form-input" placeholder="Search customers..." style="width: 250px;" id="customerSearch" disabled>
+                </div>
+                <div class="filter-group">
+                    <select class="form-input" style="width: 150px;" id="statusFilter" disabled>
+                        <option value="all">All Status</option>
+                        <option value="active">Active</option>
+                        <option value="inactive">Inactive</option>
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <select class="form-input" style="width: 150px;" id="sortFilter" disabled>
+                        <option value="recent">Most Recent</option>
+                        <option value="orders">Most Orders</option>
+                        <option value="spent">Highest Spent</option>
+                    </select>
+                </div>
+                <button class="btn btn-primary btn-sm" onclick="applyFilters()" disabled>
+                    <i class="fas fa-filter"></i>
+                    Filter
+                </button>
+            </div>
+        </div>
+
+        <!-- Empty State Table -->
+        <div class="table-container">
+            <div class="table-header">
+                <div style="display: flex; align-items: center; gap: var(--space-3);">
+                    <input type="checkbox" class="table-checkbox" id="selectAllCustomers" disabled>
+                    <span style="font-size: 14px; color: var(--neutral-600);"><span id="selectedCount">0</span> selected</span>
+                </div>
+                <div class="flex gap-2">
+                    <button class="btn btn-secondary btn-sm" onclick="bulkEmail()" disabled>
+                        <i class="fas fa-envelope"></i>
+                        Email
+                    </button>
+                    <button class="btn btn-danger btn-sm" onclick="bulkDelete()" disabled>
+                        <i class="fas fa-trash"></i>
+                        Delete
+                    </button>
+                </div>
+            </div>
+            
+            <div style="text-align: center; padding: var(--space-8); color: var(--neutral-600);">
+                <div style="font-size: 64px; margin-bottom: var(--space-4); opacity: 0.3;">
+                    <i class="fas fa-users"></i>
+                </div>
+                <h3 style="margin-bottom: var(--space-2); color: var(--neutral-800);">No Customers Yet</h3>
+                <p style="margin-bottom: var(--space-4); max-width: 400px; margin-left: auto; margin-right: auto;">
+                    Your customer list is empty. Add your first customer to start building your customer base and tracking purchase history.
+                </p>
+                <button class="btn btn-primary" onclick="openModal('addCustomerModal')">
+                    <i class="fas fa-plus"></i>
+                    Add Your First Customer
+                </button>
+            </div>
+            
+            <div class="table-footer">
+                <span>Showing 0 of 0 customers</span>
+                <div class="pagination">
+                    <button class="page-btn" disabled><i class="fas fa-chevron-left"></i></button>
+                    <button class="page-btn active">1</button>
+                    <button class="page-btn" disabled><i class="fas fa-chevron-right"></i></button>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Customer Detail Modal -->
+    <div class="modal-overlay" id="customerDetailModal" onclick="closeModalOnOverlay(event)">
+        <div class="modal modal-lg">
+            <div class="modal-header">
+                <h3 class="modal-title">Customer Details</h3>
+                <button class="modal-close" onclick="closeModal('customerDetailModal')">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body" id="customerDetailContent">
+                <!-- Content loaded dynamically -->
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" onclick="closeModal('customerDetailModal')">Close</button>
+                <button class="btn btn-primary">
+                    <i class="fas fa-envelope"></i>
+                    Send Email
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Add Customer Modal -->
+    <div class="modal-overlay" id="addCustomerModal" onclick="closeModalOnOverlay(event)">
+        <div class="modal">
+            <div class="modal-header">
+                <h3 class="modal-title">Add New Customer</h3>
+                <button class="modal-close" onclick="closeModal('addCustomerModal')">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="customerForm">
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label class="form-label">First Name *</label>
+                            <input type="text" class="form-input" required>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Last Name *</label>
+                            <input type="text" class="form-input" required>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Email *</label>
+                        <input type="email" class="form-input" required>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Phone</label>
+                        <input type="tel" class="form-input">
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Address</label>
+                        <textarea class="form-input" rows="2"></textarea>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" onclick="closeModal('addCustomerModal')">Cancel</button>
+                <button class="btn btn-primary" onclick="saveCustomer()">Save Customer</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="../assets/js/main.js"></script>
+    <script src="../assets/js/admin.js"></script>
+    <script>
+        function toggleSidebar() {
+            document.querySelector('.sidebar').classList.toggle('active');
+        }
+
+        function toggleSelectAll() {
+            const selectAll = document.getElementById('selectAllCustomers');
+            const checkboxes = document.querySelectorAll('.customer-checkbox');
+            checkboxes.forEach(cb => cb.checked = selectAll.checked);
+            updateSelectedCount();
+        }
+
+        function updateSelectedCount() {
+            const count = document.querySelectorAll('.customer-checkbox:checked').length;
+            document.getElementById('selectedCount').textContent = count;
+        }
+
+        function viewCustomer(email) {
+            // No customers to view
+            return;
+        }
+
+        function editCustomer(email) {
+            // No customers to edit
+            return;
+        }
+
+        function deleteCustomer(email) {
+            // No customers to delete
+            return;
+        }
+
+        function saveCustomer() {
+            closeModal('addCustomerModal');
+            if (typeof toast !== 'undefined') {
+                toast.show('Customer added successfully', 'success');
+            } else {
+                alert('Customer added successfully');
+            }
+            // In a real app, this would add the customer and refresh the list
+        }
+
+        function bulkEmail() {
+            if (typeof toast !== 'undefined') {
+                toast.show('No customers selected', 'warning');
+            }
+        }
+
+        function bulkDelete() {
+            if (typeof toast !== 'undefined') {
+                toast.show('No customers selected', 'warning');
+            }
+        }
+
+        function applyFilters() {
+            // No filters to apply
+            return;
+        }
+
+        // Modal helper functions (if not in admin.js)
+        function openModal(modalId) {
+            document.getElementById(modalId).style.display = 'flex';
+        }
+
+        function closeModal(modalId) {
+            document.getElementById(modalId).style.display = 'none';
+        }
+
+        function closeModalOnOverlay(event) {
+            if (event.target === event.currentTarget) {
+                event.target.style.display = 'none';
+            }
+        }
+    </script>
+    <script>
+    // Apply saved theme color on every page
+    (function() {
+        try {
+            const savedColor = localStorage.getItem('themeColor');
+            if (savedColor && savedColor.startsWith('#') && savedColor.length === 7) {
+                document.documentElement.style.setProperty('--primary-500', savedColor);
+            }
+        } catch (err) {
+            // Silent fail – don't break the page
+            console.warn('Theme color could not be applied', err);
+        }
+    })();
+</script>
+</body>
+</html>

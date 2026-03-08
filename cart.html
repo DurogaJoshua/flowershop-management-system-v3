@@ -1,0 +1,1143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Shopping Cart - Maria's Floral Fantasy</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-500: #e91e63;
+            --primary-600: #d81b60;
+            --primary-100: #fce4ec;
+            --secondary-500: #9c27b0;
+            --secondary-100: #f3e5f5;
+            --success-500: #4caf50;
+            --success-100: #e8f5e9;
+            --warning-500: #ff9800;
+            --warning-100: #fff3e0;
+            --info-500: #2196f3;
+            --info-100: #e3f2fd;
+            --neutral-800: #1a1a1a;
+            --neutral-700: #2d2d2d;
+            --neutral-600: #666666;
+            --neutral-500: #888888;
+            --neutral-400: #aaaaaa;
+            --neutral-300: #dddddd;
+            --neutral-200: #eeeeee;
+            --neutral-100: #f5f5f5;
+            --neutral-50: #fafafa;
+            --radius-sm: 4px;
+            --radius-md: 8px;
+            --radius-lg: 12px;
+            --radius-full: 9999px;
+            --space-1: 4px;
+            --space-2: 8px;
+            --space-3: 12px;
+            --space-4: 16px;
+            --space-5: 24px;
+            --space-6: 32px;
+            --space-8: 48px;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--neutral-50);
+            color: var(--neutral-800);
+            line-height: 1.6;
+        }
+
+        .container { max-width: 1200px; margin: 0 auto; padding: 0 var(--space-4); }
+
+        /* Navigation */
+        .navbar {
+            background: white;
+            border-bottom: 1px solid var(--neutral-200);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .navbar-content {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            height: 70px;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: var(--space-2);
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--primary-500);
+            text-decoration: none;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: var(--space-5);
+        }
+
+        .nav-link {
+            color: var(--neutral-600);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.2s;
+        }
+
+        .nav-link:hover, .nav-link.active { color: var(--primary-500); }
+
+        .nav-actions {
+            display: flex;
+            align-items: center;
+            gap: var(--space-3);
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: var(--space-2);
+            padding: var(--space-2) var(--space-4);
+            border-radius: var(--radius-md);
+            font-weight: 500;
+            cursor: pointer;
+            border: none;
+            transition: all 0.2s;
+            text-decoration: none;
+            font-size: 14px;
+        }
+
+        .btn-primary { background: var(--primary-500); color: white; }
+        .btn-primary:hover { background: var(--primary-600); }
+        .btn-secondary { background: var(--neutral-100); color: var(--neutral-700); border: 1px solid var(--neutral-300); }
+        .btn-secondary:hover { background: var(--neutral-200); }
+        .btn-ghost { background: transparent; color: var(--neutral-600); }
+        .btn-ghost:hover { background: var(--neutral-100); }
+        .btn-lg { padding: var(--space-3) var(--space-6); font-size: 16px; }
+        .btn-sm { padding: var(--space-2) var(--space-3); font-size: 13px; }
+        .btn-block { display: block; width: 100%; text-align: center; }
+        .btn-icon { padding: var(--space-2); width: 40px; height: 40px; justify-content: center; }
+
+        .cart-badge { position: relative; }
+        .cart-count {
+            position: absolute;
+            top: -5px;
+            right: -5px;
+            background: var(--primary-500);
+            color: white;
+            font-size: 11px;
+            width: 18px;
+            height: 18px;
+            border-radius: var(--radius-full);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+        }
+
+        /* Cart Layout */
+        .cart-layout {
+            display: grid;
+            grid-template-columns: 1fr 380px;
+            gap: var(--space-6);
+            padding-top: var(--space-6);
+            padding-bottom: var(--space-8);
+        }
+
+        @media (max-width: 968px) {
+            .cart-layout { grid-template-columns: 1fr; }
+        }
+
+        h1 { font-size: 32px; font-weight: 700; margin-bottom: var(--space-6); }
+
+        /* Cart Items */
+        .cart-items { display: flex; flex-direction: column; gap: var(--space-4); }
+
+        .cart-item {
+            display: flex;
+            gap: var(--space-4);
+            padding: var(--space-4);
+            background: white;
+            border-radius: var(--radius-lg);
+            border: 1px solid var(--neutral-200);
+            transition: all 0.3s;
+        }
+
+        .cart-item-image {
+            width: 100px;
+            height: 100px;
+            border-radius: var(--radius-md);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 50px;
+            flex-shrink: 0;
+        }
+
+        .cart-item-details { flex: 1; }
+
+        .cart-item-title {
+            font-weight: 600;
+            font-size: 16px;
+            margin-bottom: var(--space-1);
+        }
+
+        .cart-item-price {
+            color: var(--neutral-600);
+            font-size: 14px;
+            margin-bottom: var(--space-3);
+        }
+
+        .cart-item-actions {
+            display: flex;
+            align-items: center;
+            gap: var(--space-3);
+            flex-wrap: wrap;
+        }
+
+        .quantity-control {
+            display: flex;
+            align-items: center;
+            gap: var(--space-2);
+            border: 1px solid var(--neutral-300);
+            border-radius: var(--radius-md);
+            padding: 4px;
+        }
+
+        .quantity-btn {
+            width: 28px;
+            height: 28px;
+            border: none;
+            background: var(--neutral-100);
+            border-radius: var(--radius-sm);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s;
+        }
+
+        .quantity-btn:hover { background: var(--primary-100); color: var(--primary-500); }
+
+        .quantity-value {
+            min-width: 30px;
+            text-align: center;
+            font-weight: 600;
+            transition: transform 0.2s;
+        }
+
+        .cart-item-total {
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--primary-500);
+            min-width: 100px;
+            text-align: right;
+        }
+
+        .btn-remove { color: var(--error); }
+        .btn-remove:hover { background: var(--danger-100); }
+
+        /* Cart Actions */
+        .cart-actions {
+            margin-top: var(--space-5);
+            padding-top: var(--space-5);
+            border-top: 1px solid var(--neutral-200);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        /* Cart Summary */
+        .cart-summary {
+            background: white;
+            border-radius: var(--radius-lg);
+            padding: var(--space-5);
+            border: 1px solid var(--neutral-200);
+            height: fit-content;
+            position: sticky;
+            top: 90px;
+        }
+
+        .summary-title {
+            font-size: 20px;
+            font-weight: 700;
+            margin-bottom: var(--space-4);
+        }
+
+        .summary-row {
+            display: flex;
+            justify-content: space-between;
+            padding: var(--space-2) 0;
+            font-size: 14px;
+        }
+
+        .summary-row.discount { color: var(--success-500); }
+        .summary-row.total {
+            font-size: 18px;
+            font-weight: 700;
+            border-top: 2px solid var(--neutral-200);
+            padding-top: var(--space-3);
+            margin-top: var(--space-3);
+        }
+
+        .summary-row.total span:last-child { color: var(--primary-500); }
+
+        /* Promo Code */
+        .promo-section {
+            margin-top: var(--space-5);
+            padding-top: var(--space-5);
+            border-top: 1px solid var(--neutral-200);
+        }
+
+        .promo-title {
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: var(--space-3);
+        }
+
+        .promo-form {
+            display: flex;
+            gap: var(--space-3);
+        }
+
+        /* Empty State */
+        .empty-state {
+            text-align: center;
+            padding: var(--space-8);
+            background: white;
+            border-radius: var(--radius-lg);
+            border: 1px solid var(--neutral-200);
+        }
+
+        .empty-emoji { font-size: 64px; margin-bottom: var(--space-4); }
+        .empty-title { font-size: 20px; font-weight: 700; margin-bottom: var(--space-2); color: var(--neutral-700); }
+        .empty-text { color: var(--neutral-600); margin-bottom: var(--space-4); }
+
+        /* You May Also Like */
+        .section { padding: var(--space-8) 0; }
+        .section-title {
+            font-size: 24px;
+            font-weight: 700;
+            text-align: center;
+            margin-bottom: var(--space-5);
+        }
+
+        .product-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: var(--space-4);
+        }
+
+        .product-card {
+            background: white;
+            border-radius: var(--radius-lg);
+            overflow: hidden;
+            border: 1px solid var(--neutral-200);
+            transition: transform 0.2s;
+        }
+
+        .product-card:hover { transform: translateY(-4px); }
+
+        .product-image {
+            height: 150px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 60px;
+        }
+
+        .product-content { padding: var(--space-3); }
+
+        .product-title { font-size: 14px; font-weight: 600; margin-bottom: var(--space-2); }
+        .product-price { font-size: 16px; font-weight: 700; color: var(--primary-500); margin-bottom: var(--space-3); }
+
+        /* Footer */
+        .footer {
+            background: var(--neutral-800);
+            color: white;
+            padding: var(--space-8) 0 var(--space-5);
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1fr;
+            gap: var(--space-6);
+            margin-bottom: var(--space-6);
+        }
+
+        @media (max-width: 768px) {
+            .footer-grid { grid-template-columns: 1fr; }
+            .nav-links { display: none; }
+        }
+
+        .footer-logo {
+            display: flex;
+            align-items: center;
+            gap: var(--space-2);
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--primary-500);
+            margin-bottom: var(--space-3);
+        }
+
+        .footer-description { color: var(--neutral-400); font-size: 14px; line-height: 1.6; }
+
+        .footer-title {
+            font-weight: 600;
+            margin-bottom: var(--space-3);
+            color: white;
+        }
+
+        .footer-links { list-style: none; }
+        .footer-links li { margin-bottom: var(--space-2); }
+        .footer-link {
+            color: var(--neutral-400);
+            text-decoration: none;
+            font-size: 14px;
+            transition: color 0.2s;
+        }
+        .footer-link:hover { color: white; }
+
+        .footer-bottom {
+            border-top: 1px solid var(--neutral-700);
+            padding-top: var(--space-5);
+            text-align: center;
+            color: var(--neutral-400);
+            font-size: 14px;
+        }
+
+        /* Mobile Nav */
+        .mobile-nav {
+            display: none;
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: white;
+            border-top: 1px solid var(--neutral-200);
+            z-index: 100;
+        }
+
+        @media (max-width: 768px) {
+            .mobile-nav { display: block; }
+            body { padding-bottom: 70px; }
+        }
+
+        .mobile-nav-items {
+            display: flex;
+            justify-content: space-around;
+            list-style: none;
+            padding: var(--space-2) 0;
+        }
+
+        .mobile-nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 4px;
+            color: var(--neutral-600);
+            text-decoration: none;
+            font-size: 12px;
+            padding: var(--space-2);
+        }
+
+        .mobile-nav-item.active { color: var(--primary-500); }
+
+        /* Toast */
+        .toast {
+            position: fixed;
+            bottom: 100px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: var(--neutral-800);
+            color: white;
+            padding: 12px 24px;
+            border-radius: 8px;
+            z-index: 9999;
+            display: none;
+            animation: fadeInUp 0.3s ease;
+        }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translate(-50%, 20px); }
+            to { opacity: 1; transform: translate(-50%, 0); }
+        }
+
+        .toast.show { display: block; }
+
+        .card {
+            background: white;
+            border-radius: var(--radius-lg);
+            border: 1px solid var(--neutral-200);
+        }
+
+        .form-input {
+            padding: var(--space-3);
+            border: 1px solid var(--neutral-300);
+            border-radius: var(--radius-md);
+            font-size: 14px;
+            font-family: inherit;
+            flex: 1;
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: var(--primary-500);
+            box-shadow: 0 0 0 3px var(--primary-100);
+        }
+
+        /* Login Modal */
+        .login-modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(0,0,0,0.5);
+            z-index: 2000;
+            align-items: center;
+            justify-content: center;
+            padding: var(--space-4);
+        }
+
+        .login-modal-overlay.show { display: flex; }
+
+        .login-modal {
+            background: white;
+            border-radius: var(--radius-lg);
+            padding: var(--space-6);
+            max-width: 400px;
+            width: 100%;
+            text-align: center;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+        }
+
+        .login-modal-icon {
+            font-size: 48px;
+            color: var(--primary-500);
+            margin-bottom: var(--space-4);
+        }
+
+        .login-modal-title {
+            font-size: 20px;
+            font-weight: 700;
+            margin-bottom: var(--space-2);
+        }
+
+        .login-modal-text {
+            color: var(--neutral-600);
+            margin-bottom: var(--space-5);
+        }
+
+        .login-modal-buttons {
+            display: flex;
+            flex-direction: column;
+            gap: var(--space-3);
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="container navbar-content">
+            <a href="index.html" class="logo">
+                <i class="fas fa-spa"></i>
+                <span id="storeName">Maria's Floral Fantasy</span>
+            </a>
+            
+            <ul class="nav-links">
+                <li><a href="index.html" class="nav-link">Home</a></li>
+                <li><a href="shop.html" class="nav-link">Shop</a></li>
+                <li><a href="about.html" class="nav-link">About</a></li>
+                <li><a href="contact.html" class="nav-link">Contact</a></li>
+            </ul>
+            
+            <div class="nav-actions">
+                <a href="shop.html" class="btn btn-ghost btn-sm">
+                    <i class="fas fa-arrow-left"></i> Continue Shopping
+                </a>
+                <a href="cart.html" class="btn btn-icon btn-ghost cart-badge">
+                    <i class="fas fa-shopping-cart"></i>
+                    <span class="cart-count" id="navCartCount">0</span>
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Cart Content -->
+    <div class="container cart-layout">
+        <div>
+            <h1>Shopping Cart</h1>
+            
+            <div class="cart-items" id="cartItems">
+                <!-- Cart items rendered by JavaScript -->
+            </div>
+
+            <!-- Cart Actions -->
+            <div class="cart-actions" id="cartActions" style="display: none;">
+                <a href="shop.html" class="btn btn-secondary">
+                    <i class="fas fa-arrow-left"></i> Continue Shopping
+                </a>
+                <button class="btn btn-ghost btn-remove" onclick="clearCart()">
+                    <i class="fas fa-trash"></i> Clear Cart
+                </button>
+            </div>
+
+            <!-- Promo Code -->
+            <div class="promo-section" id="promoSection" style="display: none;">
+                <div class="promo-title">Promo Code</div>
+                <div class="promo-form">
+                    <input type="text" class="form-input" id="promoInput" placeholder="Enter promo code">
+                    <button class="btn btn-secondary" onclick="applyPromo()">Apply</button>
+                </div>
+                <div id="promoMessage" style="margin-top: var(--space-2); font-size: 13px;"></div>
+            </div>
+        </div>
+
+        <!-- Order Summary -->
+        <div class="cart-summary" id="cartSummary" style="display: none;">
+            <h2 class="summary-title">Order Summary</h2>
+            
+            <div class="summary-row">
+                <span id="subtotalLabel">Subtotal (0 items)</span>
+                <span id="subtotal">₱0.00</span>
+            </div>
+            <div class="summary-row">
+                <span>Shipping</span>
+                <span id="shipping">₱0.00</span>
+            </div>
+            <div class="summary-row">
+                <span>Tax (12%)</span>
+                <span id="tax">₱0.00</span>
+            </div>
+            <div class="summary-row discount" id="discountRow" style="display: none;">
+                <span>Discount <small id="promoCode"></small></span>
+                <span id="discount">-₱0.00</span>
+            </div>
+            <div class="summary-row total">
+                <span>Total</span>
+                <span id="total">₱0.00</span>
+            </div>
+
+            <!-- Checkout Button - Now checks login -->
+            <button onclick="proceedToCheckout()" class="btn btn-primary btn-lg btn-block" style="margin-top: var(--space-4);">
+                Proceed to Checkout
+            </button>
+
+            <div style="margin-top: var(--space-4); text-align: center;">
+                <div style="display: flex; align-items: center; justify-content: center; gap: var(--space-3); margin-bottom: var(--space-3);">
+                    <i class="fas fa-shield-alt" style="color: var(--secondary-500);"></i>
+                    <span style="font-size: 12px; color: var(--neutral-600);">Secure Checkout</span>
+                </div>
+                <div style="display: flex; justify-content: center; gap: var(--space-3); font-size: 24px; color: var(--neutral-400);">
+                    <i class="fas fa-money-bill-wave" title="Cash on Delivery"></i>
+                    <i class="fas fa-mobile-alt" title="GCash"></i>
+                    <i class="fas fa-credit-card" title="Credit Card"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Login Required Modal -->
+    <div class="login-modal-overlay" id="loginModal">
+        <div class="login-modal">
+            <div class="login-modal-icon">
+                <i class="fas fa-user-lock"></i>
+            </div>
+            <h3 class="login-modal-title">Login Required</h3>
+            <p class="login-modal-text">Please log in to your account to proceed with checkout.</p>
+            <div class="login-modal-buttons">
+                <a href="login.html?return=cart.html" class="btn btn-primary btn-lg">
+                    <i class="fas fa-sign-in-alt"></i> Login to Continue
+                </a>
+                <button onclick="closeLoginModal()" class="btn btn-secondary">
+                    Cancel
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- You May Also Like -->
+    <section class="section" style="background: var(--neutral-100);">
+        <div class="container">
+            <h2 class="section-title">You May Also Like</h2>
+            <div class="product-grid" id="recommendations">
+                <!-- Recommendations rendered by JS -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div>
+                    <div class="footer-logo">
+                        <i class="fas fa-spa"></i>
+                        <span id="footerStoreName">Maria's Floral Fantasy</span>
+                    </div>
+                    <p class="footer-description" id="footerDesc">
+                        Bringing joy and beauty to your special moments with fresh, hand-crafted floral arrangements.
+                    </p>
+                </div>
+                <div>
+                    <h4 class="footer-title">Quick Links</h4>
+                    <ul class="footer-links">
+                        <li><a href="index.html" class="footer-link">Home</a></li>
+                        <li><a href="shop.html" class="footer-link">Shop</a></li>
+                        <li><a href="about.html" class="footer-link">About Us</a></li>
+                        <li><a href="contact.html" class="footer-link">Contact</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="footer-title">Customer Service</h4>
+                    <ul class="footer-links">
+                        <li><a href="tracking.html" class="footer-link">Track Order</a></li>
+                        <li><a href="#" class="footer-link">Shipping Info</a></li>
+                        <li><a href="#" class="footer-link">Returns</a></li>
+                        <li><a href="#" class="footer-link">FAQ</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="footer-title">Contact Us</h4>
+                    <ul class="footer-links">
+                        <li class="footer-link"><i class="fas fa-map-marker-alt" style="margin-right: 8px;"></i> <span id="footerAddress">Tacloban City</span></li>
+                        <li class="footer-link"><i class="fas fa-phone" style="margin-right: 8px;"></i> <span id="footerPhone">0956-431-7832</span></li>
+                        <li class="footer-link"><i class="fas fa-envelope" style="margin-right: 8px;"></i> <span id="footerEmail">hello@mariasfloral.ph</span></li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 <span id="copyrightName">Maria's Floral Fantasy</span>. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Mobile Navigation -->
+    <nav class="mobile-nav">
+        <ul class="mobile-nav-items">
+            <li>
+                <a href="index.html" class="mobile-nav-item">
+                    <i class="fas fa-home"></i>
+                    <span>Home</span>
+                </a>
+            </li>
+            <li>
+                <a href="shop.html" class="mobile-nav-item">
+                    <i class="fas fa-store"></i>
+                    <span>Shop</span>
+                </a>
+            </li>
+            <li>
+                <a href="cart.html" class="mobile-nav-item active">
+                    <i class="fas fa-shopping-cart"></i>
+                    <span>Cart</span>
+                </a>
+            </li>
+            <li>
+                <a href="tracking.html" class="mobile-nav-item">
+                    <i class="fas fa-truck"></i>
+                    <span>Track</span>
+                </a>
+            </li>
+            <li>
+                <a href="login.html" class="mobile-nav-item">
+                    <i class="fas fa-user"></i>
+                    <span>Profile</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+
+    <!-- Toast -->
+    <div id="toast" class="toast"></div>
+
+    <script>
+        // Storage Keys - MUST match index.html
+        const StorageKeys = {
+            CART: 'mff_cart',
+            STORE_INFO: 'mff_store_info',
+            PRODUCTS: 'mff_products',
+            CURRENT_USER: 'currentUser'  // Added for login check
+        };
+
+        // Cart State
+        let cart = [];
+        let appliedPromo = null;
+
+        // Initialize
+        document.addEventListener('DOMContentLoaded', function() {
+            loadCart();
+            loadStoreInfo();
+            renderRecommendations();
+            updateNavCartCount();
+        });
+
+        // Check if user is logged in
+        function isLoggedIn() {
+            const user = JSON.parse(localStorage.getItem(StorageKeys.CURRENT_USER) || '{}');
+            return user.loggedIn === true && user.role === 'user';
+        }
+
+        // Proceed to checkout with login check
+        function proceedToCheckout() {
+            if (!isLoggedIn()) {
+                // Show login modal
+                document.getElementById('loginModal').classList.add('show');
+                return;
+            }
+            
+            // User is logged in, proceed to checkout
+            window.location.href = 'checkout.html';
+        }
+
+        // Close login modal
+        function closeLoginModal() {
+            document.getElementById('loginModal').classList.remove('show');
+        }
+
+        // Close modal on overlay click
+        document.getElementById('loginModal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeLoginModal();
+            }
+        });
+
+        // Load Cart from localStorage
+        function loadCart() {
+            const saved = localStorage.getItem(StorageKeys.CART);
+            cart = saved ? JSON.parse(saved) : [];
+            renderCart();
+        }
+
+        // Save Cart to localStorage
+        function saveCart() {
+            localStorage.setItem(StorageKeys.CART, JSON.stringify(cart));
+            updateNavCartCount();
+            
+            // Dispatch event for other pages
+            window.dispatchEvent(new StorageEvent('storage', {
+                key: StorageKeys.CART,
+                newValue: JSON.stringify(cart)
+            }));
+        }
+
+        // Load Store Info
+        function loadStoreInfo() {
+            const info = JSON.parse(localStorage.getItem(StorageKeys.STORE_INFO)) || {};
+            
+            const name = info.name || "Maria's Floral Fantasy";
+            document.getElementById('storeName').textContent = name;
+            document.getElementById('footerStoreName').textContent = name;
+            document.getElementById('copyrightName').textContent = name;
+            
+            if (info.address) document.getElementById('footerAddress').textContent = info.address;
+            if (info.phone) document.getElementById('footerPhone').textContent = info.phone;
+            if (info.email) document.getElementById('footerEmail').textContent = info.email;
+            if (info.description) document.getElementById('footerDesc').textContent = info.description;
+        }
+
+        // Render Cart
+        function renderCart() {
+            const container = document.getElementById('cartItems');
+            const actions = document.getElementById('cartActions');
+            const summary = document.getElementById('cartSummary');
+            const promo = document.getElementById('promoSection');
+
+            if (cart.length === 0) {
+                // Empty cart
+                container.innerHTML = `
+                    <div class="empty-state">
+                        <div class="empty-emoji">🛒</div>
+                        <h3 class="empty-title">Your cart is empty</h3>
+                        <p class="empty-text">Looks like you haven't added any flowers yet.</p>
+                        <a href="shop.html" class="btn btn-primary btn-lg">Start Shopping</a>
+                    </div>
+                `;
+                actions.style.display = 'none';
+                summary.style.display = 'none';
+                promo.style.display = 'none';
+                updateSummary();
+                return;
+            }
+
+            // Has items
+            container.innerHTML = cart.map(item => `
+                <div class="cart-item" data-id="${item.id}">
+                    <div class="cart-item-image" style="background: ${getItemBg(item.category)};">
+                        ${item.emoji || '🌸'}
+                    </div>
+                    <div class="cart-item-details">
+                        <h3 class="cart-item-title">${item.name}</h3>
+                        <div class="cart-item-price">₱${item.price.toLocaleString()} each</div>
+                        <div class="cart-item-actions">
+                            <div class="quantity-control">
+                                <button class="quantity-btn" onclick="updateQuantity(${item.id}, -1)">-</button>
+                                <span class="quantity-value">${item.quantity}</span>
+                                <button class="quantity-btn" onclick="updateQuantity(${item.id}, 1)">+</button>
+                            </div>
+                            <button class="btn btn-ghost btn-sm btn-remove" onclick="removeItem(${item.id})">
+                                <i class="fas fa-trash"></i> Remove
+                            </button>
+                        </div>
+                    </div>
+                    <div class="cart-item-total">₱${(item.price * item.quantity).toLocaleString()}</div>
+                </div>
+            `).join('');
+
+            actions.style.display = 'flex';
+            summary.style.display = 'block';
+            promo.style.display = 'block';
+            
+            updateSummary();
+        }
+
+        function getItemBg(category) {
+            const bgs = {
+                roses: 'linear-gradient(135deg, #fce4ec 0%, #f8bbd9 100%)',
+                bouquets: 'linear-gradient(135deg, #f3e5f5 0%, #e1bee7 100%)',
+                boxes: 'linear-gradient(135deg, #fff3e0 0%, #ffe0b2 100%)',
+                arrangements: 'linear-gradient(135deg, #e8f5e9 0%, #c8e6c9 100%)',
+                plants: 'linear-gradient(135deg, #e0f2f1 0%, #b2dfdb 100%)',
+                singles: 'linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%)'
+            };
+            return bgs[category] || 'linear-gradient(135deg, #f5f5f5 0%, #eeeeee 100%)';
+        }
+
+        // Update Quantity
+        function updateQuantity(productId, change) {
+            const item = cart.find(i => i.id === productId);
+            if (!item) return;
+
+            const newQty = item.quantity + change;
+            
+            if (newQty < 1) {
+                removeItem(productId);
+                return;
+            }
+
+            item.quantity = newQty;
+            saveCart();
+            renderCart();
+            
+            showToast(`Updated ${item.name} quantity to ${newQty}`);
+        }
+
+        // Remove Item
+        function removeItem(productId) {
+            const item = cart.find(i => i.id === productId);
+            const itemEl = document.querySelector(`[data-id="${productId}"]`);
+            
+            if (itemEl) {
+                itemEl.style.opacity = '0';
+                itemEl.style.transform = 'translateX(-20px)';
+                
+                setTimeout(() => {
+                    cart = cart.filter(i => i.id !== productId);
+                    saveCart();
+                    renderCart();
+                    showToast(`${item.name} removed from cart`);
+                }, 300);
+            }
+        }
+
+        // Clear Cart
+        function clearCart() {
+            if (!confirm('Are you sure you want to clear your cart?')) return;
+
+            const items = document.querySelectorAll('.cart-item');
+            items.forEach((item, index) => {
+                setTimeout(() => {
+                    item.style.opacity = '0';
+                    item.style.transform = 'translateX(-20px)';
+                }, index * 100);
+            });
+
+            setTimeout(() => {
+                cart = [];
+                appliedPromo = null;
+                saveCart();
+                renderCart();
+                showToast('Cart cleared');
+            }, items.length * 100 + 300);
+        }
+
+        // Update Summary
+        function updateSummary() {
+            const subtotal = cart.reduce((sum, item) => sum + (item.price * item.quantity), 0);
+            const itemCount = cart.reduce((sum, item) => sum + item.quantity, 0);
+            
+            // Free shipping over ₱5000
+            const shipping = subtotal > 5000 ? 0 : 50;
+            
+            // Tax 12%
+            const tax = subtotal * 0.12;
+            
+            // Discount
+            let discount = 0;
+            if (appliedPromo) {
+                if (appliedPromo.type === 'percent') {
+                    discount = subtotal * (appliedPromo.value / 100);
+                } else {
+                    discount = appliedPromo.value;
+                }
+            }
+            
+            const total = subtotal + shipping + tax - discount;
+
+            // Update DOM
+            document.getElementById('subtotalLabel').textContent = `Subtotal (${itemCount} item${itemCount !== 1 ? 's' : ''})`;
+            document.getElementById('subtotal').textContent = '₱' + subtotal.toLocaleString('en-PH', {minimumFractionDigits: 2, maximumFractionDigits: 2});
+            document.getElementById('shipping').textContent = shipping === 0 ? 'FREE' : '₱' + shipping.toLocaleString('en-PH', {minimumFractionDigits: 2, maximumFractionDigits: 2});
+            document.getElementById('tax').textContent = '₱' + tax.toLocaleString('en-PH', {minimumFractionDigits: 2, maximumFractionDigits: 2});
+            document.getElementById('total').textContent = '₱' + total.toLocaleString('en-PH', {minimumFractionDigits: 2, maximumFractionDigits: 2});
+            
+            // Discount row
+            const discountRow = document.getElementById('discountRow');
+            if (appliedPromo && discount > 0) {
+                discountRow.style.display = 'flex';
+                document.getElementById('promoCode').textContent = `(${appliedPromo.code})`;
+                document.getElementById('discount').textContent = '-₱' + discount.toLocaleString('en-PH', {minimumFractionDigits: 2, maximumFractionDigits: 2});
+            } else {
+                discountRow.style.display = 'none';
+            }
+        }
+
+        // Apply Promo Code
+        function applyPromo() {
+            const code = document.getElementById('promoInput').value.trim().toUpperCase();
+            const msgEl = document.getElementById('promoMessage');
+            
+            // Sample promo codes
+            const promos = {
+                'SAVE10': { type: 'percent', value: 10, code: 'SAVE10' },
+                'SAVE20': { type: 'percent', value: 20, code: 'SAVE20' },
+                'WELCOME': { type: 'fixed', value: 100, code: 'WELCOME' },
+                'FREESHIP': { type: 'shipping', value: 0, code: 'FREESHIP' }
+            };
+            
+            const promo = promos[code];
+            
+            if (!promo) {
+                msgEl.textContent = 'Invalid promo code';
+                msgEl.style.color = 'var(--error)';
+                return;
+            }
+            
+            if (promo.type === 'shipping') {
+                // Free shipping handled separately
+                showToast('Free shipping applied!');
+            } else {
+                appliedPromo = promo;
+                updateSummary();
+                msgEl.textContent = `Promo ${code} applied!`;
+                msgEl.style.color = 'var(--success-500)';
+                showToast(`Promo code ${code} applied!`);
+            }
+        }
+
+        // Update Nav Cart Count
+        function updateNavCartCount() {
+            const count = cart.reduce((sum, item) => sum + item.quantity, 0);
+            document.getElementById('navCartCount').textContent = count;
+        }
+
+        // Render Recommendations
+        function renderRecommendations() {
+            const products = JSON.parse(localStorage.getItem(StorageKeys.PRODUCTS)) || [];
+            
+            // Get 4 random products not in cart
+            const cartIds = cart.map(i => i.id);
+            const available = products.filter(p => !cartIds.includes(p.id) && p.status === 'active');
+            const shuffled = available.sort(() => 0.5 - Math.random()).slice(0, 4);
+            
+            const container = document.getElementById('recommendations');
+            
+            if (shuffled.length === 0) {
+                container.innerHTML = '<p style="text-align: center; color: var(--neutral-600);">No recommendations available</p>';
+                return;
+            }
+            
+            container.innerHTML = shuffled.map(p => `
+                <div class="product-card">
+                    <div class="product-image" style="background: ${getItemBg(p.category)};">
+                        ${p.emoji || '🌸'}
+                    </div>
+                    <div class="product-content">
+                        <h3 class="product-title">${p.name}</h3>
+                        <div class="product-price">₱${p.price.toLocaleString()}</div>
+                        <button class="btn btn-primary btn-sm btn-block" onclick="addToCart(${p.id})">
+                            Add to Cart
+                        </button>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        // Add to Cart from recommendations
+        function addToCart(productId) {
+            const products = JSON.parse(localStorage.getItem(StorageKeys.PRODUCTS)) || [];
+            const product = products.find(p => p.id === productId);
+            
+            if (!product) {
+                showToast('Product not found');
+                return;
+            }
+            
+            const existing = cart.find(i => i.id === productId);
+            if (existing) {
+                existing.quantity++;
+                showToast(`Added another ${product.name} to cart`);
+            } else {
+                cart.push({
+                    id: product.id,
+                    name: product.name,
+                    price: product.price,
+                    emoji: product.emoji,
+                    category: product.category,
+                    quantity: 1
+                });
+                showToast(`${product.name} added to cart!`);
+            }
+            
+            saveCart();
+            renderCart();
+        }
+
+        // Show Toast
+        function showToast(message) {
+            const toast = document.getElementById('toast');
+            toast.textContent = message;
+            toast.classList.add('show');
+            setTimeout(() => toast.classList.remove('show'), 3000);
+        }
+
+        // Listen for storage changes from other pages
+        window.addEventListener('storage', function(e) {
+            if (e.key === StorageKeys.CART) {
+                loadCart();
+            }
+        });
+    </script>
+    <script>
+    // Apply saved theme color on every page
+    (function() {
+        try {
+            const savedColor = localStorage.getItem('themeColor');
+            if (savedColor && savedColor.startsWith('#') && savedColor.length === 7) {
+                document.documentElement.style.setProperty('--primary-500', savedColor);
+            }
+        } catch (err) {
+            // Silent fail – don't break the page
+            console.warn('Theme color could not be applied', err);
+        }
+    })();
+</script>
+</body>
+</html>

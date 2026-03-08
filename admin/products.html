@@ -1,0 +1,637 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Product Management - Maria's Floral Fantasy</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="../assets/css/main.css">
+    <link rel="stylesheet" href="../assets/css/admin.css">
+    <link rel="stylesheet" href="../assets/css/responsive.css">
+    <style>
+    .sidebar {
+            position: fixed;
+            left: 0;
+            top: 0;
+            width: 260px;
+            height: 100vh;
+            background: white;
+            border-right: 1px solid var(--neutral-200);
+            padding: 24px 0;
+            z-index: 100;
+            transition: transform 0.3s ease;
+        }
+
+        .sidebar-logo {
+            padding: var(--space-5);
+            display: flex;
+            align-items: center;
+            gap: var(--space-3);
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--primary-500);
+            border-bottom: 1px solid var(--neutral-200);
+        }
+
+        .sidebar-logo i {
+            font-size: 24px;
+            color: var(--primary-500);
+        }
+
+        
+
+        .sidebar-nav {
+            list-style: none;
+            padding: 0 12px;
+        }
+
+        .sidebar-nav li {
+            margin-bottom: 4px;
+        }
+
+        .sidebar-link {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px 16px;
+            color: var(--neutral-600);
+            text-decoration: none;
+            border-radius: var(--radius-md);
+            transition: all 0.2s;
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        .sidebar-link:hover {
+            background: var(--neutral-50);
+            color: var(--neutral-800);
+        }
+
+        .sidebar-link.active {
+            background: var(--primary-100);
+            color: var(--primary-500);
+        }
+
+        .sidebar-icon {
+            width: 20px;
+            text-align: center;
+        }
+
+        .sidebar-section {
+            margin-top: 32px;
+            padding-top: 24px;
+            border-top: 1px solid var(--neutral-100);
+        }
+
+        .sidebar-section-title {
+            padding: 0 24px;
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--neutral-500);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 12px;
+        }
+
+        /* Mobile Toggle */
+        .sidebar-toggle {
+            display: none;
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            z-index: 101;
+            background: white;
+            border: 1px solid var(--neutral-200);
+            padding: 12px;
+            border-radius: var(--radius-md);
+            cursor: pointer;
+            box-shadow: var(--shadow-md);
+        }</style>
+</head>
+<body class="admin-layout">
+    <!-- Sidebar -->
+    <aside class="sidebar">
+        <div class="sidebar-logo">
+            <i class="fas fa-spa"></i>
+            <span>Admin Portal</span>
+        </div>
+        
+        <nav>
+            <ul class="sidebar-nav">
+                <li>
+                    <a href="index.html" class="sidebar-link">
+                        <i class="fas fa-chart-pie sidebar-icon"></i>
+                        Dashboard
+                    </a>
+                </li>
+                <li>
+                    <a href="orders.html" class="sidebar-link">
+                        <i class="fas fa-shopping-bag sidebar-icon"></i>
+                        Orders
+                    </a>
+                </li>
+                <li>
+                    <a href="products.html" class="sidebar-link active">
+                        <i class="fas fa-box-open sidebar-icon"></i>
+                        Products
+                    </a>
+                </li>
+                <li>
+                    <a href="customers.html" class="sidebar-link">
+                        <i class="fas fa-users sidebar-icon"></i>
+                        Customers
+                    </a>
+                </li>
+                <li>
+                    <a href="delivery.html" class="sidebar-link">
+                        <i class="fas fa-truck sidebar-icon"></i>
+                        Delivery
+                    </a>
+                </li>
+                <li>
+                    <a href="reports.html" class="sidebar-link">
+                        <i class="fas fa-chart-bar sidebar-icon"></i>
+                        Reports
+                    </a>
+                </li>
+            </ul>
+            
+            <div class="sidebar-section">
+                <div class="sidebar-section-title">Settings</div>
+                <ul class="sidebar-nav">
+                    <li>
+                        <a href="settings.html" class="sidebar-link">
+                            <i class="fas fa-cog sidebar-icon"></i>
+                            General Settings
+                        </a>
+                    </li>
+                    <li>
+                        <a href="../index.html" class="sidebar-link">
+                            <i class="fas fa-sign-out-alt sidebar-icon"></i>
+                            Exit to Store
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+    </aside>
+
+    <!-- Mobile Sidebar Toggle -->
+    <button class="sidebar-toggle" onclick="toggleSidebar()">
+        <i class="fas fa-bars"></i>
+    </button>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <div class="admin-header">
+            <div>
+                <h1 class="admin-title">Product Management</h1>
+                <p style="color: var(--neutral-600); font-size: 14px;">Manage your flower inventory</p>
+            </div>
+            <div class="admin-actions">
+                <button class="btn btn-primary btn-sm" onclick="openModal('addProductModal')">
+                    <i class="fas fa-plus"></i>
+                    Add Product
+                </button>
+            </div>
+        </div>
+
+        <!-- Stats -->
+        <div class="stats-grid" style="grid-template-columns: repeat(4, 1fr); margin-bottom: var(--space-5);">
+            <div class="stat-card">
+                <div class="stat-header">
+                    <div class="stat-icon primary">
+                        <i class="fas fa-box"></i>
+                    </div>
+                    <span class="stat-label">Total Products</span>
+                </div>
+                <div class="stat-value">48</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-header">
+                    <div class="stat-icon success">
+                        <i class="fas fa-check-circle"></i>
+                    </div>
+                    <span class="stat-label">Active</span>
+                </div>
+                <div class="stat-value">42</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-header">
+                    <div class="stat-icon warning">
+                        <i class="fas fa-exclamation-triangle"></i>
+                    </div>
+                    <span class="stat-label">Low Stock</span>
+                </div>
+                <div class="stat-value">3</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-header">
+                    <div class="stat-icon danger">
+                        <i class="fas fa-times-circle"></i>
+                    </div>
+                    <span class="stat-label">Out of Stock</span>
+                </div>
+                <div class="stat-value">2</div>
+            </div>
+        </div>
+
+        <!-- Filters -->
+        <div class="card" style="padding: var(--space-4); margin-bottom: var(--space-5);">
+            <div class="filter-bar">
+                <div class="filter-group">
+                    <input type="text" class="form-input" placeholder="Search products..." style="width: 250px;" id="productSearch">
+                </div>
+                <div class="filter-group">
+                    <select class="form-input" style="width: 150px;" id="categoryFilter">
+                        <option value="all">All Categories</option>
+                        <option value="bouquets">Bouquets</option>
+                        <option value="boxes">Boxes</option>
+                        <option value="plants">Plants</option>
+                        <option value="singles">Singles</option>
+                    </select>
+                </div>
+                <div class="filter-group">
+                    <select class="form-input" style="width: 150px;" id="stockFilter">
+                        <option value="all">All Stock</option>
+                        <option value="in">In Stock</option>
+                        <option value="low">Low Stock</option>
+                        <option value="out">Out of Stock</option>
+                    </select>
+                </div>
+                <button class="btn btn-primary btn-sm" onclick="applyFilters()">
+                    <i class="fas fa-filter"></i>
+                    Filter
+                </button>
+            </div>
+        </div>
+
+        <!-- Products Table -->
+        <div class="table-container products-page">
+            <div class="table-header">
+                <div style="display: flex; align-items: center; gap: var(--space-3);">
+                    <input type="checkbox" class="table-checkbox" id="selectAllProducts" onchange="toggleSelectAll()">
+                    <span style="font-size: 14px; color: var(--neutral-600);"><span id="selectedCount">0</span> selected</span>
+                </div>
+                <div class="flex gap-2">
+                    <button class="btn btn-secondary btn-sm" onclick="bulkAction('edit')">
+                        <i class="fas fa-edit"></i>
+                        Edit
+                    </button>
+                    <button class="btn btn-danger btn-sm" onclick="bulkAction('delete')">
+                        <i class="fas fa-trash"></i>
+                        Delete
+                    </button>
+                </div>
+            </div>
+            
+            <table class="data-table products-table">
+                <thead>
+                    <tr>
+                        <th style="width: 40px;"><input type="checkbox" class="table-checkbox"></th>
+                        <th>Image</th>
+                        <th>Product Name</th>
+                        <th>Category</th>
+                        <th>Price</th>
+                        <th>Stock</th>
+                        <th>Status</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr data-category="bouquets" data-stock="25">
+                        <td><input type="checkbox" class="table-checkbox product-checkbox"></td>
+                        <td>
+                            <div class="table-product">
+                                <div class="table-product-img">🌹</div>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="table-product-info">
+                                <div class="table-product-title">Rose Bouquet Deluxe</div>
+                                <div class="table-product-subtitle">SKU: ROSE-001</div>
+                            </div>
+                        </td>
+                        <td>Bouquets</td>
+                        <td class="table-price">₱1,250.00</td>
+                        <td>25</td>
+                        <td><span class="badge badge-delivered">Active</span></td>
+                        <td>
+                            <div class="table-actions-cell">
+                                <button class="table-btn edit" onclick="editProduct('ROSE-001')" title="Edit">
+                                    <i class="fas fa-edit"></i>
+                                </button>
+                                <button class="table-btn delete" onclick="deleteProduct('ROSE-001')" title="Delete">
+                                    <i class="fas fa-trash"></i>
+                                </button>
+                            </div>
+                        </td>
+                    </tr>
+                    
+                    <tr data-category="boxes" data-stock="3">
+                        <td><input type="checkbox" class="table-checkbox product-checkbox"></td>
+                        <td>
+                            <div class="table-product">
+                                <div class="table-product-img">🌻</div>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="table-product-info">
+                                <div class="table-product-title">Sunflower Sunshine Box</div>
+                                <div class="table-product-subtitle">SKU: SUN-001</div>
+                            </div>
+                        </td>
+                        <td>Boxes</td>
+                        <td class="table-price">₱850.00</td>
+                        <td>3</td>
+                        <td><span class="badge badge-low">Low Stock</span></td>
+                        <td>
+                            <div class="table-actions-cell">
+                                <button class="table-btn edit" onclick="editProduct('SUN-001')" title="Edit">
+                                    <i class="fas fa-edit"></i>
+                                </button>
+                                <button class="table-btn delete" onclick="deleteProduct('SUN-001')" title="Delete">
+                                    <i class="fas fa-trash"></i>
+                                </button>
+                            </div>
+                        </td>
+                    </tr>
+                    
+                    <tr data-category="plants" data-stock="0">
+                        <td><input type="checkbox" class="table-checkbox product-checkbox"></td>
+                        <td>
+                            <div class="table-product">
+                                <div class="table-product-img">🌺</div>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="table-product-info">
+                                <div class="table-product-title">Orchid Elegance</div>
+                                <div class="table-product-subtitle">SKU: ORCH-001</div>
+                            </div>
+                        </td>
+                        <td>Plants</td>
+                        <td class="table-price">₱1,800.00</td>
+                        <td>0</td>
+                        <td><span class="badge badge-out">Out of Stock</span></td>
+                        <td>
+                            <div class="table-actions-cell">
+                                <button class="table-btn edit" onclick="editProduct('ORCH-001')" title="Edit">
+                                    <i class="fas fa-edit"></i>
+                                </button>
+                                <button class="table-btn delete" onclick="deleteProduct('ORCH-001')" title="Delete">
+                                    <i class="fas fa-trash"></i>
+                                </button>
+                            </div>
+                        </td>
+                    </tr>
+                    
+                    <tr data-category="singles" data-stock="50">
+                        <td><input type="checkbox" class="table-checkbox product-checkbox"></td>
+                        <td>
+                            <div class="table-product">
+                                <div class="table-product-img">🌼</div>
+                            </div>
+                        </td>
+                        <td>
+                            <div class="table-product-info">
+                                <div class="table-product-title">White Daisy Bundle</div>
+                                <div class="table-product-subtitle">SKU: DAISY-001</div>
+                            </div>
+                        </td>
+                        <td>Singles</td>
+                        <td class="table-price">₱180.00</td>
+                        <td>50</td>
+                        <td><span class="badge badge-delivered">Active</span></td>
+                        <td>
+                            <div class="table-actions-cell">
+                                <button class="table-btn edit" onclick="editProduct('DAISY-001')" title="Edit">
+                                    <i class="fas fa-edit"></i>
+                                </button>
+                                <button class="table-btn delete" onclick="deleteProduct('DAISY-001')" title="Delete">
+                                    <i class="fas fa-trash"></i>
+                                </button>
+                            </div>
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+            
+            <div class="table-footer">
+                <span>Showing 1-4 of 48 products</span>
+                <div class="pagination">
+                    <button class="page-btn" disabled><i class="fas fa-chevron-left"></i></button>
+                    <button class="page-btn active">1</button>
+                    <button class="page-btn">2</button>
+                    <button class="page-btn">3</button>
+                    <button class="page-btn"><i class="fas fa-chevron-right"></i></button>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Add/Edit Product Modal -->
+    <div class="modal-overlay" id="addProductModal" onclick="closeModalOnOverlay(event)">
+        <div class="modal modal-lg">
+            <div class="modal-header">
+                <h3 class="modal-title" id="modalTitle">Add New Product</h3>
+                <button class="modal-close" onclick="closeModal('addProductModal')">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="productForm">
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label class="form-label">Product Name *</label>
+                            <input type="text" class="form-input" name="name" id="productName" required>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">SKU *</label>
+                            <input type="text" class="form-input" name="sku" id="productSku" placeholder="e.g., ROSE-001" required>
+                        </div>
+                    </div>
+
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label class="form-label">Category *</label>
+                            <select class="form-input" name="category" id="productCategory" required>
+                                <option value="">Select category</option>
+                                <option value="bouquets">Bouquets</option>
+                                <option value="boxes">Boxes</option>
+                                <option value="plants">Plants</option>
+                                <option value="singles">Singles</option>
+                                <option value="weddings">Weddings</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Price (₱) *</label>
+                            <input type="number" class="form-input" name="price" id="productPrice" min="0" step="0.01" required>
+                        </div>
+                    </div>
+
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label class="form-label">Stock Quantity *</label>
+                            <input type="number" class="form-input" name="stock" id="productStock" min="0" required>
+                        </div>
+                        <div class="form-group">
+                            <label class="form-label">Status</label>
+                            <select class="form-input" name="status" id="productStatus">
+                                <option value="active">Active</option>
+                                <option value="inactive">Inactive</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Description</label>
+                        <textarea class="form-input" name="description" id="productDescription" rows="3"></textarea>
+                    </div>
+
+                    <div class="form-group">
+                        <label class="form-label">Product Images</label>
+                        <div class="image-upload" onclick="document.getElementById('productImages').click()">
+                            <i class="fas fa-cloud-upload-alt image-upload-icon"></i>
+                            <div class="image-upload-text">Click or drag images here</div>
+                            <div class="image-upload-hint">Supports: JPG, PNG, WebP (Max 5MB each)</div>
+                            <input type="file" id="productImages" multiple accept="image/*" style="display: none;" onchange="handleImageUpload(this.files)">
+                        </div>
+                        <div class="image-preview-grid" id="imagePreviewGrid"></div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-secondary" onclick="closeModal('addProductModal')">Cancel</button>
+                <button class="btn btn-primary" onclick="saveProduct()">Save Product</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="../assets/js/main.js"></script>
+    <script src="../assets/js/admin.js"></script>
+    <script>
+        function toggleSidebar() {
+            document.querySelector('.sidebar').classList.toggle('active');
+        }
+
+        function toggleSelectAll() {
+            const selectAll = document.getElementById('selectAllProducts');
+            const checkboxes = document.querySelectorAll('.product-checkbox');
+            checkboxes.forEach(cb => cb.checked = selectAll.checked);
+            updateSelectedCount();
+        }
+
+        function updateSelectedCount() {
+            const count = document.querySelectorAll('.product-checkbox:checked').length;
+            document.getElementById('selectedCount').textContent = count;
+        }
+
+        document.querySelectorAll('.product-checkbox').forEach(cb => {
+            cb.addEventListener('change', updateSelectedCount);
+        });
+
+        function editProduct(sku) {
+            document.getElementById('modalTitle').textContent = 'Edit Product';
+            // Populate form with product data
+            openModal('addProductModal');
+        }
+
+        function deleteProduct(sku) {
+            if (!confirm(`Are you sure you want to delete product ${sku}?`)) return;
+            toast.show('Product deleted', 'success');
+        }
+
+        function saveProduct() {
+            const form = document.getElementById('productForm');
+            if (!form.checkValidity()) {
+                form.reportValidity();
+                return;
+            }
+            
+            closeModal('addProductModal');
+            toast.show('Product saved successfully', 'success');
+            document.getElementById('modalTitle').textContent = 'Add New Product';
+            form.reset();
+        }
+
+        function bulkAction(action) {
+            const selected = document.querySelectorAll('.product-checkbox:checked');
+            if (selected.length === 0) {
+                toast.show('Please select products first', 'warning');
+                return;
+            }
+            toast.show(`${action} action on ${selected.length} products`, 'info');
+        }
+
+        function applyFilters() {
+            const category = document.getElementById('categoryFilter').value;
+            const stock = document.getElementById('stockFilter').value;
+            
+            document.querySelectorAll('.products-table tbody tr').forEach(row => {
+                let show = true;
+                
+                if (category !== 'all' && row.dataset.category !== category) {
+                    show = false;
+                }
+                
+                if (stock !== 'all') {
+                    const stockNum = parseInt(row.dataset.stock);
+                    if (stock === 'in' && stockNum === 0) show = false;
+                    if (stock === 'low' && (stockNum === 0 || stockNum > 5)) show = false;
+                    if (stock === 'out' && stockNum > 0) show = false;
+                }
+                
+                row.style.display = show ? '' : 'none';
+            });
+        }
+
+        // Search functionality
+        document.getElementById('productSearch').addEventListener('input', function() {
+            const query = this.value.toLowerCase();
+            document.querySelectorAll('.products-table tbody tr').forEach(row => {
+                const text = row.textContent.toLowerCase();
+                row.style.display = text.includes(query) ? '' : 'none';
+            });
+        });
+
+        function handleImageUpload(files) {
+            const grid = document.getElementById('imagePreviewGrid');
+            
+            Array.from(files).forEach(file => {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    const div = document.createElement('div');
+                    div.className = 'image-preview';
+                    div.innerHTML = `
+                        <img src="${e.target.result}" alt="Preview">
+                        <button type="button" class="image-preview-remove" onclick="this.parentElement.remove()">
+                            <i class="fas fa-times"></i>
+                        </button>
+                    `;
+                    grid.appendChild(div);
+                };
+                reader.readAsDataURL(file);
+            });
+        }
+    </script>
+    <script>
+    // Apply saved theme color on every page
+    (function() {
+        try {
+            const savedColor = localStorage.getItem('themeColor');
+            if (savedColor && savedColor.startsWith('#') && savedColor.length === 7) {
+                document.documentElement.style.setProperty('--primary-500', savedColor);
+            }
+        } catch (err) {
+            // Silent fail – don't break the page
+            console.warn('Theme color could not be applied', err);
+        }
+    })();
+</script>
+</body>
+</html>

@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Track Order - Maria's Floral Fantasy</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="assets/css/main.css">
+    <link rel="stylesheet" href="assets/css/responsive.css">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="container navbar-content">
+            <a href="index.html" class="logo">
+                <i class="fas fa-spa logo-icon"></i>
+                Maria's Floral Fantasy
+            </a>
+            
+            <ul class="nav-links">
+                <li><a href="index.html" class="nav-link">Home</a></li>
+                <li><a href="shop.html" class="nav-link">Shop</a></li>
+                <li><a href="about.html" class="nav-link">About</a></li>
+                <li><a href="contact.html" class="nav-link">Contact</a></li>
+            </ul>
+            
+            <div class="nav-actions">
+                <a href="cart.html" class="btn btn-icon btn-ghost cart-badge">
+                    <i class="fas fa-shopping-cart"></i>
+                    <span class="cart-count">0</span>
+                </a>
+                <a href="login.html" class="btn btn-primary btn-sm">Login</a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Tracking Content -->
+    <div class="container tracking-container" style="padding: var(--space-6) 0;">
+        <!-- Search Order -->
+        <div class="card" style="padding: var(--space-6); margin-bottom: var(--space-6); text-align: center;">
+            <h2 style="font-size: 24px; font-weight: 700; margin-bottom: var(--space-4);">Track Your Order</h2>
+            <div style="max-width: 500px; margin: 0 auto; display: flex; gap: var(--space-3);">
+                <input type="text" class="form-input" placeholder="Enter order number (e.g., FS-123456)" id="orderSearch" style="flex: 1;">
+                <button class="btn btn-primary" onclick="searchOrder()">
+                    <i class="fas fa-search"></i> Track
+                </button>
+            </div>
+        </div>
+
+        <!-- Order Details -->
+        <div id="orderDetails">
+            <div class="tracking-header" style="text-align: center; margin-bottom: var(--space-6);">
+                <h1 style="font-size: 28px; font-weight: 700; margin-bottom: var(--space-2);">Order <span id="displayOrderId">#FS-2026-001</span></h1>
+                <div class="tracking-number">Placed on February 20, 2026 • Estimated delivery: February 22, 2026</div>
+            </div>
+
+            <!-- Timeline -->
+            <div class="timeline" style="margin-bottom: var(--space-6);">
+                <div class="timeline-track">
+                    <div class="timeline-progress" style="width: 50%;"></div>
+                    
+                    <div class="timeline-step completed">
+                        <div class="timeline-dot"><i class="fas fa-check"></i></div>
+                        <span class="timeline-label">Order Placed</span>
+                        <span class="timeline-date">Feb 20, 10:00 AM</span>
+                    </div>
+                    
+                    <div class="timeline-step completed">
+                        <div class="timeline-dot"><i class="fas fa-check"></i></div>
+                        <span class="timeline-label">Confirmed</span>
+                        <span class="timeline-date">Feb 20, 11:30 AM</span>
+                    </div>
+                    
+                    <div class="timeline-step active">
+                        <div class="timeline-dot"><i class="fas fa-box"></i></div>
+                        <span class="timeline-label">Processing</span>
+                        <span class="timeline-date">In progress</span>
+                    </div>
+                    
+                    <div class="timeline-step">
+                        <div class="timeline-dot"></div>
+                        <span class="timeline-label">Shipped</span>
+                        <span class="timeline-date">Pending</span>
+                    </div>
+                    
+                    <div class="timeline-step">
+                        <div class="timeline-dot"></div>
+                        <span class="timeline-label">Delivered</span>
+                        <span class="timeline-date">Est. Feb 22</span>
+                    </div>
+                </div>
+
+                <div class="timeline-alert">
+                    <i class="fas fa-info-circle timeline-alert-icon"></i>
+                    <div>
+                        <div style="font-weight: 600;">Your order is being prepared</div>
+                        <div style="font-size: 14px;">Our florists are carefully arranging your flowers. We'll notify you once it's shipped.</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Details Grid -->
+            <div class="tracking-details">
+                <!-- Order Items -->
+                <div class="detail-card">
+                    <div class="detail-title">Order Items</div>
+                    <div class="detail-content">
+                        <div class="detail-item">
+                            <div class="detail-item-icon">🌹</div>
+                            <div class="detail-item-info">
+                                <div class="detail-item-title">Rose Bouquet Deluxe</div>
+                                <div class="detail-item-subtitle">Qty: 2 × ₱1,250</div>
+                            </div>
+                        </div>
+                        <div class="detail-item">
+                            <div class="detail-item-icon">🌻</div>
+                            <div class="detail-item-info">
+                                <div class="detail-item-title">Sunflower Sunshine Box</div>
+                                <div class="detail-item-subtitle">Qty: 1 × ₱850</div>
+                            </div>
+                        </div>
+                        <div class="detail-item">
+                            <div class="detail-item-icon">🌷</div>
+                            <div class="detail-item-info">
+                                <div class="detail-item-title">Tulip Garden Collection</div>
+                                <div class="detail-item-subtitle">Qty: 1 × ₱650</div>
+                            </div>
+                        </div>
+                        <div class="detail-total">Total: ₱4,530.00</div>
+                    </div>
+                </div>
+
+                <!-- Shipping Info -->
+                <div class="detail-card">
+                    <div class="detail-title">Shipping Information</div>
+                    <div class="detail-content">
+                        <div style="margin-bottom: var(--space-3);">
+                            <div style="font-size: 12px; color: var(--neutral-600); text-transform: uppercase; margin-bottom: 4px;">Recipient</div>
+                            <div style="font-weight: 600;">Maria Santos</div>
+                            <div>09123456789</div>
+                            <div>maria@email.com</div>
+                        </div>
+                        <div style="margin-bottom: var(--space-3);">
+                            <div style="font-size: 12px; color: var(--neutral-600); text-transform: uppercase; margin-bottom: 4px;">Delivery Address</div>
+                            <div>123 Main Street</div>
+                            <div>Manila, 1000</div>
+                        </div>
+                        <div>
+                            <div style="font-size: 12px; color: var(--neutral-600); text-transform: uppercase; margin-bottom: 4px;">Method</div>
+                            <div>Standard Delivery</div>
+                            <div style="font-size: 12px; color: var(--neutral-600);">₱50.00</div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Payment Info -->
+                <div class="detail-card">
+                    <div class="detail-title">Payment Information</div>
+                    <div class="detail-content">
+                        <div style="margin-bottom: var(--space-3);">
+                            <div style="font-size: 12px; color: var(--neutral-600); text-transform: uppercase; margin-bottom: 4px;">Payment Method</div>
+                            <div style="display: flex; align-items: center; gap: var(--space-2);">
+                                <i class="fas fa-money-bill-wave" style="color: var(--secondary-500);"></i>
+                                <span>Cash on Delivery</span>
+                            </div>
+                        </div>
+                        <div style="margin-bottom: var(--space-3);">
+                            <div style="font-size: 12px; color: var(--neutral-600); text-transform: uppercase; margin-bottom: 4px;">Payment Status</div>
+                            <span class="badge badge-pending">Pending</span>
+                            <div style="font-size: 12px; color: var(--neutral-600); margin-top: 4px;">Pay ₱4,530.00 upon delivery</div>
+                        </div>
+                        <div>
+                            <div style="font-size: 12px; color: var(--neutral-600); text-transform: uppercase; margin-bottom: 4px;">Order Total</div>
+                            <div style="font-size: 24px; font-weight: 700; color: var(--primary-500);">₱4,530.00</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Actions -->
+            <div class="tracking-actions">
+                <button class="btn btn-secondary" onclick="window.print()">
+                    <i class="fas fa-print"></i> Print Receipt
+                </button>
+                <a href="mailto:support@mariasfloral.com" class="btn btn-secondary">
+                    <i class="fas fa-envelope"></i> Email Support
+                </a>
+                <button class="btn btn-primary">
+                    <i class="fas fa-headset"></i> Contact Support
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-brand">
+                    <div class="footer-logo">
+                        <i class="fas fa-spa"></i>
+                        Maria's Floral Fantasy
+                    </div>
+                    <p class="footer-description">
+                        Bringing joy and beauty to your special moments with fresh, hand-crafted floral arrangements since 2020.
+                    </p>
+                </div>
+                <div>
+                    <h4 class="footer-title">Quick Links</h4>
+                    <ul class="footer-links">
+                        <li><a href="index.html" class="footer-link">Home</a></li>
+                        <li><a href="shop.html" class="footer-link">Shop</a></li>
+                        <li><a href="about.html" class="footer-link">About Us</a></li>
+                        <li><a href="contact.html" class="footer-link">Contact</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="footer-title">Customer Service</h4>
+                    <ul class="footer-links">
+                        <li><a href="tracking.html" class="footer-link">Track Order</a></li>
+                        <li><a href="#" class="footer-link">Shipping Info</a></li>
+                        <li><a href="#" class="footer-link">Returns</a></li>
+                        <li><a href="#" class="footer-link">FAQ</a></li>
+                    </ul>
+                </div>
+                <div>
+                    <h4 class="footer-title">Contact Us</h4>
+                    <ul class="footer-links">
+                        <li class="footer-link"><i class="fas fa-map-marker-alt" style="margin-right: 8px;"></i> 123 Main St, Manila</li>
+                        <li class="footer-link"><i class="fas fa-phone" style="margin-right: 8px;"></i> (02) 8123-4567</li>
+                        <li class="footer-link"><i class="fas fa-envelope" style="margin-right: 8px;"></i> hello@mariasfloral.com</li>
+                    </ul>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>&copy; 2026 Maria's Floral Fantasy. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Mobile Navigation -->
+    <nav class="mobile-nav">
+        <ul class="mobile-nav-items">
+            <li>
+                <a href="index.html" class="mobile-nav-item">
+                    <i class="fas fa-home"></i>
+                    <span>Home</span>
+                </a>
+            </li>
+            <li>
+                <a href="shop.html" class="mobile-nav-item">
+                    <i class="fas fa-store"></i>
+                    <span>Shop</span>
+                </a>
+            </li>
+            <li>
+                <a href="cart.html" class="mobile-nav-item">
+                    <i class="fas fa-shopping-cart"></i>
+                    <span>Cart</span>
+                </a>
+            </li>
+            <li>
+                <a href="tracking.html" class="mobile-nav-item active">
+                    <i class="fas fa-truck"></i>
+                    <span>Track</span>
+                </a>
+            </li>
+            <li>
+                <a href="login.html" class="mobile-nav-item">
+                    <i class="fas fa-user"></i>
+                    <span>Profile</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
+
+    <!-- Scripts -->
+    <script src="assets/js/main.js"></script>
+    <script>
+        // Check for order ID in URL
+        document.addEventListener('DOMContentLoaded', function() {
+            const urlParams = new URLSearchParams(window.location.search);
+            const orderId = urlParams.get('order');
+            
+            if (orderId) {
+                document.getElementById('displayOrderId').textContent = '#' + orderId;
+                document.getElementById('orderSearch').value = orderId;
+                
+                // Try to load order from localStorage
+                loadOrder(orderId);
+            }
+        });
+
+        function searchOrder() {
+            const orderId = document.getElementById('orderSearch').value.trim();
+            if (!orderId) {
+                alert('Please enter an order number');
+                return;
+            }
+            
+            // Update URL without reload
+            const url = new URL(window.location);
+            url.searchParams.set('order', orderId.replace('#', ''));
+            window.history.pushState({}, '', url);
+            
+            document.getElementById('displayOrderId').textContent = orderId.startsWith('#') ? orderId : '#' + orderId;
+            
+            loadOrder(orderId.replace('#', ''));
+        }
+
+        function loadOrder(orderId) {
+            const orders = JSON.parse(localStorage.getItem('orders') || '[]');
+            const order = orders.find(o => o.id === orderId);
+            
+            if (order) {
+                // Update timeline based on status
+                updateTimeline(order.status);
+                
+                // Update order details
+                document.querySelector('.tracking-number').textContent = 
+                    `Placed on ${new Date(order.date).toLocaleDateString()} • Status: ${order.status}`;
+            }
+        }
+
+        function updateTimeline(status) {
+            const steps = document.querySelectorAll('.timeline-step');
+            const progress = document.querySelector('.timeline-progress');
+            
+            const statusMap = {
+                'pending': 2,
+                'processing': 3,
+                'shipped': 4,
+                'delivered': 5
+            };
+            
+            const activeStep = statusMap[status] || 1;
+            const progressWidth = ((activeStep - 1) / 4) * 100;
+            
+            progress.style.width = progressWidth + '%';
+            
+            steps.forEach((step, index) => {
+                step.classList.remove('completed', 'active');
+                
+                if (index < activeStep - 1) {
+                    step.classList.add('completed');
+                    step.querySelector('.timeline-dot').innerHTML = '<i class="fas fa-check"></i>';
+                } else if (index === activeStep - 1) {
+                    step.classList.add('active');
+                }
+            });
+        }
+
+        // Allow Enter key to search
+        document.getElementById('orderSearch').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                searchOrder();
+            }
+        });
+    </script>
+    <script>
+    // Apply saved theme color on every page
+    (function() {
+        try {
+            const savedColor = localStorage.getItem('themeColor');
+            if (savedColor && savedColor.startsWith('#') && savedColor.length === 7) {
+                document.documentElement.style.setProperty('--primary-500', savedColor);
+            }
+        } catch (err) {
+            // Silent fail – don't break the page
+            console.warn('Theme color could not be applied', err);
+        }
+    })();
+</script>
+</body>
+</html>

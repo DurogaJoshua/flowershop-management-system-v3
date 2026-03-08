@@ -1,0 +1,888 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Reports & Analytics - Maria's Floral Fantasy</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary-500: #ec4899;
+            --primary-100: #fce7f3;
+            --secondary-500: #8b5cf6;
+            --secondary-100: #ede9fe;
+            --info: #06b6d4;
+            --warning: #f59e0b;
+            --success: #10b981;
+            --neutral-50: #f9fafb;
+            --neutral-100: #f3f4f6;
+            --neutral-200: #e5e7eb;
+            --neutral-300: #d1d5db;
+            --neutral-500: #6b7280;
+            --neutral-600: #4b5563;
+            --neutral-800: #1f2937;
+            --radius-md: 8px;
+            --radius-lg: 12px;
+            --space-5: 24px;
+            --shadow-sm: 0 1px 2px 0 rgb(0 0 0 / 0.05);
+            --shadow-md: 0 4px 6px -1px rgb(0 0 0 / 0.1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #f8fafc;
+            color: var(--neutral-800);
+            line-height: 1.6;
+        }
+
+        /* Sidebar */
+        .sidebar {
+            position: fixed;
+            left: 0;
+            top: 0;
+            width: 260px;
+            height: 100vh;
+            background: white;
+            border-right: 1px solid var(--neutral-200);
+            padding: 24px 0;
+            z-index: 100;
+            transition: transform 0.3s ease;
+        }
+
+        .sidebar-logo {
+            padding: var(--space-5);
+            display: flex;
+            align-items: center;
+            gap: var(--space-3);
+            font-size: 20px;
+            font-weight: 700;
+            color: var(--primary-500);
+            border-bottom: 1px solid var(--neutral-200);
+        }
+
+        .sidebar-logo i {
+            font-size: 24px;
+            color: var(--primary-500);
+        }
+
+        
+        .sidebar-nav {
+            list-style: none;
+            padding: 0 12px;
+        }
+
+        .sidebar-nav li {
+            margin-bottom: 4px;
+        }
+
+        .sidebar-link {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding: 12px 16px;
+            color: var(--neutral-600);
+            text-decoration: none;
+            border-radius: var(--radius-md);
+            transition: all 0.2s;
+            font-size: 14px;
+            font-weight: 500;
+        }
+
+        .sidebar-link:hover {
+            background: var(--neutral-50);
+            color: var(--neutral-800);
+        }
+
+        .sidebar-link.active {
+            background: var(--primary-100);
+            color: var(--primary-500);
+        }
+
+        .sidebar-icon {
+            width: 20px;
+            text-align: center;
+        }
+
+        .sidebar-section {
+            margin-top: 32px;
+            padding-top: 24px;
+            border-top: 1px solid var(--neutral-100);
+        }
+
+        .sidebar-section-title {
+            padding: 0 24px;
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--neutral-500);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-bottom: 12px;
+        }
+
+        /* Mobile Toggle */
+        .sidebar-toggle {
+            display: none;
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            z-index: 101;
+            background: white;
+            border: 1px solid var(--neutral-200);
+            padding: 12px;
+            border-radius: var(--radius-md);
+            cursor: pointer;
+            box-shadow: var(--shadow-md);
+        }
+
+        /* Main Content */
+        .main-content {
+            margin-left: 260px;
+            padding: 32px;
+            min-height: 100vh;
+        }
+
+        .admin-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 32px;
+        }
+
+        .admin-title {
+            font-size: 28px;
+            font-weight: 700;
+            color: var(--neutral-800);
+            margin-bottom: 4px;
+        }
+
+        .admin-actions {
+            display: flex;
+            gap: 12px;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 20px;
+            border-radius: var(--radius-md);
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
+            border: none;
+            transition: all 0.2s;
+        }
+
+        .btn-primary {
+            background: var(--primary-500);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #db2777;
+            transform: translateY(-1px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .btn-secondary {
+            background: white;
+            color: var(--neutral-600);
+            border: 1px solid var(--neutral-200);
+        }
+
+        .btn-secondary:hover {
+            background: var(--neutral-50);
+            border-color: var(--neutral-300);
+        }
+
+        .btn-sm {
+            padding: 8px 16px;
+            font-size: 13px;
+        }
+
+        /* Stats Grid */
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 20px;
+            margin-bottom: 32px;
+        }
+
+        .stat-card {
+            background: white;
+            padding: 24px;
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-sm);
+            border: 1px solid var(--neutral-100);
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-md);
+        }
+
+        .stat-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 16px;
+        }
+
+        .stat-icon {
+            width: 48px;
+            height: 48px;
+            border-radius: var(--radius-md);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+        }
+
+        .stat-icon.primary {
+            background: var(--primary-100);
+            color: var(--primary-500);
+        }
+
+        .stat-icon.success {
+            background: #d1fae5;
+            color: var(--success);
+        }
+
+        .stat-icon.info {
+            background: #cffafe;
+            color: var(--info);
+        }
+
+        .stat-icon.warning {
+            background: #fef3c7;
+            color: var(--warning);
+        }
+
+        .stat-label {
+            font-size: 14px;
+            color: var(--neutral-600);
+            font-weight: 500;
+        }
+
+        .stat-value {
+            font-size: 32px;
+            font-weight: 700;
+            color: var(--neutral-800);
+            margin-bottom: 8px;
+        }
+
+        .stat-change {
+            font-size: 13px;
+            color: var(--success);
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        /* Charts */
+        .report-grid {
+            display: grid;
+            gap: 24px;
+            margin-bottom: 24px;
+        }
+
+        .report-grid.two-col {
+            grid-template-columns: 2fr 1fr;
+        }
+
+        .report-grid.three-col {
+            grid-template-columns: repeat(3, 1fr);
+        }
+
+        .chart-card {
+            background: white;
+            border-radius: var(--radius-lg);
+            box-shadow: var(--shadow-sm);
+            border: 1px solid var(--neutral-100);
+            overflow: hidden;
+        }
+
+        .chart-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px 24px;
+            border-bottom: 1px solid var(--neutral-100);
+        }
+
+        .chart-title {
+            font-size: 16px;
+            font-weight: 600;
+            color: var(--neutral-800);
+        }
+
+        .form-input {
+            padding: 8px 12px;
+            border: 1px solid var(--neutral-200);
+            border-radius: var(--radius-md);
+            font-size: 13px;
+            background: white;
+            color: var(--neutral-800);
+            cursor: pointer;
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: var(--primary-500);
+        }
+
+        /* Empty State Styling */
+        .empty-state {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 60px 40px;
+            text-align: center;
+            color: var(--neutral-500);
+        }
+
+        .empty-state-icon {
+            width: 80px;
+            height: 80px;
+            background: var(--neutral-100);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 20px;
+            font-size: 32px;
+            color: var(--neutral-300);
+        }
+
+        .empty-state h4 {
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--neutral-800);
+            margin-bottom: 8px;
+        }
+
+        .empty-state p {
+            font-size: 14px;
+            max-width: 300px;
+        }
+
+        /* Bar Chart Animation */
+        .bar-chart {
+            display: flex;
+            align-items: flex-end;
+            justify-content: space-between;
+            padding: 20px;
+            gap: 12px;
+            height: 300px;
+        }
+
+        .bar-item {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .bar {
+            width: 100%;
+            background: linear-gradient(to top, var(--primary-500), #f472b6);
+            border-radius: 6px 6px 0 0;
+            transition: height 1s ease-out;
+            position: relative;
+            min-height: 4px;
+        }
+
+        .bar:hover {
+            opacity: 0.8;
+        }
+
+        .bar-label {
+            font-size: 12px;
+            color: var(--neutral-500);
+            font-weight: 500;
+        }
+
+        /* Progress Bars */
+        .progress-item {
+            margin-bottom: 20px;
+        }
+
+        .progress-header {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 8px;
+            font-size: 14px;
+        }
+
+        .progress-header span:first-child {
+            color: var(--neutral-700);
+            font-weight: 500;
+        }
+
+        .progress-header span:last-child {
+            color: var(--neutral-800);
+            font-weight: 600;
+        }
+
+        .progress-bar {
+            height: 8px;
+            background: var(--neutral-200);
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            border-radius: 4px;
+            transition: width 1s ease-out;
+        }
+
+        /* Payment Method Items */
+        .payment-item {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            padding: 16px;
+            background: var(--neutral-50);
+            border-radius: var(--radius-md);
+            margin-bottom: 12px;
+            transition: all 0.2s;
+        }
+
+        .payment-item:hover {
+            background: var(--neutral-100);
+            transform: translateX(4px);
+        }
+
+        .payment-icon {
+            width: 48px;
+            height: 48px;
+            border-radius: var(--radius-md);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+        }
+
+        .payment-info {
+            flex: 1;
+        }
+
+        .payment-name {
+            font-weight: 600;
+            color: var(--neutral-800);
+            margin-bottom: 2px;
+        }
+
+        .payment-count {
+            font-size: 13px;
+            color: var(--neutral-500);
+        }
+
+        .payment-amount {
+            font-weight: 700;
+            color: var(--neutral-800);
+            font-size: 16px;
+        }
+
+        /* Responsive */
+        @media (max-width: 1200px) {
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .report-grid.two-col,
+            .report-grid.three-col {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .sidebar {
+                transform: translateX(-100%);
+            }
+            .sidebar.active {
+                transform: translateX(0);
+            }
+            .main-content {
+                margin-left: 0;
+                padding: 80px 20px 20px;
+            }
+            .sidebar-toggle {
+                display: block;
+            }
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+            .admin-header {
+                flex-direction: column;
+                gap: 16px;
+            }
+            .admin-actions {
+                width: 100%;
+            }
+            .btn {
+                flex: 1;
+                justify-content: center;
+            }
+        }
+
+        /* Overlay for mobile */
+        .overlay {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0,0,0,0.5);
+            z-index: 99;
+        }
+
+        .overlay.active {
+            display: block;
+        }
+    </style>
+</head>
+<body class="admin-layout">
+    <!-- Overlay -->
+    <div class="overlay" onclick="toggleSidebar()"></div>
+
+    <!-- Sidebar -->
+    <aside class="sidebar" id="sidebar">
+        <div class="sidebar-logo">
+            <i class="fas fa-spa"></i>
+            <span>Admin Portal</span>
+        </div>
+        
+        <nav>
+            <ul class="sidebar-nav">
+                <li>
+                    <a href="index.html" class="sidebar-link">
+                        <i class="fas fa-chart-pie sidebar-icon"></i>
+                        Dashboard
+                    </a>
+                </li>
+                <li>
+                    <a href="orders.html" class="sidebar-link">
+                        <i class="fas fa-shopping-bag sidebar-icon"></i>
+                        Orders
+                    </a>
+                </li>
+                <li>
+                    <a href="products.html" class="sidebar-link">
+                        <i class="fas fa-box-open sidebar-icon"></i>
+                        Products
+                    </a>
+                </li>
+                <li>
+                    <a href="customers.html" class="sidebar-link">
+                        <i class="fas fa-users sidebar-icon"></i>
+                        Customers
+                    </a>
+                </li>
+                <li>
+                    <a href="delivery.html" class="sidebar-link">
+                        <i class="fas fa-truck sidebar-icon"></i>
+                        Delivery
+                    </a>
+                </li>
+                <li>
+                    <a href="reports.html" class="sidebar-link active">
+                        <i class="fas fa-chart-bar sidebar-icon"></i>
+                        Reports
+                    </a>
+                </li>
+            </ul>
+            
+            <div class="sidebar-section">
+                <div class="sidebar-section-title">Settings</div>
+                <ul class="sidebar-nav">
+                    <li>
+                        <a href="settings.html" class="sidebar-link">
+                            <i class="fas fa-cog sidebar-icon"></i>
+                            General Settings
+                        </a>
+                    </li>
+                    <li>
+                        <a href="../index.html" class="sidebar-link">
+                            <i class="fas fa-sign-out-alt sidebar-icon"></i>
+                            Exit to Store
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+    </aside>
+
+    <!-- Mobile Sidebar Toggle -->
+    <button class="sidebar-toggle" onclick="toggleSidebar()">
+        <i class="fas fa-bars"></i>
+    </button>
+
+    <!-- Main Content -->
+    <main class="main-content">
+        <div class="admin-header">
+            <div>
+                <h1 class="admin-title">Reports & Analytics</h1>
+                <p style="color: var(--neutral-600); font-size: 14px;">Business insights and performance metrics</p>
+            </div>
+            <div class="admin-actions">
+                <button class="btn btn-secondary btn-sm">
+                    <i class="fas fa-calendar"></i>
+                    Last 30 Days
+                </button>
+            </div>
+        </div>
+
+        <!-- Empty State Message -->
+        <div style="background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%); border: 1px solid #f59e0b; border-radius: var(--radius-lg); padding: 16px 20px; margin-bottom: 24px; display: flex; align-items: center; gap: 12px;">
+            <i class="fas fa-info-circle" style="color: #f59e0b; font-size: 20px;"></i>
+            <span style="color: #92400e; font-size: 14px; font-weight: 500;">No transactions recorded yet. Start selling to see your analytics come to life!</span>
+        </div>
+
+        <!-- KPI Cards -->
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-header">
+                    <div class="stat-icon primary">
+                        <i class="fas fa-peso-sign"></i>
+                    </div>
+                    <span class="stat-label">Total Revenue</span>
+                </div>
+                <div class="stat-value">₱0</div>
+                <div class="stat-change" style="color: var(--neutral-500);">
+                    <i class="fas fa-minus"></i> No data yet
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-header">
+                    <div class="stat-icon success">
+                        <i class="fas fa-shopping-bag"></i>
+                    </div>
+                    <span class="stat-label">Total Orders</span>
+                </div>
+                <div class="stat-value">0</div>
+                <div class="stat-change" style="color: var(--neutral-500);">
+                    <i class="fas fa-minus"></i> No data yet
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-header">
+                    <div class="stat-icon info">
+                        <i class="fas fa-users"></i>
+                    </div>
+                    <span class="stat-label">New Customers</span>
+                </div>
+                <div class="stat-value">0</div>
+                <div class="stat-change" style="color: var(--neutral-500);">
+                    <i class="fas fa-minus"></i> No data yet
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-header">
+                    <div class="stat-icon warning">
+                        <i class="fas fa-shopping-cart"></i>
+                    </div>
+                    <span class="stat-label">Avg. Order Value</span>
+                </div>
+                <div class="stat-value">₱0</div>
+                <div class="stat-change" style="color: var(--neutral-500);">
+                    <i class="fas fa-minus"></i> No data yet
+                </div>
+            </div>
+        </div>
+
+        <!-- Charts Section -->
+        <div class="report-grid two-col">
+            <!-- Sales Chart -->
+            <div class="chart-card">
+                <div class="chart-header">
+                    <h3 class="chart-title">Sales Overview</h3>
+                    <select class="form-input" style="width: 120px;">
+                        <option>Daily</option>
+                        <option>Weekly</option>
+                        <option selected>Monthly</option>
+                    </select>
+                </div>
+                <div class="empty-state" style="padding: 80px 40px;">
+                    <div class="empty-state-icon">
+                        <i class="fas fa-chart-line"></i>
+                    </div>
+                    <h4>No Sales Data</h4>
+                    <p>Your sales chart will appear here once you start receiving orders. Check back after your first sale!</p>
+                </div>
+            </div>
+
+            <!-- Top Products -->
+            <div class="chart-card">
+                <div class="chart-header">
+                    <h3 class="chart-title">Top Products</h3>
+                </div>
+                <div class="empty-state" style="padding: 60px 40px;">
+                    <div class="empty-state-icon">
+                        <i class="fas fa-trophy"></i>
+                    </div>
+                    <h4>No Products Sold Yet</h4>
+                    <p>Your best-selling products will be ranked here once sales begin.</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- More Charts -->
+        <div class="report-grid three-col">
+            <!-- Order Status -->
+            <div class="chart-card">
+                <div class="chart-header">
+                    <h3 class="chart-title">Order Status</h3>
+                </div>
+                <div class="empty-state" style="padding: 60px 40px;">
+                    <div class="empty-state-icon">
+                        <i class="fas fa-pie-chart"></i>
+                    </div>
+                    <h4>No Orders</h4>
+                    <p>Order distribution will be visualized here once orders are placed.</p>
+                </div>
+            </div>
+
+            <!-- Sales by Category -->
+            <div class="chart-card">
+                <div class="chart-header">
+                    <h3 class="chart-title">Sales by Category</h3>
+                </div>
+                <div class="empty-state" style="padding: 60px 40px;">
+                    <div class="empty-state-icon">
+                        <i class="fas fa-tags"></i>
+                    </div>
+                    <h4>No Category Data</h4>
+                    <p>Category performance metrics will appear here with your first sales.</p>
+                </div>
+            </div>
+
+            <!-- Payment Methods -->
+            <div class="chart-card">
+                <div class="chart-header">
+                    <h3 class="chart-title">Payment Methods</h3>
+                </div>
+                <div style="padding: 24px;">
+                    <div class="payment-item" style="opacity: 0.5;">
+                        <div class="payment-icon" style="background: var(--secondary-100); color: var(--secondary-500);">
+                            <i class="fas fa-money-bill-wave"></i>
+                        </div>
+                        <div class="payment-info">
+                            <div class="payment-name">Cash on Delivery</div>
+                            <div class="payment-count">0 transactions</div>
+                        </div>
+                        <div class="payment-amount">₱0</div>
+                    </div>
+                    <div class="payment-item" style="opacity: 0.5;">
+                        <div class="payment-icon" style="background: #dbeafe; color: #3b82f6;">
+                            <i class="fas fa-wallet"></i>
+                        </div>
+                        <div class="payment-info">
+                            <div class="payment-name">GCash</div>
+                            <div class="payment-count">0 transactions</div>
+                        </div>
+                        <div class="payment-amount">₱0</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        function toggleSidebar() {
+            const sidebar = document.getElementById('sidebar');
+            const overlay = document.querySelector('.overlay');
+            sidebar.classList.toggle('active');
+            overlay.classList.toggle('active');
+        }
+
+
+        function showNotification(message, type = 'info') {
+            const notification = document.createElement('div');
+            notification.style.cssText = `
+                position: fixed;
+                top: 20px;
+                right: 20px;
+                background: ${type === 'warning' ? '#f59e0b' : '#10b981'};
+                color: white;
+                padding: 16px 24px;
+                border-radius: 8px;
+                box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1);
+                z-index: 1000;
+                font-weight: 500;
+                display: flex;
+                align-items: center;
+                gap: 8px;
+                animation: slideIn 0.3s ease;
+            `;
+            notification.innerHTML = `
+                <i class="fas ${type === 'warning' ? 'fa-exclamation-triangle' : 'fa-check-circle'}"></i>
+                ${message}
+            `;
+            
+            document.body.appendChild(notification);
+            
+            setTimeout(() => {
+                notification.style.animation = 'slideOut 0.3s ease';
+                setTimeout(() => notification.remove(), 300);
+            }, 3000);
+        }
+
+        // Add animation keyframes
+        const style = document.createElement('style');
+        style.textContent = `
+            @keyframes slideIn {
+                from { transform: translateX(100%); opacity: 0; }
+                to { transform: translateX(0); opacity: 1; }
+            }
+            @keyframes slideOut {
+                from { transform: translateX(0); opacity: 1; }
+                to { transform: translateX(100%); opacity: 0; }
+            }
+        `;
+        document.head.appendChild(style);
+
+        // Simulate loading animation for empty states
+        document.addEventListener('DOMContentLoaded', function() {
+            const cards = document.querySelectorAll('.stat-card, .chart-card');
+            cards.forEach((card, index) => {
+                card.style.opacity = '0';
+                card.style.transform = 'translateY(20px)';
+                setTimeout(() => {
+                    card.style.transition = 'all 0.5s ease';
+                    card.style.opacity = '1';
+                    card.style.transform = 'translateY(0)';
+                }, index * 100);
+            });
+        });
+    </script>
+    <script>
+    // Apply saved theme color on every page
+    (function() {
+        try {
+            const savedColor = localStorage.getItem('themeColor');
+            if (savedColor && savedColor.startsWith('#') && savedColor.length === 7) {
+                document.documentElement.style.setProperty('--primary-500', savedColor);
+            }
+        } catch (err) {
+            // Silent fail – don't break the page
+            console.warn('Theme color could not be applied', err);
+        }
+    })();
+</script>
+</body>
+</html>

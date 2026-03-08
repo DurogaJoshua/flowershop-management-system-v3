@@ -1,0 +1,528 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Checkout - Maria's Floral Fantasy</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="assets/css/main.css">
+    <link rel="stylesheet" href="assets/css/responsive.css">
+</head>
+<body>
+    <!-- Simple Header -->
+    <nav class="navbar" style="position: relative;">
+        <div class="container navbar-content">
+            <a href="index.html" class="logo">
+                <i class="fas fa-spa logo-icon"></i>
+                Maria's Floral Fantasy
+            </a>
+            <div class="nav-actions">
+                <span style="color: var(--neutral-600); font-size: 14px;">
+                    <i class="fas fa-lock" style="margin-right: 8px; color: var(--secondary-500);"></i>
+                    Secure Checkout
+                </span>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Checkout Content -->
+    <div class="container" style="padding: var(--space-6) 0; max-width: 1000px;">
+        <!-- Progress Steps -->
+        <div class="checkout-steps">
+            <div class="step active" data-step="1">
+                <div class="step-number">1</div>
+                <span>Information</span>
+            </div>
+            <i class="fas fa-chevron-right" style="color: var(--neutral-400);"></i>
+            <div class="step" data-step="2">
+                <div class="step-number">2</div>
+                <span>Shipping</span>
+            </div>
+            <i class="fas fa-chevron-right" style="color: var(--neutral-400);"></i>
+            <div class="step" data-step="3">
+                <div class="step-number">3</div>
+                <span>Payment</span>
+            </div>
+        </div>
+
+        <form id="checkoutForm" onsubmit="return false;">
+            <div class="checkout-layout">
+                <!-- Main Form -->
+                <div>
+                    <!-- Step 1: Contact Information -->
+                    <div class="checkout-form checkout-step" data-step="1">
+                        <div class="form-section">
+                            <h3 class="form-section-title">
+                                <i class="fas fa-user form-section-icon"></i>
+                                Contact Information
+                            </h3>
+                            
+                            <div class="form-group">
+                                <label class="form-label">Email Address *</label>
+                                <input type="email" class="form-input" placeholder="you@example.com" required id="email">
+                            </div>
+                            
+                            <div class="form-check" style="margin-top: var(--space-3);">
+                                <input type="checkbox" class="form-check-input" id="newsletter">
+                                <label for="newsletter" style="font-size: 14px; color: var(--neutral-700);">Email me with news and offers</label>
+                            </div>
+                        </div>
+
+                        <div class="form-section">
+                            <h3 class="form-section-title">
+                                <i class="fas fa-truck form-section-icon"></i>
+                                Shipping Address
+                            </h3>
+                            
+                            <div class="form-grid">
+                                <div class="form-group">
+                                    <label class="form-label">First Name *</label>
+                                    <input type="text" class="form-input" placeholder="Maria" required id="firstName">
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label">Last Name *</label>
+                                    <input type="text" class="form-input" placeholder="Santos" required id="lastName">
+                                </div>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label class="form-label">Address *</label>
+                                <input type="text" class="form-input" placeholder="Street address" required id="address">
+                            </div>
+                            
+                            <div class="form-group">
+                                <input type="text" class="form-input" placeholder="Apartment, suite, unit, etc. (optional)" id="address2">
+                            </div>
+                            
+                            <div class="form-grid">
+                                <div class="form-group">
+                                    <label class="form-label">City *</label>
+                                    <input type="text" class="form-input" placeholder="Manila" required id="city">
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label">Postal Code *</label>
+                                    <input type="text" class="form-input" placeholder="1000" required id="postal">
+                                </div>
+                            </div>
+                            
+                            <div class="form-group">
+                                <label class="form-label">Phone *</label>
+                                <input type="tel" class="form-input" placeholder="09123456789" required id="phone">
+                            </div>
+                        </div>
+
+                        <button type="button" class="btn btn-primary btn-lg btn-block" onclick="nextStep(2)">
+                            Continue to Shipping
+                        </button>
+                    </div>
+
+                    <!-- Step 2: Shipping Method -->
+                    <div class="checkout-form checkout-step hidden" data-step="2">
+                        <div class="form-section">
+                            <h3 class="form-section-title">
+                                <i class="fas fa-shipping-fast form-section-icon"></i>
+                                Shipping Method
+                            </h3>
+                            
+                            <div class="payment-options">
+                                <label class="payment-option selected" style="cursor: pointer;">
+                                    <div class="payment-option-content">
+                                        <input type="radio" name="shipping" value="standard" checked class="payment-option-radio" onchange="updateShipping(50)">
+                                        <div class="payment-option-details">
+                                            <div class="payment-option-title">Standard Delivery</div>
+                                            <div class="payment-option-description">2-3 business days</div>
+                                        </div>
+                                        <div style="font-weight: 700;">₱50.00</div>
+                                    </div>
+                                </label>
+                                
+                                <label class="payment-option" style="cursor: pointer;">
+                                    <div class="payment-option-content">
+                                        <input type="radio" name="shipping" value="express" class="payment-option-radio" onchange="updateShipping(150)">
+                                        <div class="payment-option-details">
+                                            <div class="payment-option-title">Express Delivery</div>
+                                            <div class="payment-option-description">Next business day</div>
+                                        </div>
+                                        <div style="font-weight: 700;">₱150.00</div>
+                                    </div>
+                                </label>
+                                
+                                <label class="payment-option" style="cursor: pointer;">
+                                    <div class="payment-option-content">
+                                        <input type="radio" name="shipping" value="same_day" class="payment-option-radio" onchange="updateShipping(250)">
+                                        <div class="payment-option-details">
+                                            <div class="payment-option-title">Same Day Delivery</div>
+                                            <div class="payment-option-description">Order before 2 PM, deliver today</div>
+                                        </div>
+                                        <div style="font-weight: 700;">₱250.00</div>
+                                    </div>
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="form-section">
+                            <h3 class="form-section-title">
+                                <i class="fas fa-calendar-alt form-section-icon"></i>
+                                Delivery Date
+                            </h3>
+                            <input type="date" class="form-input" id="deliveryDate" min="">
+                        </div>
+
+                        <div class="form-section">
+                            <h3 class="form-section-title">
+                                <i class="fas fa-comment-alt form-section-icon"></i>
+                                Delivery Instructions (Optional)
+                            </h3>
+                            <textarea class="form-input" placeholder="Any special instructions for delivery..." rows="3"></textarea>
+                        </div>
+
+                        <div class="flex gap-3">
+                            <button type="button" class="btn btn-secondary" onclick="prevStep(1)" style="flex: 1;">
+                                Back
+                            </button>
+                            <button type="button" class="btn btn-primary btn-lg" onclick="nextStep(3)" style="flex: 2;">
+                                Continue to Payment
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Step 3: Payment -->
+                    <div class="checkout-form checkout-step hidden" data-step="3">
+                        <div class="form-section">
+                            <h3 class="form-section-title">
+                                <i class="fas fa-credit-card form-section-icon"></i>
+                                Payment Method
+                            </h3>
+                            
+                            <div class="payment-options">
+                                <label class="payment-option selected" data-method="cod" style="cursor: pointer;" onclick="selectPayment(this)">
+                                    <div class="payment-option-content">
+                                        <input type="radio" name="payment" value="cod" checked class="payment-option-radio">
+                                        <div class="payment-option-details">
+                                            <div class="payment-option-title">Cash on Delivery (COD)</div>
+                                            <div class="payment-option-description">Pay when you receive your order</div>
+                                        </div>
+                                        <i class="fas fa-money-bill-wave" style="font-size: 24px; color: var(--secondary-500);"></i>
+                                    </div>
+                                </label>
+                                
+                                <label class="payment-option" data-method="gcash" style="cursor: pointer;" onclick="selectPayment(this)">
+                                    <div class="payment-option-content">
+                                        <input type="radio" name="payment" value="gcash" class="payment-option-radio">
+                                        <div class="payment-option-details">
+                                            <div class="payment-option-title">GCash</div>
+                                            <div class="payment-option-description">Pay using GCash e-wallet</div>
+                                        </div>
+                                        <i class="fas fa-mobile-alt" style="font-size: 24px; color: var(--primary-500);"></i>
+                                    </div>
+                                    <div class="payment-option-extra" id="gcashField" style="display: none;">
+                                        <div class="form-group" style="margin-top: var(--space-3);">
+                                            <label class="form-label">GCash Number *</label>
+                                            <input type="tel" class="form-input" placeholder="09123456789">
+                                        </div>
+                                    </div>
+                                </label>
+                                
+                                <label class="payment-option" data-method="card" style="cursor: pointer;" onclick="selectPayment(this)">
+                                    <div class="payment-option-content">
+                                        <input type="radio" name="payment" value="card" class="payment-option-radio">
+                                        <div class="payment-option-details">
+                                            <div class="payment-option-title">Credit/Debit Card</div>
+                                            <div class="payment-option-description">Visa, Mastercard, JCB</div>
+                                        </div>
+                                        <div style="display: flex; gap: 8px;">
+                                            <i class="fab fa-cc-visa" style="font-size: 24px; color: var(--neutral-600);"></i>
+                                            <i class="fab fa-cc-mastercard" style="font-size: 24px; color: var(--neutral-600);"></i>
+                                        </div>
+                                    </div>
+                                </label>
+                            </div>
+                        </div>
+
+                        <div class="form-section" id="cardFields" style="display: none;">
+                            <h3 class="form-section-title">Card Details</h3>
+                            <div class="form-group">
+                                <label class="form-label">Card Number *</label>
+                                <input type="text" class="form-input" placeholder="1234 5678 9012 3456">
+                            </div>
+                            <div class="form-grid">
+                                <div class="form-group">
+                                    <label class="form-label">Expiry Date *</label>
+                                    <input type="text" class="form-input" placeholder="MM/YY">
+                                </div>
+                                <div class="form-group">
+                                    <label class="form-label">CVV *</label>
+                                    <input type="text" class="form-input" placeholder="123">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="form-label">Name on Card *</label>
+                                <input type="text" class="form-input" placeholder="MARIA SANTOS">
+                            </div>
+                        </div>
+
+                        <div class="form-check" style="margin-bottom: var(--space-4);">
+                            <input type="checkbox" class="form-check-input" id="saveInfo">
+                            <label for="saveInfo" style="font-size: 14px; color: var(--neutral-700);">Save this information for next time</label>
+                        </div>
+
+                        <div class="flex gap-3">
+                            <button type="button" class="btn btn-secondary" onclick="prevStep(2)" style="flex: 1;">
+                                Back
+                            </button>
+                            <button type="submit" class="btn btn-primary btn-lg" onclick="placeOrder()" style="flex: 2;">
+                                Place Order
+                            </button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Order Summary Sidebar -->
+                <div class="cart-summary" style="position: sticky; top: 20px;">
+                    <h2 class="summary-title">Order Summary</h2>
+                    
+                    <div class="checkout-summary-items" style="margin-bottom: var(--space-4); max-height: 300px; overflow-y: auto;">
+                        <div class="summary-item" style="display: flex; gap: var(--space-3); margin-bottom: var(--space-3); padding-bottom: var(--space-3); border-bottom: 1px solid var(--neutral-200);">
+                            <div style="width: 60px; height: 60px; background: linear-gradient(135deg, #fce4ec 0%, #f8bbd9 100%); border-radius: var(--radius-md); display: flex; align-items: center; justify-content: center; font-size: 24px;">🌹</div>
+                            <div style="flex: 1;">
+                                <div style="font-weight: 600; font-size: 14px;">Rose Bouquet Deluxe</div>
+                                <div style="font-size: 12px; color: var(--neutral-600);">Qty: 2</div>
+                            </div>
+                            <div style="font-weight: 600;">₱2,500</div>
+                        </div>
+                        <div class="summary-item" style="display: flex; gap: var(--space-3); margin-bottom: var(--space-3); padding-bottom: var(--space-3); border-bottom: 1px solid var(--neutral-200);">
+                            <div style="width: 60px; height: 60px; background: linear-gradient(135deg, #fff3e0 0%, #ffe0b2 100%); border-radius: var(--radius-md); display: flex; align-items: center; justify-content: center; font-size: 24px;">🌻</div>
+                            <div style="flex: 1;">
+                                <div style="font-weight: 600; font-size: 14px;">Sunflower Sunshine Box</div>
+                                <div style="font-size: 12px; color: var(--neutral-600);">Qty: 1</div>
+                            </div>
+                            <div style="font-weight: 600;">₱850</div>
+                        </div>
+                        <div class="summary-item" style="display: flex; gap: var(--space-3);">
+                            <div style="width: 60px; height: 60px; background: linear-gradient(135deg, #f3e5f5 0%, #e1bee7 100%); border-radius: var(--radius-md); display: flex; align-items: center; justify-content: center; font-size: 24px;">🌷</div>
+                            <div style="flex: 1;">
+                                <div style="font-weight: 600; font-size: 14px;">Tulip Garden Collection</div>
+                                <div style="font-size: 12px; color: var(--neutral-600);">Qty: 1</div>
+                            </div>
+                            <div style="font-weight: 600;">₱650</div>
+                        </div>
+                    </div>
+
+                    <div class="summary-row">
+                        <span>Subtotal</span>
+                        <span id="checkoutSubtotal">₱4,000.00</span>
+                    </div>
+                    <div class="summary-row">
+                        <span>Shipping</span>
+                        <span id="checkoutShipping">₱50.00</span>
+                    </div>
+                    <div class="summary-row">
+                        <span>Tax (12%)</span>
+                        <span id="checkoutTax">₱480.00</span>
+                    </div>
+                    <div class="summary-row total">
+                        <span>Total</span>
+                        <span id="checkoutTotal" style="font-size: 24px;">₱4,530.00</span>
+                    </div>
+                </div>
+            </div>
+        </form>
+    </div>
+
+    <!-- Scripts -->
+    <script src="assets/js/main.js"></script>
+    <script src="assets/js/checkout.js"></script>
+    <script>
+        // Set minimum date to today
+        document.getElementById('deliveryDate').min = new Date().toISOString().split('T')[0];
+
+        let currentStep = 1;
+        let shippingCost = 50;
+
+        function nextStep(step) {
+            // Validate current step
+            if (!validateStep(currentStep)) return;
+            
+            // Hide current step
+            document.querySelector(`.checkout-step[data-step="${currentStep}"]`).classList.add('hidden');
+            
+            // Show next step
+            currentStep = step;
+            document.querySelector(`.checkout-step[data-step="${currentStep}"]`).classList.remove('hidden');
+            document.querySelector(`.checkout-step[data-step="${currentStep}"]`).classList.add('animate-fade-in');
+            
+            // Update progress
+            updateProgress();
+            
+            // Scroll to top
+            window.scrollTo(0, 0);
+        }
+
+        function prevStep(step) {
+            document.querySelector(`.checkout-step[data-step="${currentStep}"]`).classList.add('hidden');
+            currentStep = step;
+            document.querySelector(`.checkout-step[data-step="${currentStep}"]`).classList.remove('hidden');
+            updateProgress();
+            window.scrollTo(0, 0);
+        }
+
+        function validateStep(step) {
+            const stepElement = document.querySelector(`.checkout-step[data-step="${step}"]`);
+            const requiredFields = stepElement.querySelectorAll('[required]');
+            let isValid = true;
+
+            requiredFields.forEach(field => {
+                if (!field.value.trim()) {
+                    isValid = false;
+                    field.style.borderColor = 'var(--error)';
+                    field.addEventListener('input', function() {
+                        this.style.borderColor = '';
+                    }, { once: true });
+                }
+            });
+
+            if (!isValid) {
+                // Show toast or alert
+                const firstError = stepElement.querySelector('[required]:invalid');
+                if (firstError) firstError.focus();
+            }
+
+            return isValid;
+        }
+
+        function updateProgress() {
+            document.querySelectorAll('.step').forEach((step, index) => {
+                const stepNum = index + 1;
+                step.classList.remove('active', 'completed');
+                
+                if (stepNum < currentStep) {
+                    step.classList.add('completed');
+                    step.querySelector('.step-number').innerHTML = '<i class="fas fa-check"></i>';
+                } else if (stepNum === currentStep) {
+                    step.classList.add('active');
+                    step.querySelector('.step-number').textContent = stepNum;
+                } else {
+                    step.querySelector('.step-number').textContent = stepNum;
+                }
+            });
+        }
+
+        function selectPayment(element) {
+            document.querySelectorAll('.payment-option').forEach(opt => {
+                opt.classList.remove('selected');
+                opt.querySelector('input[type="radio"]').checked = false;
+            });
+
+            element.classList.add('selected');
+            element.querySelector('input[type="radio"]').checked = true;
+
+            const method = element.dataset.method;
+            
+            // Show/hide GCash field
+            const gcashField = document.getElementById('gcashField');
+            if (gcashField) {
+                gcashField.style.display = method === 'gcash' ? 'block' : 'none';
+            }
+            
+            // Show/hide card fields
+            const cardFields = document.getElementById('cardFields');
+            if (cardFields) {
+                cardFields.style.display = method === 'card' ? 'block' : 'none';
+            }
+        }
+
+        function updateShipping(cost) {
+            shippingCost = cost;
+            updateTotals();
+        }
+
+        function updateTotals() {
+            const subtotal = 4000;
+            const tax = subtotal * 0.12;
+            const total = subtotal + shippingCost + tax;
+
+            document.getElementById('checkoutShipping').textContent = shippingCost === 0 ? 'FREE' : '₱' + shippingCost.toFixed(2);
+            document.getElementById('checkoutTotal').textContent = '₱' + total.toLocaleString('en-PH', {minimumFractionDigits: 2, maximumFractionDigits: 2});
+        }
+
+        function placeOrder() {
+            // Validate final step
+            const paymentMethod = document.querySelector('input[name="payment"]:checked').value;
+            
+            if (paymentMethod === 'gcash') {
+                const gcashNum = document.querySelector('#gcashField input');
+                if (!gcashNum || !gcashNum.value.trim()) {
+                    gcashNum.style.borderColor = 'var(--error)';
+                    return;
+                }
+            }
+            
+            if (paymentMethod === 'card') {
+                const cardFields = document.querySelectorAll('#cardFields input[required]');
+                let valid = true;
+                cardFields.forEach(field => {
+                    if (!field.value.trim()) {
+                        valid = false;
+                        field.style.borderColor = 'var(--error)';
+                    }
+                });
+                if (!valid) return;
+            }
+
+            // Simulate order placement
+            const orderId = 'FS-' + Date.now();
+            
+            // Save order to localStorage
+            const order = {
+                id: orderId,
+                date: new Date().toISOString(),
+                status: 'pending',
+                items: [
+                    { name: 'Rose Bouquet Deluxe', qty: 2, price: 1250 },
+                    { name: 'Sunflower Sunshine Box', qty: 1, price: 850 },
+                    { name: 'Tulip Garden Collection', qty: 1, price: 650 }
+                ],
+                shipping: shippingCost,
+                total: 4000 + shippingCost + 480
+            };
+            
+            let orders = JSON.parse(localStorage.getItem('orders') || '[]');
+            orders.push(order);
+            localStorage.setItem('orders', JSON.stringify(orders));
+            
+            // Clear cart
+            localStorage.removeItem('cart');
+            
+            // Show success and redirect
+            alert('Order placed successfully! Order ID: ' + orderId);
+            window.location.href = 'tracking.html?order=' + orderId;
+        }
+
+        // Payment option click handlers
+        document.querySelectorAll('.payment-option').forEach(option => {
+            option.addEventListener('click', function(e) {
+                if (e.target.type !== 'radio') {
+                    this.querySelector('input[type="radio"]').click();
+                }
+            });
+        });
+    </script>
+    <script>
+    // Apply saved theme color on every page
+    (function() {
+        try {
+            const savedColor = localStorage.getItem('themeColor');
+            if (savedColor && savedColor.startsWith('#') && savedColor.length === 7) {
+                document.documentElement.style.setProperty('--primary-500', savedColor);
+            }
+        } catch (err) {
+            // Silent fail – don't break the page
+            console.warn('Theme color could not be applied', err);
+        }
+    })();
+</script>
+</body>
+</html>
