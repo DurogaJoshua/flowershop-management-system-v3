@@ -6,181 +6,656 @@
     <title>Track Order - Maria's Floral Fantasy</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="assets/css/main.css">
-    <link rel="stylesheet" href="assets/css/responsive.css">
+
+    <style>
+        :root {
+            --primary-500: #e91e63;
+            --primary-600: #d81b60;
+            --primary-100: #fce4ec;
+            --primary-50: #fce4ec;
+            --secondary-500: #9c27b0;
+            --neutral-50: #fafafa;
+            --neutral-100: #f5f5f5;
+            --neutral-200: #eeeeee;
+            --neutral-300: #dddddd;
+            --neutral-400: #aaaaaa;
+            --neutral-500: #888888;
+            --neutral-600: #666666;
+            --neutral-700: #2d2d2d;
+            --neutral-800: #1a1a1a;
+            --neutral-900: #111111;
+            --radius-md: 8px;
+            --radius-lg: 12px;
+            --radius-full: 9999px;
+            --space-3: 12px;
+            --space-4: 16px;
+            --space-5: 24px;
+            --space-6: 32px;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--neutral-50);
+            color: var(--neutral-800);
+            line-height: 1.6;
+        }
+
+        /* Navigation */
+        .navbar {
+            background: white;
+            border-bottom: 1px solid var(--neutral-200);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 24px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            height: 70px;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            text-decoration: none;
+            color: var(--primary-600);
+            font-family: 'Playfair Display', serif;
+            font-size: 24px;
+            font-weight: 700;
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: 32px;
+            list-style: none;
+        }
+
+        .nav-links a {
+            text-decoration: none;
+            color: var(--neutral-600);
+            font-weight: 500;
+            font-size: 15px;
+            transition: color 0.2s;
+        }
+
+        .nav-links a:hover,
+        .nav-links a.active {
+            color: var(--primary-600);
+        }
+
+        .nav-actions {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .btn-icon {
+            background: none;
+            border: none;
+            font-size: 20px;
+            color: var(--neutral-600);
+            cursor: pointer;
+            padding: 8px;
+            border-radius: 50%;
+            transition: all 0.2s;
+        }
+
+        .btn-icon:hover {
+            background: var(--primary-100);
+            color: var(--primary-600);
+        }
+
+        .cart-badge { position: relative; }
+
+        .cart-count {
+            position: absolute;
+            top: -5px;
+            right: -5px;
+            background: var(--primary-500);
+            color: white;
+            font-size: 11px;
+            width: 18px;
+            height: 18px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 10px 20px;
+            border-radius: var(--radius-md);
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+            border: none;
+            text-decoration: none;
+            font-size: 14px;
+        }
+
+        .btn-primary {
+            background: var(--primary-500);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: var(--primary-600);
+        }
+
+        .btn-sm {
+            padding: 8px 12px;
+            font-size: 13px;
+        }
+
+        .user-menu { position: relative; }
+
+        .user-avatar {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary-500), var(--primary-600));
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            font-size: 14px;
+            cursor: pointer;
+            border: 2px solid transparent;
+            transition: all 0.2s;
+        }
+
+        .user-avatar:hover {
+            border-color: var(--primary-100);
+            transform: scale(1.05);
+        }
+
+        .dropdown {
+            position: absolute;
+            top: 45px;
+            right: 0;
+            background: white;
+            border-radius: var(--radius-lg);
+            box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1);
+            min-width: 180px;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(-10px);
+            transition: all 0.2s;
+            border: 1px solid var(--neutral-200);
+            z-index: 1000;
+        }
+
+        .dropdown.show {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+
+        .dropdown-header {
+            padding: 12px 16px;
+            border-bottom: 1px solid var(--neutral-100);
+        }
+
+        .dropdown-name {
+            font-weight: 600;
+            color: var(--neutral-800);
+            font-size: 14px;
+        }
+
+        .dropdown-email {
+            font-size: 12px;
+            color: var(--neutral-500);
+        }
+
+        .dropdown-menu {
+            list-style: none;
+            padding: 8px;
+        }
+
+        .dropdown-menu li a {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 12px;
+            color: var(--neutral-700);
+            text-decoration: none;
+            border-radius: var(--radius-md);
+            font-size: 14px;
+            transition: all 0.2s;
+        }
+
+        .dropdown-menu li a:hover {
+            background: var(--primary-50);
+            color: var(--primary-600);
+        }
+
+        .dropdown-divider {
+            height: 1px;
+            background: var(--neutral-200);
+            margin: 8px 0;
+        }
+
+        .logout-item { color: #ef4444 !important; }
+        .logout-item:hover { background: #ffebee !important; }
+
+        /* Tracking Page Styles */
+        .container-main {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        .card {
+            background: white;
+            border-radius: var(--radius-lg);
+            padding: 32px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+            margin-bottom: 32px;
+        }
+
+        .search-box {
+            max-width: 600px;
+            margin: 0 auto 40px;
+            display: flex;
+            gap: 12px;
+        }
+
+        .form-input {
+            flex: 1;
+            padding: 14px 16px;
+            border: 1px solid var(--neutral-300);
+            border-radius: var(--radius-md);
+            font-size: 16px;
+            transition: border-color 0.2s;
+        }
+
+        .form-input:focus {
+            outline: none;
+            border-color: var(--primary-500);
+            box-shadow: 0 0 0 3px var(--primary-100);
+        }
+
+        .btn-primary {
+            background: var(--primary-500);
+            color: white;
+            border: none;
+            padding: 14px 28px;
+            border-radius: var(--radius-md);
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .btn-primary:hover {
+            background: var(--primary-600);
+            transform: translateY(-1px);
+        }
+
+        .order-not-found {
+            text-align: center;
+            padding: 80px 20px;
+            color: var(--neutral-600);
+            font-size: 1.1rem;
+        }
+
+        .tracking-header {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .tracking-header h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.5rem;
+            margin-bottom: 8px;
+            color: var(--neutral-900);
+        }
+
+        .tracking-number {
+            color: var(--neutral-600);
+            font-size: 1rem;
+        }
+
+        .timeline {
+            margin: 40px 0;
+            position: relative;
+        }
+
+        .timeline-track {
+            display: flex;
+            justify-content: space-between;
+            position: relative;
+        }
+
+        .timeline-progress {
+            position: absolute;
+            top: 20px;
+            left: 0;
+            height: 4px;
+            background: var(--primary-500);
+            transition: width 0.6s ease;
+        }
+
+        .timeline-step {
+            text-align: center;
+            position: relative;
+            flex: 1;
+        }
+
+        .timeline-dot {
+            width: 44px;
+            height: 44px;
+            background: var(--neutral-300);
+            border-radius: 50%;
+            margin: 0 auto 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            color: white;
+            transition: all 0.4s;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+
+        .timeline-step.completed .timeline-dot {
+            background: var(--primary-500);
+        }
+
+        .timeline-step.active .timeline-dot {
+            background: var(--primary-600);
+            transform: scale(1.2);
+            box-shadow: 0 0 0 10px rgba(233,30,99,0.15);
+        }
+
+        .timeline-label {
+            font-weight: 600;
+            font-size: 15px;
+            margin-bottom: 4px;
+            color: var(--neutral-900);
+        }
+
+        .timeline-date {
+            font-size: 13px;
+            color: var(--neutral-600);
+        }
+
+        .tracking-alert {
+            background: #fff3e0;
+            border-radius: var(--radius-md);
+            padding: 16px 20px;
+            margin: 24px 0;
+            display: flex;
+            gap: 16px;
+            align-items: center;
+            border-left: 4px solid #f59e0b;
+        }
+
+        .tracking-alert i {
+            font-size: 28px;
+            color: #f59e0b;
+        }
+
+        .tracking-details {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 24px;
+            margin-top: 32px;
+        }
+
+        .detail-card {
+            background: white;
+            border-radius: var(--radius-lg);
+            border: 1px solid var(--neutral-200);
+            overflow: hidden;
+            box-shadow: 0 2px 12px rgba(0,0,0,0.05);
+        }
+
+        .detail-title {
+            padding: 16px 20px;
+            background: var(--neutral-100);
+            font-weight: 600;
+            font-size: 1.1rem;
+            border-bottom: 1px solid var(--neutral-200);
+        }
+
+        .detail-content {
+            padding: 20px;
+        }
+
+        .detail-item {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            padding: 12px 0;
+            border-bottom: 1px solid var(--neutral-100);
+        }
+
+        .detail-item:last-child { border-bottom: none; }
+
+        .detail-item-icon {
+            font-size: 32px;
+            width: 50px;
+            text-align: center;
+            flex-shrink: 0;
+        }
+
+        .detail-total {
+            margin-top: 16px;
+            font-size: 1.25rem;
+            font-weight: 700;
+            text-align: right;
+            color: var(--primary-500);
+        }
+
+        .tracking-actions {
+            display: flex;
+            gap: 16px;
+            justify-content: center;
+            margin-top: 48px;
+            flex-wrap: wrap;
+        }
+
+        .btn-secondary {
+            background: white;
+            border: 1px solid var(--neutral-300);
+            color: var(--neutral-700);
+            padding: 12px 24px;
+            border-radius: var(--radius-md);
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .btn-secondary:hover {
+            background: var(--neutral-100);
+            border-color: var(--primary-500);
+            color: var(--primary-600);
+        }
+
+        /* Mobile Nav */
+        .mobile-nav {
+            display: none;
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: white;
+            border-top: 1px solid var(--neutral-200);
+            z-index: 100;
+        }
+
+        @media (max-width: 768px) {
+            .mobile-nav { display: block; }
+            body { padding-bottom: 70px; }
+        }
+
+        .mobile-nav-items {
+            display: flex;
+            justify-content: space-around;
+            list-style: none;
+            padding: 12px 0;
+        }
+
+        .mobile-nav-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 4px;
+            color: var(--neutral-600);
+            text-decoration: none;
+            font-size: 12px;
+        }
+
+        .mobile-nav-item.active { color: var(--primary-500); }
+    </style>
 </head>
 <body>
+
     <!-- Navigation -->
     <nav class="navbar">
-        <div class="container navbar-content">
+        <div class="nav-container">
             <a href="index.html" class="logo">
-                <i class="fas fa-spa logo-icon"></i>
-                Maria's Floral Fantasy
+                <i class="fas fa-spa"></i>
+                <span>Maria's Floral Fantasy</span>
             </a>
-            
+
             <ul class="nav-links">
-                <li><a href="index.html" class="nav-link">Home</a></li>
-                <li><a href="shop.html" class="nav-link">Shop</a></li>
-                <li><a href="about.html" class="nav-link">About</a></li>
-                <li><a href="contact.html" class="nav-link">Contact</a></li>
+                <li><a href="index.html">Home</a></li>
+                <li><a href="shop.html">Shop</a></li>
+                <li><a href="about.html">About</a></li>
+                <li><a href="contact.html">Contact</a></li>
             </ul>
-            
+
             <div class="nav-actions">
-                <a href="cart.html" class="btn btn-icon btn-ghost cart-badge">
+                <button class="btn-icon btn-ghost" onclick="document.querySelector('.search-bar')?.scrollIntoView({behavior: 'smooth'})">
+                    <i class="fas fa-search"></i>
+                </button>
+
+                <a href="cart.html" class="btn-icon btn-ghost cart-badge">
                     <i class="fas fa-shopping-cart"></i>
-                    <span class="cart-count">0</span>
+                    <span class="cart-count" id="navCartCount">0</span>
                 </a>
-                <a href="login.html" class="btn btn-primary btn-sm">Login</a>
+
+                <a href="login.html" class="btn btn-primary btn-sm" id="loginBtn">Login</a>
+
+                <div class="user-menu" id="userMenu" style="display: none;">
+                    <div class="user-avatar" id="userAvatar" onclick="toggleUserMenu()">MS</div>
+                    <div class="dropdown" id="userDropdown">
+                        <div class="dropdown-header">
+                            <div class="dropdown-name" id="userName"></div>
+                            <div class="dropdown-email" id="userEmail"></div>
+                        </div>
+                        <ul class="dropdown-menu">
+                            <li><a href="account.html"><i class="fas fa-user"></i> My Account</a></li>
+                            <li><a href="orders.html"><i class="fas fa-box"></i> My Orders</a></li>
+                            <!-- Track Order link removed as requested -->
+                            <div class="dropdown-divider"></div>
+                            <li><a href="#" onclick="logout()" class="logout-item"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
+                        </ul>
+                    </div>
+                </div>
             </div>
         </div>
     </nav>
 
-    <!-- Tracking Content -->
-    <div class="container tracking-container" style="padding: var(--space-6) 0;">
-        <!-- Search Order -->
-        <div class="card" style="padding: var(--space-6); margin-bottom: var(--space-6); text-align: center;">
-            <h2 style="font-size: 24px; font-weight: 700; margin-bottom: var(--space-4);">Track Your Order</h2>
-            <div style="max-width: 500px; margin: 0 auto; display: flex; gap: var(--space-3);">
-                <input type="text" class="form-input" placeholder="Enter order number (e.g., FS-123456)" id="orderSearch" style="flex: 1;">
-                <button class="btn btn-primary" onclick="searchOrder()">
-                    <i class="fas fa-search"></i> Track
-                </button>
+    <!-- Main Content -->
+    <div class="container-main">
+        <div class="card">
+            <h2 style="text-align: center; margin-bottom: 24px; font-family: 'Playfair Display', serif; font-size: 2rem;">Track Your Order</h2>
+            <div class="search-box">
+                <input type="text" id="orderSearch" class="form-input" placeholder="Enter your order number (e.g. MFF-12345678)">
+                <button class="btn btn-primary" onclick="searchOrder()">Track Order</button>
             </div>
         </div>
 
-        <!-- Order Details -->
-        <div id="orderDetails">
-            <div class="tracking-header" style="text-align: center; margin-bottom: var(--space-6);">
-                <h1 style="font-size: 28px; font-weight: 700; margin-bottom: var(--space-2);">Order <span id="displayOrderId">#FS-2026-001</span></h1>
-                <div class="tracking-number">Placed on February 20, 2026 • Estimated delivery: February 22, 2026</div>
+        <div id="orderNotFound" class="order-not-found" style="display: none;">
+            <i class="fas fa-exclamation-triangle" style="font-size: 48px; color: #f59e0b; margin-bottom: 16px;"></i>
+            <h3>Order Not Found</h3>
+            <p>Please check the order number and try again.</p>
+        </div>
+
+        <div id="orderDetails" style="display: none;">
+            <div class="tracking-header">
+                <h1>Order <span id="displayOrderId"></span></h1>
+                <div class="tracking-number" id="orderDateStatus"></div>
             </div>
 
-            <!-- Timeline -->
-            <div class="timeline" style="margin-bottom: var(--space-6);">
+            <div class="timeline">
                 <div class="timeline-track">
-                    <div class="timeline-progress" style="width: 50%;"></div>
+                    <div class="timeline-progress" id="timelineProgress" style="width: 0%;"></div>
                     
-                    <div class="timeline-step completed">
+                    <div class="timeline-step" id="step-placed">
                         <div class="timeline-dot"><i class="fas fa-check"></i></div>
-                        <span class="timeline-label">Order Placed</span>
-                        <span class="timeline-date">Feb 20, 10:00 AM</span>
+                        <div class="timeline-label">Order Placed</div>
+                        <div class="timeline-date" id="date-placed"></div>
                     </div>
                     
-                    <div class="timeline-step completed">
+                    <div class="timeline-step" id="step-confirmed">
                         <div class="timeline-dot"><i class="fas fa-check"></i></div>
-                        <span class="timeline-label">Confirmed</span>
-                        <span class="timeline-date">Feb 20, 11:30 AM</span>
+                        <div class="timeline-label">Confirmed</div>
+                        <div class="timeline-date" id="date-confirmed"></div>
                     </div>
                     
-                    <div class="timeline-step active">
+                    <div class="timeline-step" id="step-processing">
                         <div class="timeline-dot"><i class="fas fa-box"></i></div>
-                        <span class="timeline-label">Processing</span>
-                        <span class="timeline-date">In progress</span>
+                        <div class="timeline-label">Processing</div>
+                        <div class="timeline-date" id="date-processing"></div>
                     </div>
                     
-                    <div class="timeline-step">
+                    <div class="timeline-step" id="step-shipped">
                         <div class="timeline-dot"></div>
-                        <span class="timeline-label">Shipped</span>
-                        <span class="timeline-date">Pending</span>
+                        <div class="timeline-label">Shipped</div>
+                        <div class="timeline-date" id="date-shipped"></div>
                     </div>
                     
-                    <div class="timeline-step">
+                    <div class="timeline-step" id="step-delivered">
                         <div class="timeline-dot"></div>
-                        <span class="timeline-label">Delivered</span>
-                        <span class="timeline-date">Est. Feb 22</span>
+                        <div class="timeline-label">Delivered</div>
+                        <div class="timeline-date" id="date-delivered"></div>
                     </div>
                 </div>
 
-                <div class="timeline-alert">
-                    <i class="fas fa-info-circle timeline-alert-icon"></i>
+                <div class="tracking-alert" id="statusMessage">
+                    <i class="fas fa-info-circle"></i>
                     <div>
-                        <div style="font-weight: 600;">Your order is being prepared</div>
-                        <div style="font-size: 14px;">Our florists are carefully arranging your flowers. We'll notify you once it's shipped.</div>
+                        <strong>Order Received</strong>
+                        <p>We're preparing your beautiful arrangement. You'll be notified when it's on its way.</p>
                     </div>
                 </div>
             </div>
 
-            <!-- Details Grid -->
             <div class="tracking-details">
-                <!-- Order Items -->
                 <div class="detail-card">
                     <div class="detail-title">Order Items</div>
-                    <div class="detail-content">
-                        <div class="detail-item">
-                            <div class="detail-item-icon">🌹</div>
-                            <div class="detail-item-info">
-                                <div class="detail-item-title">Rose Bouquet Deluxe</div>
-                                <div class="detail-item-subtitle">Qty: 2 × ₱1,250</div>
-                            </div>
-                        </div>
-                        <div class="detail-item">
-                            <div class="detail-item-icon">🌻</div>
-                            <div class="detail-item-info">
-                                <div class="detail-item-title">Sunflower Sunshine Box</div>
-                                <div class="detail-item-subtitle">Qty: 1 × ₱850</div>
-                            </div>
-                        </div>
-                        <div class="detail-item">
-                            <div class="detail-item-icon">🌷</div>
-                            <div class="detail-item-info">
-                                <div class="detail-item-title">Tulip Garden Collection</div>
-                                <div class="detail-item-subtitle">Qty: 1 × ₱650</div>
-                            </div>
-                        </div>
-                        <div class="detail-total">Total: ₱4,530.00</div>
-                    </div>
+                    <div class="detail-content" id="orderItemsList"></div>
                 </div>
 
-                <!-- Shipping Info -->
                 <div class="detail-card">
                     <div class="detail-title">Shipping Information</div>
-                    <div class="detail-content">
-                        <div style="margin-bottom: var(--space-3);">
-                            <div style="font-size: 12px; color: var(--neutral-600); text-transform: uppercase; margin-bottom: 4px;">Recipient</div>
-                            <div style="font-weight: 600;">Maria Santos</div>
-                            <div>09123456789</div>
-                            <div>maria@email.com</div>
-                        </div>
-                        <div style="margin-bottom: var(--space-3);">
-                            <div style="font-size: 12px; color: var(--neutral-600); text-transform: uppercase; margin-bottom: 4px;">Delivery Address</div>
-                            <div>123 Main Street</div>
-                            <div>Manila, 1000</div>
-                        </div>
-                        <div>
-                            <div style="font-size: 12px; color: var(--neutral-600); text-transform: uppercase; margin-bottom: 4px;">Method</div>
-                            <div>Standard Delivery</div>
-                            <div style="font-size: 12px; color: var(--neutral-600);">₱50.00</div>
-                        </div>
-                    </div>
+                    <div class="detail-content" id="shippingInfo"></div>
                 </div>
 
-                <!-- Payment Info -->
                 <div class="detail-card">
                     <div class="detail-title">Payment Information</div>
-                    <div class="detail-content">
-                        <div style="margin-bottom: var(--space-3);">
-                            <div style="font-size: 12px; color: var(--neutral-600); text-transform: uppercase; margin-bottom: 4px;">Payment Method</div>
-                            <div style="display: flex; align-items: center; gap: var(--space-2);">
-                                <i class="fas fa-money-bill-wave" style="color: var(--secondary-500);"></i>
-                                <span>Cash on Delivery</span>
-                            </div>
-                        </div>
-                        <div style="margin-bottom: var(--space-3);">
-                            <div style="font-size: 12px; color: var(--neutral-600); text-transform: uppercase; margin-bottom: 4px;">Payment Status</div>
-                            <span class="badge badge-pending">Pending</span>
-                            <div style="font-size: 12px; color: var(--neutral-600); margin-top: 4px;">Pay ₱4,530.00 upon delivery</div>
-                        </div>
-                        <div>
-                            <div style="font-size: 12px; color: var(--neutral-600); text-transform: uppercase; margin-bottom: 4px;">Order Total</div>
-                            <div style="font-size: 24px; font-weight: 700; color: var(--primary-500);">₱4,530.00</div>
-                        </div>
-                    </div>
+                    <div class="detail-content" id="paymentInfo"></div>
                 </div>
             </div>
 
-            <!-- Actions -->
             <div class="tracking-actions">
                 <button class="btn btn-secondary" onclick="window.print()">
                     <i class="fas fa-print"></i> Print Receipt
@@ -188,55 +663,58 @@
                 <a href="mailto:support@mariasfloral.com" class="btn btn-secondary">
                     <i class="fas fa-envelope"></i> Email Support
                 </a>
-                <button class="btn btn-primary">
-                    <i class="fas fa-headset"></i> Contact Support
-                </button>
             </div>
         </div>
     </div>
 
     <!-- Footer -->
-    <footer class="footer">
+    <footer class="footer" style="background: var(--neutral-800); color: white; padding: 64px 0 32px; margin-top: 64px;">
         <div class="container">
-            <div class="footer-grid">
-                <div class="footer-brand">
-                    <div class="footer-logo">
+            <div class="footer-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 48px; max-width: 1200px; margin: 0 auto; padding: 0 24px;">
+                <div>
+                    <div class="footer-logo" style="font-size: 1.6rem; font-weight: 700; color: var(--primary-500); margin-bottom: 16px; display: flex; align-items: center; gap: 12px;">
                         <i class="fas fa-spa"></i>
                         Maria's Floral Fantasy
                     </div>
-                    <p class="footer-description">
-                        Bringing joy and beauty to your special moments with fresh, hand-crafted floral arrangements since 2020.
+                    <p style="color: #9ca3af; line-height: 1.6;">
+                        Bringing joy and beauty to your special moments with fresh, hand-crafted floral arrangements since 2015.
                     </p>
                 </div>
                 <div>
-                    <h4 class="footer-title">Quick Links</h4>
-                    <ul class="footer-links">
-                        <li><a href="index.html" class="footer-link">Home</a></li>
-                        <li><a href="shop.html" class="footer-link">Shop</a></li>
-                        <li><a href="about.html" class="footer-link">About Us</a></li>
-                        <li><a href="contact.html" class="footer-link">Contact</a></li>
+                    <h4 class="footer-title" style="font-weight: 600; margin-bottom: 20px; color: white;">Quick Links</h4>
+                    <ul style="list-style: none;">
+                        <li style="margin-bottom: 12px;"><a href="index.html" style="color: #9ca3af; text-decoration: none; transition: color 0.2s;">Home</a></li>
+                        <li style="margin-bottom: 12px;"><a href="shop.html" style="color: #9ca3af; text-decoration: none; transition: color 0.2s;">Shop</a></li>
+                        <li style="margin-bottom: 12px;"><a href="about.html" style="color: #9ca3af; text-decoration: none; transition: color 0.2s;">About Us</a></li>
+                        <li style="margin-bottom: 12px;"><a href="contact.html" style="color: #9ca3af; text-decoration: none; transition: color 0.2s;">Contact</a></li>
                     </ul>
                 </div>
                 <div>
-                    <h4 class="footer-title">Customer Service</h4>
-                    <ul class="footer-links">
-                        <li><a href="tracking.html" class="footer-link">Track Order</a></li>
-                        <li><a href="#" class="footer-link">Shipping Info</a></li>
-                        <li><a href="#" class="footer-link">Returns</a></li>
-                        <li><a href="#" class="footer-link">FAQ</a></li>
+                    <h4 class="footer-title" style="font-weight: 600; margin-bottom: 20px; color: white;">Customer Service</h4>
+                    <ul style="list-style: none;">
+                        <li style="margin-bottom: 12px;"><a href="tracking.html" style="color: #9ca3af; text-decoration: none; transition: color 0.2s;">Track Order</a></li>
+                        <li style="margin-bottom: 12px;"><a href="#" style="color: #9ca3af; text-decoration: none; transition: color 0.2s;">Shipping Info</a></li>
+                        <li style="margin-bottom: 12px;"><a href="#" style="color: #9ca3af; text-decoration: none; transition: color 0.2s;">Returns</a></li>
+                        <li style="margin-bottom: 12px;"><a href="#" style="color: #9ca3af; text-decoration: none; transition: color 0.2s;">FAQ</a></li>
                     </ul>
                 </div>
                 <div>
-                    <h4 class="footer-title">Contact Us</h4>
-                    <ul class="footer-links">
-                        <li class="footer-link"><i class="fas fa-map-marker-alt" style="margin-right: 8px;"></i> 123 Main St, Manila</li>
-                        <li class="footer-link"><i class="fas fa-phone" style="margin-right: 8px;"></i> (02) 8123-4567</li>
-                        <li class="footer-link"><i class="fas fa-envelope" style="margin-right: 8px;"></i> hello@mariasfloral.com</li>
+                    <h4 class="footer-title" style="font-weight: 600; margin-bottom: 20px; color: white;">Contact Us</h4>
+                    <ul style="list-style: none;">
+                        <li style="margin-bottom: 12px; color: #9ca3af;">
+                            <i class="fas fa-map-marker-alt" style="margin-right: 8px;"></i> 123 Flower Street, Tacloban City
+                        </li>
+                        <li style="margin-bottom: 12px; color: #9ca3af;">
+                            <i class="fas fa-phone" style="margin-right: 8px;"></i> 0956-431-7832
+                        </li>
+                        <li style="color: #9ca3af;">
+                            <i class="fas fa-envelope" style="margin-right: 8px;"></i> hello@mariasfloral.ph
+                        </li>
                     </ul>
                 </div>
             </div>
-            <div class="footer-bottom">
-                <p>&copy; 2026 Maria's Floral Fantasy. All rights reserved.</p>
+            <div class="footer-bottom" style="border-top: 1px solid #374151; margin-top: 48px; padding-top: 32px; text-align: center; color: #9ca3af; font-size: 14px;">
+                © 2026 Maria's Floral Fantasy. All rights reserved.
             </div>
         </div>
     </footer>
@@ -244,135 +722,225 @@
     <!-- Mobile Navigation -->
     <nav class="mobile-nav">
         <ul class="mobile-nav-items">
-            <li>
-                <a href="index.html" class="mobile-nav-item">
-                    <i class="fas fa-home"></i>
-                    <span>Home</span>
-                </a>
-            </li>
-            <li>
-                <a href="shop.html" class="mobile-nav-item">
-                    <i class="fas fa-store"></i>
-                    <span>Shop</span>
-                </a>
-            </li>
-            <li>
-                <a href="cart.html" class="mobile-nav-item">
-                    <i class="fas fa-shopping-cart"></i>
-                    <span>Cart</span>
-                </a>
-            </li>
-            <li>
-                <a href="tracking.html" class="mobile-nav-item active">
-                    <i class="fas fa-truck"></i>
-                    <span>Track</span>
-                </a>
-            </li>
-            <li>
-                <a href="login.html" class="mobile-nav-item">
-                    <i class="fas fa-user"></i>
-                    <span>Profile</span>
-                </a>
-            </li>
+            <li><a href="index.html" class="mobile-nav-item"><i class="fas fa-home"></i><span>Home</span></a></li>
+            <li><a href="shop.html" class="mobile-nav-item"><i class="fas fa-store"></i><span>Shop</span></a></li>
+            <li><a href="cart.html" class="mobile-nav-item"><i class="fas fa-shopping-cart"></i><span>Cart</span></a></li>
+            <li><a href="tracking.html" class="mobile-nav-item active"><i class="fas fa-truck"></i><span>Track</span></a></li>
+            <li><a href="login.html" class="mobile-nav-item"><i class="fas fa-user"></i><span>Profile</span></a></li>
         </ul>
     </nav>
 
-    <!-- Scripts -->
-    <script src="assets/js/main.js"></script>
     <script>
-        // Check for order ID in URL
-        document.addEventListener('DOMContentLoaded', function() {
+        // ────────────────────────────────────────────────
+        // Authentication + User Menu Logic
+        // ────────────────────────────────────────────────
+
+        document.addEventListener('DOMContentLoaded', () => {
+            checkAuthStatus();
+
+            const cart = JSON.parse(localStorage.getItem('mff_cart') || '[]');
+            document.getElementById('navCartCount').textContent = 
+                cart.reduce((sum, item) => sum + item.quantity, 0);
+
             const urlParams = new URLSearchParams(window.location.search);
             const orderId = urlParams.get('order');
-            
+
             if (orderId) {
-                document.getElementById('displayOrderId').textContent = '#' + orderId;
                 document.getElementById('orderSearch').value = orderId;
-                
-                // Try to load order from localStorage
                 loadOrder(orderId);
             }
         });
 
-        function searchOrder() {
-            const orderId = document.getElementById('orderSearch').value.trim();
-            if (!orderId) {
-                alert('Please enter an order number');
+        function checkAuthStatus() {
+            const user = JSON.parse(localStorage.getItem('currentUser') || '{}');
+            
+            if (!user.loggedIn || user.role !== 'user') {
+                alert("Please log in to track your order.");
+                window.location.href = 'login.html';
                 return;
             }
-            
-            // Update URL without reload
+
+            document.getElementById('loginBtn').style.display = 'none';
+            document.getElementById('userMenu').style.display = 'block';
+
+            document.getElementById('userName').textContent = user.name || 'User';
+            document.getElementById('userEmail').textContent = user.email || '';
+            document.getElementById('userAvatar').textContent = 
+                (user.name || 'U').split(' ').map(n => n[0]).join('').substring(0,2).toUpperCase();
+        }
+
+        function toggleUserMenu() {
+            document.getElementById('userDropdown').classList.toggle('show');
+        }
+
+        document.addEventListener('click', function(e) {
+            if (!e.target.closest('.user-menu')) {
+                document.getElementById('userDropdown')?.classList.remove('show');
+            }
+        });
+
+        function logout() {
+            localStorage.removeItem('currentUser');
+            alert('Logged out successfully');
+            window.location.href = 'login.html';
+        }
+
+        // ────────────────────────────────────────────────
+        // Order Tracking Logic
+        // ────────────────────────────────────────────────
+
+        function searchOrder() {
+            let orderId = document.getElementById('orderSearch').value.trim();
+            if (!orderId) {
+                alert("Please enter an order number");
+                return;
+            }
+
+            orderId = orderId.replace(/^#/, '');
+
             const url = new URL(window.location);
-            url.searchParams.set('order', orderId.replace('#', ''));
+            url.searchParams.set('order', orderId);
             window.history.pushState({}, '', url);
-            
-            document.getElementById('displayOrderId').textContent = orderId.startsWith('#') ? orderId : '#' + orderId;
-            
-            loadOrder(orderId.replace('#', ''));
+
+            loadOrder(orderId);
         }
 
         function loadOrder(orderId) {
-            const orders = JSON.parse(localStorage.getItem('orders') || '[]');
-            const order = orders.find(o => o.id === orderId);
-            
-            if (order) {
-                // Update timeline based on status
-                updateTimeline(order.status);
-                
-                // Update order details
-                document.querySelector('.tracking-number').textContent = 
-                    `Placed on ${new Date(order.date).toLocaleDateString()} • Status: ${order.status}`;
+            const orders = JSON.parse(localStorage.getItem('mff_orders') || '[]');
+            const order = orders.find(o => o.id === orderId || o.id === `#${orderId}`);
+
+            if (!order) {
+                document.getElementById('orderDetails').style.display = 'none';
+                document.getElementById('orderNotFound').style.display = 'block';
+                return;
             }
+
+            document.getElementById('orderNotFound').style.display = 'none';
+            document.getElementById('orderDetails').style.display = 'block';
+
+            document.getElementById('displayOrderId').textContent = order.id;
+            document.getElementById('orderDateStatus').textContent = 
+                `Placed on ${new Date(order.date).toLocaleDateString('en-PH', { 
+                    year: 'numeric', month: 'long', day: 'numeric'
+                })} • Status: ${order.status.charAt(0).toUpperCase() + order.status.slice(1)}`;
+
+            // Items
+            const itemsList = document.getElementById('orderItemsList');
+            itemsList.innerHTML = '';
+
+            let subtotal = 0;
+            order.items.forEach(item => {
+                const itemTotal = item.price * item.quantity;
+                subtotal += itemTotal;
+
+                itemsList.innerHTML += `
+                    <div class="detail-item">
+                        <div class="detail-item-icon">${item.emoji || '🌸'}</div>
+                        <div class="detail-item-info">
+                            <div class="detail-item-title">${item.name}</div>
+                            <div class="detail-item-subtitle">Qty: ${item.quantity} × ₱${item.price.toLocaleString('en-PH')}</div>
+                        </div>
+                        <div>₱${itemTotal.toLocaleString('en-PH')}</div>
+                    </div>
+                `;
+            });
+
+            itemsList.innerHTML += `
+                <div class="detail-total">Total: ₱${subtotal.toLocaleString('en-PH')}</div>
+            `;
+
+            // Shipping Info
+            const si = order.shippingInfo || {};
+            document.getElementById('shippingInfo').innerHTML = `
+                <div style="margin-bottom: 16px;">
+                    <div style="font-size: 12px; color: var(--neutral-600); text-transform: uppercase; margin-bottom: 4px;">Recipient</div>
+                    <div style="font-weight: 600;">${si.firstName || ''} ${si.lastName || ''}</div>
+                    <div>${si.phone || '—'}</div>
+                    <div>${si.email || '—'}</div>
+                </div>
+                <div style="margin-bottom: 16px;">
+                    <div style="font-size: 12px; color: var(--neutral-600); text-transform: uppercase; margin-bottom: 4px;">Delivery Address</div>
+                    <div>${si.address || '—'}</div>
+                    ${si.address2 ? `<div>${si.address2}</div>` : ''}
+                    <div>${si.city || ''}${si.postal ? ', ' + si.postal : ''}</div>
+                </div>
+                <div>
+                    <div style="font-size: 12px; color: var(--neutral-600); text-transform: uppercase; margin-bottom: 4px;">Method</div>
+                    <div>Standard Delivery</div>
+                    <div style="font-size: 12px; color: var(--neutral-600);">₱${order.shipping?.toLocaleString('en-PH') || '50.00'}</div>
+                </div>
+            `;
+
+            // Payment Info
+            document.getElementById('paymentInfo').innerHTML = `
+                <div style="margin-bottom: 16px;">
+                    <div style="font-size: 12px; color: var(--neutral-600); text-transform: uppercase; margin-bottom: 4px;">Payment Method</div>
+                    <div style="display: flex; align-items: center; gap: 8px;">
+                        <i class="fas fa-money-bill-wave" style="color: var(--secondary-500);"></i>
+                        <span>${order.paymentMethod === 'cod' ? 'Cash on Delivery' : 'GCash'}</span>
+                    </div>
+                </div>
+                <div style="margin-bottom: 16px;">
+                    <div style="font-size: 12px; color: var(--neutral-600); text-transform: uppercase; margin-bottom: 4px;">Payment Status</div>
+                    <span style="background: var(--warning-100); color: var(--warning-500); padding: 4px 12px; border-radius: var(--radius-full); font-size: 13px; font-weight: 600;">
+                        Pending
+                    </span>
+                    <div style="margin-top: 8px; font-size: 13px; color: var(--neutral-600);">
+                        Pay ₱${order.total.toLocaleString('en-PH')} upon delivery
+                    </div>
+                </div>
+                <div>
+                    <div style="font-size: 12px; color: var(--neutral-600); text-transform: uppercase; margin-bottom: 4px;">Order Total</div>
+                    <div style="font-size: 24px; font-weight: 700; color: var(--primary-500);">
+                        ₱${order.total.toLocaleString('en-PH')}
+                    </div>
+                </div>
+            `;
+
+            updateTimeline(order.status);
         }
 
         function updateTimeline(status) {
             const steps = document.querySelectorAll('.timeline-step');
-            const progress = document.querySelector('.timeline-progress');
-            
-            const statusMap = {
-                'pending': 2,
-                'processing': 3,
-                'shipped': 4,
-                'delivered': 5
-            };
-            
-            const activeStep = statusMap[status] || 1;
-            const progressWidth = ((activeStep - 1) / 4) * 100;
-            
-            progress.style.width = progressWidth + '%';
-            
-            steps.forEach((step, index) => {
+            const progress = document.getElementById('timelineProgress');
+            const messageDiv = document.getElementById('statusMessage');
+
+            const map = { pending: 1, confirmed: 2, processing: 3, shipped: 4, delivered: 5 };
+            const stepNum = map[status] || 1;
+            progress.style.width = ((stepNum - 1) / 4 * 100) + '%';
+
+            steps.forEach((step, i) => {
                 step.classList.remove('completed', 'active');
-                
-                if (index < activeStep - 1) {
+                const dot = step.querySelector('.timeline-dot');
+                if (i < stepNum - 1) {
                     step.classList.add('completed');
-                    step.querySelector('.timeline-dot').innerHTML = '<i class="fas fa-check"></i>';
-                } else if (index === activeStep - 1) {
+                    dot.innerHTML = '<i class="fas fa-check"></i>';
+                } else if (i === stepNum - 1) {
                     step.classList.add('active');
+                    dot.innerHTML = i === 2 ? '<i class="fas fa-box"></i>' : '<i class="fas fa-spinner fa-spin"></i>';
                 }
             });
+
+            const messages = {
+                pending: "Your order has been received and is awaiting confirmation.",
+                confirmed: "Order confirmed! We're now preparing your flowers.",
+                processing: "Your flowers are being arranged with care.",
+                shipped: "Your order is on its way — delivery soon!",
+                delivered: "Delivered! Enjoy your beautiful arrangement."
+            };
+
+            messageDiv.innerHTML = `
+                <i class="fas fa-info-circle"></i>
+                <div>
+                    <strong>${status.charAt(0).toUpperCase() + status.slice(1)}</strong>
+                    <p>${messages[status] || "We're working on your order."}</p>
+                </div>
+            `;
         }
 
-        // Allow Enter key to search
-        document.getElementById('orderSearch').addEventListener('keypress', function(e) {
-            if (e.key === 'Enter') {
-                searchOrder();
-            }
+        document.getElementById('orderSearch')?.addEventListener('keypress', e => {
+            if (e.key === 'Enter') searchOrder();
         });
     </script>
-    <script>
-    // Apply saved theme color on every page
-    (function() {
-        try {
-            const savedColor = localStorage.getItem('themeColor');
-            if (savedColor && savedColor.startsWith('#') && savedColor.length === 7) {
-                document.documentElement.style.setProperty('--primary-500', savedColor);
-            }
-        } catch (err) {
-            // Silent fail – don't break the page
-            console.warn('Theme color could not be applied', err);
-        }
-    })();
-</script>
 </body>
 </html>

@@ -8,9 +8,6 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <!-- Keep your external CSS files if they exist -->
-    <!-- <link rel="stylesheet" href="assets/css/main.css"> -->
-    <!-- <link rel="stylesheet" href="assets/css/responsive.css"> -->
 
     <style>
         :root {
@@ -40,11 +37,7 @@
             line-height: 1.6;
         }
 
-        .container {
-            max-width: 1200px;
-            margin: 0 auto;
-            padding: 0 16px;
-        }
+        .container { max-width: 1200px; margin: 0 auto; padding: 0 16px; }
 
         .navbar {
             background: white;
@@ -52,11 +45,7 @@
             padding: 16px 0;
         }
 
-        .navbar-content {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
+        .navbar-content { display: flex; justify-content: space-between; align-items: center; }
 
         .logo {
             font-size: 1.5rem;
@@ -77,17 +66,9 @@
             font-size: 0.95rem;
         }
 
-        .step {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            color: #6b7280;
-        }
+        .step { display: flex; align-items: center; gap: 8px; color: #6b7280; }
 
-        .step.active {
-            color: var(--primary-500);
-            font-weight: 600;
-        }
+        .step.active { color: var(--primary-500); font-weight: 600; }
 
         .step-number {
             width: 32px;
@@ -101,10 +82,7 @@
             font-weight: 600;
         }
 
-        .step.active .step-number {
-            background: var(--primary-500);
-            color: white;
-        }
+        .step.active .step-number { background: var(--primary-500); color: white; }
 
         .checkout-layout {
             display: grid;
@@ -156,9 +134,7 @@
             gap: 16px;
         }
 
-        @media (max-width: 640px) {
-            .form-grid { grid-template-columns: 1fr; }
-        }
+        @media (max-width: 640px) { .form-grid { grid-template-columns: 1fr; } }
 
         .payment-options {
             display: flex;
@@ -220,51 +196,37 @@
         .flex { display: flex; }
         .gap-3 { gap: 12px; }
 
-        /* Button Styles - make sure these are present */
-.btn {
-    padding: 14px 28px;
-    border-radius: 8px;
-    font-weight: 600;
-    font-size: 1.05rem;
-    cursor: pointer;
-    transition: all 0.2s;
-    border: none;
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    text-decoration: none;
-}
+        .btn {
+            padding: 14px 28px;
+            border-radius: 8px;
+            font-weight: 600;
+            font-size: 1.05rem;
+            cursor: pointer;
+            transition: all 0.2s;
+            border: none;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            text-decoration: none;
+        }
 
-.btn-primary {
-    background: var(--primary-500);
-    color: white;
-}
+        .btn-primary {
+            background: var(--primary-500);
+            color: white;
+        }
 
-.btn-primary:hover {
-    background: var(--primary-600);
-    transform: translateY(-1px);
-    box-shadow: 0 4px 12px rgba(233, 30, 99, 0.25);
-}
+        .btn-primary:hover {
+            background: var(--primary-600);
+            transform: translateY(-1px);
+            box-shadow: 0 4px 12px rgba(233, 30, 99, 0.25);
+        }
 
-.btn-lg {
-    padding: 16px 32px;
-    font-size: 1.1rem;
-}
-
-.btn-block {
-    width: 100%;
-}
-
-/* Optional: make it look even more like your "old" design */
-.btn-primary:active {
-    transform: translateY(0);
-    box-shadow: none;
-}
+        .btn-lg { padding: 16px 32px; font-size: 1.1rem; }
+        .btn-block { width: 100%; }
     </style>
 </head>
 <body>
 
-    <!-- Header -->
     <nav class="navbar">
         <div class="container navbar-content">
             <a href="index.html" class="logo">
@@ -279,7 +241,6 @@
     </nav>
 
     <div class="container" style="padding: 40px 0; max-width: 1100px;">
-        <!-- Progress Steps -->
         <div class="checkout-steps">
             <div class="step active" data-step="1">
                 <div class="step-number">1</div>
@@ -299,15 +260,11 @@
 
         <form id="checkoutForm" onsubmit="return false;">
             <div class="checkout-layout">
-                <!-- Left: Forms -->
                 <div>
-                    <!-- Step 1 -->
+                    <!-- Step 1: Contact & Shipping -->
                     <div class="checkout-form checkout-step" data-step="1">
                         <div class="form-section">
-                            <h3 class="form-section-title">
-                                <i class="fas fa-user"></i>
-                                Contact Information
-                            </h3>
+                            <h3 class="form-section-title"><i class="fas fa-user"></i> Contact Information</h3>
                             <div class="form-group">
                                 <label class="form-label">Email Address *</label>
                                 <input type="email" class="form-input" placeholder="you@example.com" required id="email">
@@ -321,11 +278,7 @@
                         </div>
 
                         <div class="form-section">
-                            <h3 class="form-section-title">
-                                <i class="fas fa-truck"></i>
-                                Shipping Address
-                            </h3>
-
+                            <h3 class="form-section-title"><i class="fas fa-truck"></i> Shipping Address</h3>
                             <div class="form-grid">
                                 <div class="form-group">
                                     <label class="form-label">First Name *</label>
@@ -371,11 +324,7 @@
                     <!-- Step 2: Shipping Method -->
                     <div class="checkout-form checkout-step hidden" data-step="2">
                         <div class="form-section">
-                            <h3 class="form-section-title">
-                                <i class="fas fa-shipping-fast"></i>
-                                Shipping Method
-                            </h3>
-
+                            <h3 class="form-section-title"><i class="fas fa-shipping-fast"></i> Shipping Method</h3>
                             <div class="payment-options">
                                 <label class="payment-option selected">
                                     <div class="payment-option-content">
@@ -413,18 +362,12 @@
                         </div>
 
                         <div class="form-section">
-                            <h3 class="form-section-title">
-                                <i class="fas fa-calendar-alt"></i>
-                                Delivery Date
-                            </h3>
+                            <h3 class="form-section-title"><i class="fas fa-calendar-alt"></i> Delivery Date</h3>
                             <input type="date" class="form-input" id="deliveryDate" min="">
                         </div>
 
                         <div class="form-section">
-                            <h3 class="form-section-title">
-                                <i class="fas fa-comment-alt"></i>
-                                Delivery Instructions (Optional)
-                            </h3>
+                            <h3 class="form-section-title"><i class="fas fa-comment-alt"></i> Delivery Instructions (Optional)</h3>
                             <textarea class="form-input" placeholder="Any special instructions for delivery..." rows="3"></textarea>
                         </div>
 
@@ -441,11 +384,7 @@
                     <!-- Step 3: Payment -->
                     <div class="checkout-form checkout-step hidden" data-step="3">
                         <div class="form-section">
-                            <h3 class="form-section-title">
-                                <i class="fas fa-credit-card"></i>
-                                Payment Method
-                            </h3>
-
+                            <h3 class="form-section-title"><i class="fas fa-credit-card"></i> Payment Method</h3>
                             <div class="payment-options">
                                 <label class="payment-option selected" data-method="cod" onclick="selectPayment(this)">
                                     <div class="payment-option-content">
@@ -467,74 +406,39 @@
                                         </div>
                                         <i class="fas fa-mobile-alt" style="font-size: 24px; color: var(--primary-500);"></i>
                                     </div>
-                                    <div class="payment-option-extra" id="gcashField" style="display: none;">
-                                        <div class="form-group" style="margin-top: var(--space-3);">
+                                    <div id="gcashField" style="display: none; margin-top: 16px;">
+                                        <div class="form-group">
                                             <label class="form-label">GCash Number *</label>
                                             <input type="tel" class="form-input" placeholder="09123456789">
                                         </div>
                                     </div>
                                 </label>
-
-                                <label class="payment-option" data-method="card" onclick="selectPayment(this)">
-                                    <div class="payment-option-content">
-                                        <input type="radio" name="payment" value="card" class="payment-option-radio">
-                                        <div class="payment-option-details">
-                                            <div class="payment-option-title">Credit/Debit Card</div>
-                                            <div class="payment-option-description">Visa, Mastercard, JCB</div>
-                                        </div>
-                                        <div style="display: flex; gap: 8px;">
-                                            <i class="fab fa-cc-visa" style="font-size: 24px; color: var(--neutral-600);"></i>
-                                            <i class="fab fa-cc-mastercard" style="font-size: 24px; color: var(--neutral-600);"></i>
-                                        </div>
-                                    </div>
-                                </label>
                             </div>
                         </div>
 
-                        <div class="form-section" id="cardFields" style="display: none;">
-                            <h3 class="form-section-title">Card Details</h3>
-                            <div class="form-group">
-                                <label class="form-label">Card Number *</label>
-                                <input type="text" class="form-input" placeholder="1234 5678 9012 3456">
-                            </div>
-                            <div class="form-grid">
-                                <div class="form-group">
-                                    <label class="form-label">Expiry Date *</label>
-                                    <input type="text" class="form-input" placeholder="MM/YY">
-                                </div>
-                                <div class="form-group">
-                                    <label class="form-label">CVV *</label>
-                                    <input type="text" class="form-input" placeholder="123">
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label class="form-label">Name on Card *</label>
-                                <input type="text" class="form-input" placeholder="MARIA SANTOS">
-                            </div>
-                        </div>
-
-                        <div class="form-check" style="margin-bottom: var(--space-4);">
-                            <input type="checkbox" class="form-check-input" id="saveInfo">
-                            <label for="saveInfo" style="font-size: 14px; color: var(--neutral-700);">Save this information for next time</label>
+                        <div style="margin: 20px 0;">
+                            <input type="checkbox" id="saveInfo">
+                            <label for="saveInfo" style="margin-left:8px; color: var(--neutral-700);">
+                                Save this information for next time
+                            </label>
                         </div>
 
                         <div class="flex gap-3">
-                            <button type="button" class="btn btn-secondary" onclick="prevStep(2)" style="flex: 1;">
+                            <button type="button" class="btn btn-secondary btn-lg" onclick="prevStep(2)" style="flex:1;">
                                 Back
                             </button>
-                            <button type="button" class="btn btn-primary btn-lg" onclick="placeOrder()" style="flex: 2;">
+                            <button type="button" class="btn btn-primary btn-lg btn-block" onclick="placeOrder()">
                                 Place Order
                             </button>
                         </div>
                     </div>
                 </div>
 
-                <!-- Right: Order Summary -->
+                <!-- Order Summary -->
                 <div class="cart-summary">
                     <h2 class="summary-title">Order Summary</h2>
-
                     <div class="checkout-summary-items" style="margin-bottom: 24px; max-height: 340px; overflow-y: auto;">
-                        <!-- Dynamically filled by JS -->
+                        <!-- Filled by JS -->
                     </div>
 
                     <div class="summary-row">
@@ -559,10 +463,6 @@
     </div>
 
     <script>
-        // ────────────────────────────────────────────────
-        // Dynamic Cart Summary + Real Calculations
-        // ────────────────────────────────────────────────
-
         let currentStep = 1;
         let shippingCost = 50;
 
@@ -583,7 +483,7 @@
                 const itemTotal = item.price * item.quantity;
                 subtotal += itemTotal;
 
-                const html = `
+                container.insertAdjacentHTML('beforeend', `
                     <div class="summary-item" style="display:flex; align-items:center; gap:16px; padding-bottom:16px; margin-bottom:16px; border-bottom:1px solid #e5e7eb;">
                         <div style="width:60px; height:60px; background:linear-gradient(135deg, #fce4ec, #f8bbd9); border-radius:8px; display:flex; align-items:center; justify-content:center; font-size:28px; flex-shrink:0;">
                             ${item.emoji || '🌸'}
@@ -596,8 +496,7 @@
                             ₱${itemTotal.toLocaleString('en-PH')}
                         </div>
                     </div>
-                `;
-                container.insertAdjacentHTML('beforeend', html);
+                `);
             });
 
             updateTotals(subtotal);
@@ -615,18 +514,13 @@
 
         function updateShipping(cost) {
             shippingCost = cost;
-            const subtotal = getCartSubtotal();
-            updateTotals(subtotal);
+            updateTotals(getCartSubtotal());
         }
 
         function getCartSubtotal() {
-            const cart = JSON.parse(localStorage.getItem('mff_cart') || '[]');
-            return cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
+            return JSON.parse(localStorage.getItem('mff_cart') || '[]')
+                .reduce((sum, item) => sum + item.price * item.quantity, 0);
         }
-
-        // ────────────────────────────────────────────────
-        // Step Navigation & Validation (unchanged from your code)
-        // ────────────────────────────────────────────────
 
         function nextStep(step) {
             if (!validateStep(currentStep)) return;
@@ -646,58 +540,54 @@
         }
 
         function validateStep(step) {
-            const stepElement = document.querySelector(`.checkout-step[data-step="${step}"]`);
-            const requiredFields = stepElement.querySelectorAll('[required]');
-            let isValid = true;
+            const stepEl = document.querySelector(`.checkout-step[data-step="${step}"]`);
+            const required = stepEl.querySelectorAll('[required]');
+            let valid = true;
 
-            requiredFields.forEach(field => {
+            required.forEach(field => {
                 if (!field.value.trim()) {
-                    isValid = false;
+                    valid = false;
                     field.style.borderColor = 'var(--danger-500)';
-                    field.addEventListener('input', function() {
-                        this.style.borderColor = '';
-                    }, { once: true });
+                    field.addEventListener('input', () => field.style.borderColor = '', {once: true});
                 }
             });
 
-            if (!isValid) {
-                const firstError = stepElement.querySelector('[required]:invalid');
-                if (firstError) firstError.focus();
+            if (!valid) {
+                stepEl.querySelector('[required]:invalid')?.focus();
             }
 
-            return isValid;
+            return valid;
         }
 
         function updateProgress() {
-            document.querySelectorAll('.step').forEach((step, index) => {
-                const stepNum = index + 1;
+            document.querySelectorAll('.step').forEach((step, i) => {
+                const num = i + 1;
                 step.classList.remove('active', 'completed');
-                
-                if (stepNum < currentStep) {
+                const dot = step.querySelector('.step-number');
+
+                if (num < currentStep) {
                     step.classList.add('completed');
-                    step.querySelector('.step-number').innerHTML = '<i class="fas fa-check"></i>';
-                } else if (stepNum === currentStep) {
+                    dot.innerHTML = '<i class="fas fa-check"></i>';
+                } else if (num === currentStep) {
                     step.classList.add('active');
-                    step.querySelector('.step-number').textContent = stepNum;
+                    dot.textContent = num;
                 } else {
-                    step.querySelector('.step-number').textContent = stepNum;
+                    dot.textContent = num;
                 }
             });
         }
 
-        function selectPayment(element) {
+        function selectPayment(el) {
             document.querySelectorAll('.payment-option').forEach(opt => {
                 opt.classList.remove('selected');
                 opt.querySelector('input[type="radio"]').checked = false;
             });
 
-            element.classList.add('selected');
-            element.querySelector('input[type="radio"]').checked = true;
+            el.classList.add('selected');
+            el.querySelector('input[type="radio"]').checked = true;
 
-            const method = element.dataset.method;
-            
+            const method = el.dataset.method;
             document.getElementById('gcashField').style.display = method === 'gcash' ? 'block' : 'none';
-            document.getElementById('cardFields').style.display = method === 'card' ? 'block' : 'none';
         }
 
         function placeOrder() {
@@ -706,24 +596,13 @@
             const paymentMethod = document.querySelector('input[name="payment"]:checked')?.value;
             if (!paymentMethod) return;
 
-            // Additional validation for GCash/Card
+            // GCash validation
             if (paymentMethod === 'gcash') {
                 const gcashInput = document.querySelector('#gcashField input');
                 if (!gcashInput?.value.trim()) {
                     gcashInput.style.borderColor = 'var(--danger-500)';
                     return;
                 }
-            }
-
-            if (paymentMethod === 'card') {
-                let cardValid = true;
-                document.querySelectorAll('#cardFields input[required]').forEach(el => {
-                    if (!el.value.trim()) {
-                        cardValid = false;
-                        el.style.borderColor = 'var(--danger-500)';
-                    }
-                });
-                if (!cardValid) return;
             }
 
             const cart = JSON.parse(localStorage.getItem('mff_cart') || '[]');
@@ -743,7 +622,21 @@
                 subtotal: getCartSubtotal(),
                 tax: getCartSubtotal() * 0.12,
                 total: getCartSubtotal() + shippingCost + (getCartSubtotal() * 0.12),
-                paymentMethod
+                paymentMethod,
+
+                // ────────────────────────────────────────────────
+                // This is the important part — saving real customer data
+                // ────────────────────────────────────────────────
+                shippingInfo: {
+                    firstName: document.getElementById('firstName').value.trim(),
+                    lastName: document.getElementById('lastName').value.trim(),
+                    phone: document.getElementById('phone').value.trim(),
+                    email: document.getElementById('email').value.trim(),
+                    address: document.getElementById('address').value.trim(),
+                    address2: document.getElementById('address2').value.trim() || '',
+                    city: document.getElementById('city').value.trim(),
+                    postal: document.getElementById('postal').value.trim()
+                }
             };
 
             let orders = JSON.parse(localStorage.getItem('mff_orders') || '[]');
@@ -756,16 +649,14 @@
             window.location.href = `tracking.html?order=${orderId}`;
         }
 
-        // Payment option click handler
-        document.querySelectorAll('.payment-option').forEach(option => {
-            option.addEventListener('click', function(e) {
+        document.querySelectorAll('.payment-option').forEach(opt => {
+            opt.addEventListener('click', e => {
                 if (e.target.type !== 'radio') {
-                    this.querySelector('input[type="radio"]').click();
+                    opt.querySelector('input[type="radio"]').click();
                 }
             });
         });
 
-        // Init
         document.addEventListener('DOMContentLoaded', () => {
             loadCartSummary();
             updateProgress();
@@ -775,9 +666,9 @@
         // Theme color
         (function() {
             try {
-                const savedColor = localStorage.getItem('themeColor');
-                if (savedColor && savedColor.startsWith('#') && savedColor.length === 7) {
-                    document.documentElement.style.setProperty('--primary-500', savedColor);
+                const saved = localStorage.getItem('themeColor');
+                if (saved && saved.startsWith('#') && saved.length === 7) {
+                    document.documentElement.style.setProperty('--primary-500', saved);
                 }
             } catch (err) {}
         })();
