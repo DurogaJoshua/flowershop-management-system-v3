@@ -8,28 +8,277 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="assets/css/main.css">
-    <link rel="stylesheet" href="assets/css/responsive.css">
+    <!-- Keep your external CSS files if they exist -->
+    <!-- <link rel="stylesheet" href="assets/css/main.css"> -->
+    <!-- <link rel="stylesheet" href="assets/css/responsive.css"> -->
+
+    <style>
+        :root {
+            --primary-500: #e91e63;
+            --primary-600: #d81b60;
+            --primary-100: #fce4ec;
+            --secondary-500: #9c27b0;
+            --neutral-600: #666666;
+            --neutral-700: #2d2d2d;
+            --neutral-400: #aaaaaa;
+            --neutral-200: #eeeeee;
+            --danger-500: #ef4444;
+            --space-3: 12px;
+            --space-4: 16px;
+            --space-5: 24px;
+            --space-6: 32px;
+            --radius-md: 8px;
+            --radius-lg: 12px;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #f9fafb;
+            color: #1f2937;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 16px;
+        }
+
+        .navbar {
+            background: white;
+            border-bottom: 1px solid #e5e7eb;
+            padding: 16px 0;
+        }
+
+        .navbar-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: var(--primary-500);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .checkout-steps {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 16px;
+            margin: 32px 0;
+            font-size: 0.95rem;
+        }
+
+        .step {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: #6b7280;
+        }
+
+        .step.active {
+            color: var(--primary-500);
+            font-weight: 600;
+        }
+
+        .step-number {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            background: #e5e7eb;
+            color: #4b5563;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+        }
+
+        .step.active .step-number {
+            background: var(--primary-500);
+            color: white;
+        }
+
+        .checkout-layout {
+            display: grid;
+            grid-template-columns: 1fr 380px;
+            gap: 48px;
+            margin-bottom: 64px;
+        }
+
+        @media (max-width: 1024px) {
+            .checkout-layout { grid-template-columns: 1fr; }
+            .cart-summary { order: -1; }
+        }
+
+        .form-section {
+            background: white;
+            border: 1px solid #e5e7eb;
+            border-radius: 12px;
+            padding: 24px;
+            margin-bottom: 24px;
+        }
+
+        .form-section-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 6px;
+            font-weight: 500;
+            font-size: 0.95rem;
+        }
+
+        .form-input, .form-textarea {
+            width: 100%;
+            padding: 12px 16px;
+            border: 1px solid #d1d5db;
+            border-radius: 8px;
+            font-size: 1rem;
+        }
+
+        .form-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 16px;
+        }
+
+        @media (max-width: 640px) {
+            .form-grid { grid-template-columns: 1fr; }
+        }
+
+        .payment-options {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .payment-option {
+            border: 2px solid #e5e7eb;
+            border-radius: 10px;
+            padding: 16px;
+            cursor: pointer;
+            transition: all 0.2s;
+        }
+
+        .payment-option.selected {
+            border-color: var(--primary-500);
+            background: var(--primary-100);
+        }
+
+        .payment-option-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .payment-option-title {
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+
+        .payment-option-description {
+            color: #6b7280;
+            font-size: 0.9rem;
+        }
+
+        .summary-title {
+            font-size: 1.4rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+        }
+
+        .summary-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 12px 0;
+            border-bottom: 1px solid #e5e7eb;
+        }
+
+        .summary-row.total {
+            font-size: 1.3rem;
+            font-weight: 700;
+            border-bottom: none;
+            padding-top: 16px;
+        }
+
+        .hidden { display: none !important; }
+
+        .flex { display: flex; }
+        .gap-3 { gap: 12px; }
+
+        /* Button Styles - make sure these are present */
+.btn {
+    padding: 14px 28px;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 1.05rem;
+    cursor: pointer;
+    transition: all 0.2s;
+    border: none;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    text-decoration: none;
+}
+
+.btn-primary {
+    background: var(--primary-500);
+    color: white;
+}
+
+.btn-primary:hover {
+    background: var(--primary-600);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(233, 30, 99, 0.25);
+}
+
+.btn-lg {
+    padding: 16px 32px;
+    font-size: 1.1rem;
+}
+
+.btn-block {
+    width: 100%;
+}
+
+/* Optional: make it look even more like your "old" design */
+.btn-primary:active {
+    transform: translateY(0);
+    box-shadow: none;
+}
+    </style>
 </head>
 <body>
-    <!-- Simple Header -->
-    <nav class="navbar" style="position: relative;">
+
+    <!-- Header -->
+    <nav class="navbar">
         <div class="container navbar-content">
             <a href="index.html" class="logo">
-                <i class="fas fa-spa logo-icon"></i>
+                <i class="fas fa-spa"></i>
                 Maria's Floral Fantasy
             </a>
-            <div class="nav-actions">
-                <span style="color: var(--neutral-600); font-size: 14px;">
-                    <i class="fas fa-lock" style="margin-right: 8px; color: var(--secondary-500);"></i>
-                    Secure Checkout
-                </span>
+            <div style="color: #4b5563; font-size: 0.95rem;">
+                <i class="fas fa-lock" style="margin-right: 8px; color: #8b5cf6;"></i>
+                Secure Checkout
             </div>
         </div>
     </nav>
 
-    <!-- Checkout Content -->
-    <div class="container" style="padding: var(--space-6) 0; max-width: 1000px;">
+    <div class="container" style="padding: 40px 0; max-width: 1100px;">
         <!-- Progress Steps -->
         <div class="checkout-steps">
             <div class="step active" data-step="1">
@@ -50,33 +299,33 @@
 
         <form id="checkoutForm" onsubmit="return false;">
             <div class="checkout-layout">
-                <!-- Main Form -->
+                <!-- Left: Forms -->
                 <div>
-                    <!-- Step 1: Contact Information -->
+                    <!-- Step 1 -->
                     <div class="checkout-form checkout-step" data-step="1">
                         <div class="form-section">
                             <h3 class="form-section-title">
-                                <i class="fas fa-user form-section-icon"></i>
+                                <i class="fas fa-user"></i>
                                 Contact Information
                             </h3>
-                            
                             <div class="form-group">
                                 <label class="form-label">Email Address *</label>
                                 <input type="email" class="form-input" placeholder="you@example.com" required id="email">
                             </div>
-                            
-                            <div class="form-check" style="margin-top: var(--space-3);">
-                                <input type="checkbox" class="form-check-input" id="newsletter">
-                                <label for="newsletter" style="font-size: 14px; color: var(--neutral-700);">Email me with news and offers</label>
+                            <div style="margin-top: 12px;">
+                                <input type="checkbox" id="newsletter">
+                                <label for="newsletter" style="font-size: 14px; color: var(--neutral-700);">
+                                    Email me with news and offers
+                                </label>
                             </div>
                         </div>
 
                         <div class="form-section">
                             <h3 class="form-section-title">
-                                <i class="fas fa-truck form-section-icon"></i>
+                                <i class="fas fa-truck"></i>
                                 Shipping Address
                             </h3>
-                            
+
                             <div class="form-grid">
                                 <div class="form-group">
                                     <label class="form-label">First Name *</label>
@@ -87,16 +336,16 @@
                                     <input type="text" class="form-input" placeholder="Santos" required id="lastName">
                                 </div>
                             </div>
-                            
+
                             <div class="form-group">
                                 <label class="form-label">Address *</label>
                                 <input type="text" class="form-input" placeholder="Street address" required id="address">
                             </div>
-                            
+
                             <div class="form-group">
                                 <input type="text" class="form-input" placeholder="Apartment, suite, unit, etc. (optional)" id="address2">
                             </div>
-                            
+
                             <div class="form-grid">
                                 <div class="form-group">
                                     <label class="form-label">City *</label>
@@ -107,7 +356,7 @@
                                     <input type="text" class="form-input" placeholder="1000" required id="postal">
                                 </div>
                             </div>
-                            
+
                             <div class="form-group">
                                 <label class="form-label">Phone *</label>
                                 <input type="tel" class="form-input" placeholder="09123456789" required id="phone">
@@ -123,12 +372,12 @@
                     <div class="checkout-form checkout-step hidden" data-step="2">
                         <div class="form-section">
                             <h3 class="form-section-title">
-                                <i class="fas fa-shipping-fast form-section-icon"></i>
+                                <i class="fas fa-shipping-fast"></i>
                                 Shipping Method
                             </h3>
-                            
+
                             <div class="payment-options">
-                                <label class="payment-option selected" style="cursor: pointer;">
+                                <label class="payment-option selected">
                                     <div class="payment-option-content">
                                         <input type="radio" name="shipping" value="standard" checked class="payment-option-radio" onchange="updateShipping(50)">
                                         <div class="payment-option-details">
@@ -138,8 +387,8 @@
                                         <div style="font-weight: 700;">₱50.00</div>
                                     </div>
                                 </label>
-                                
-                                <label class="payment-option" style="cursor: pointer;">
+
+                                <label class="payment-option">
                                     <div class="payment-option-content">
                                         <input type="radio" name="shipping" value="express" class="payment-option-radio" onchange="updateShipping(150)">
                                         <div class="payment-option-details">
@@ -149,8 +398,8 @@
                                         <div style="font-weight: 700;">₱150.00</div>
                                     </div>
                                 </label>
-                                
-                                <label class="payment-option" style="cursor: pointer;">
+
+                                <label class="payment-option">
                                     <div class="payment-option-content">
                                         <input type="radio" name="shipping" value="same_day" class="payment-option-radio" onchange="updateShipping(250)">
                                         <div class="payment-option-details">
@@ -165,7 +414,7 @@
 
                         <div class="form-section">
                             <h3 class="form-section-title">
-                                <i class="fas fa-calendar-alt form-section-icon"></i>
+                                <i class="fas fa-calendar-alt"></i>
                                 Delivery Date
                             </h3>
                             <input type="date" class="form-input" id="deliveryDate" min="">
@@ -173,17 +422,17 @@
 
                         <div class="form-section">
                             <h3 class="form-section-title">
-                                <i class="fas fa-comment-alt form-section-icon"></i>
+                                <i class="fas fa-comment-alt"></i>
                                 Delivery Instructions (Optional)
                             </h3>
                             <textarea class="form-input" placeholder="Any special instructions for delivery..." rows="3"></textarea>
                         </div>
 
                         <div class="flex gap-3">
-                            <button type="button" class="btn btn-secondary" onclick="prevStep(1)" style="flex: 1;">
+                            <button type="button" class="btn btn-secondary btn-lg" onclick="prevStep(1)" style="flex:1;">
                                 Back
                             </button>
-                            <button type="button" class="btn btn-primary btn-lg" onclick="nextStep(3)" style="flex: 2;">
+                            <button type="button" class="btn btn-primary btn-lg" onclick="nextStep(3)" style="flex:2;">
                                 Continue to Payment
                             </button>
                         </div>
@@ -193,12 +442,12 @@
                     <div class="checkout-form checkout-step hidden" data-step="3">
                         <div class="form-section">
                             <h3 class="form-section-title">
-                                <i class="fas fa-credit-card form-section-icon"></i>
+                                <i class="fas fa-credit-card"></i>
                                 Payment Method
                             </h3>
-                            
+
                             <div class="payment-options">
-                                <label class="payment-option selected" data-method="cod" style="cursor: pointer;" onclick="selectPayment(this)">
+                                <label class="payment-option selected" data-method="cod" onclick="selectPayment(this)">
                                     <div class="payment-option-content">
                                         <input type="radio" name="payment" value="cod" checked class="payment-option-radio">
                                         <div class="payment-option-details">
@@ -208,8 +457,8 @@
                                         <i class="fas fa-money-bill-wave" style="font-size: 24px; color: var(--secondary-500);"></i>
                                     </div>
                                 </label>
-                                
-                                <label class="payment-option" data-method="gcash" style="cursor: pointer;" onclick="selectPayment(this)">
+
+                                <label class="payment-option" data-method="gcash" onclick="selectPayment(this)">
                                     <div class="payment-option-content">
                                         <input type="radio" name="payment" value="gcash" class="payment-option-radio">
                                         <div class="payment-option-details">
@@ -225,8 +474,8 @@
                                         </div>
                                     </div>
                                 </label>
-                                
-                                <label class="payment-option" data-method="card" style="cursor: pointer;" onclick="selectPayment(this)">
+
+                                <label class="payment-option" data-method="card" onclick="selectPayment(this)">
                                     <div class="payment-option-content">
                                         <input type="radio" name="payment" value="card" class="payment-option-radio">
                                         <div class="payment-option-details">
@@ -273,91 +522,118 @@
                             <button type="button" class="btn btn-secondary" onclick="prevStep(2)" style="flex: 1;">
                                 Back
                             </button>
-                            <button type="submit" class="btn btn-primary btn-lg" onclick="placeOrder()" style="flex: 2;">
+                            <button type="button" class="btn btn-primary btn-lg" onclick="placeOrder()" style="flex: 2;">
                                 Place Order
                             </button>
                         </div>
                     </div>
                 </div>
 
-                <!-- Order Summary Sidebar -->
-                <div class="cart-summary" style="position: sticky; top: 20px;">
+                <!-- Right: Order Summary -->
+                <div class="cart-summary">
                     <h2 class="summary-title">Order Summary</h2>
-                    
-                    <div class="checkout-summary-items" style="margin-bottom: var(--space-4); max-height: 300px; overflow-y: auto;">
-                        <div class="summary-item" style="display: flex; gap: var(--space-3); margin-bottom: var(--space-3); padding-bottom: var(--space-3); border-bottom: 1px solid var(--neutral-200);">
-                            <div style="width: 60px; height: 60px; background: linear-gradient(135deg, #fce4ec 0%, #f8bbd9 100%); border-radius: var(--radius-md); display: flex; align-items: center; justify-content: center; font-size: 24px;">🌹</div>
-                            <div style="flex: 1;">
-                                <div style="font-weight: 600; font-size: 14px;">Rose Bouquet Deluxe</div>
-                                <div style="font-size: 12px; color: var(--neutral-600);">Qty: 2</div>
-                            </div>
-                            <div style="font-weight: 600;">₱2,500</div>
-                        </div>
-                        <div class="summary-item" style="display: flex; gap: var(--space-3); margin-bottom: var(--space-3); padding-bottom: var(--space-3); border-bottom: 1px solid var(--neutral-200);">
-                            <div style="width: 60px; height: 60px; background: linear-gradient(135deg, #fff3e0 0%, #ffe0b2 100%); border-radius: var(--radius-md); display: flex; align-items: center; justify-content: center; font-size: 24px;">🌻</div>
-                            <div style="flex: 1;">
-                                <div style="font-weight: 600; font-size: 14px;">Sunflower Sunshine Box</div>
-                                <div style="font-size: 12px; color: var(--neutral-600);">Qty: 1</div>
-                            </div>
-                            <div style="font-weight: 600;">₱850</div>
-                        </div>
-                        <div class="summary-item" style="display: flex; gap: var(--space-3);">
-                            <div style="width: 60px; height: 60px; background: linear-gradient(135deg, #f3e5f5 0%, #e1bee7 100%); border-radius: var(--radius-md); display: flex; align-items: center; justify-content: center; font-size: 24px;">🌷</div>
-                            <div style="flex: 1;">
-                                <div style="font-weight: 600; font-size: 14px;">Tulip Garden Collection</div>
-                                <div style="font-size: 12px; color: var(--neutral-600);">Qty: 1</div>
-                            </div>
-                            <div style="font-weight: 600;">₱650</div>
-                        </div>
+
+                    <div class="checkout-summary-items" style="margin-bottom: 24px; max-height: 340px; overflow-y: auto;">
+                        <!-- Dynamically filled by JS -->
                     </div>
 
                     <div class="summary-row">
                         <span>Subtotal</span>
-                        <span id="checkoutSubtotal">₱4,000.00</span>
+                        <span id="checkoutSubtotal">₱0.00</span>
                     </div>
                     <div class="summary-row">
                         <span>Shipping</span>
                         <span id="checkoutShipping">₱50.00</span>
                     </div>
                     <div class="summary-row">
-                        <span>Tax (12%)</span>
-                        <span id="checkoutTax">₱480.00</span>
+                        <span>Tax (12% VAT)</span>
+                        <span id="checkoutTax">₱0.00</span>
                     </div>
                     <div class="summary-row total">
                         <span>Total</span>
-                        <span id="checkoutTotal" style="font-size: 24px;">₱4,530.00</span>
+                        <span id="checkoutTotal" style="font-size: 1.5rem;">₱0.00</span>
                     </div>
                 </div>
             </div>
         </form>
     </div>
 
-    <!-- Scripts -->
-    <script src="assets/js/main.js"></script>
-    <script src="assets/js/checkout.js"></script>
     <script>
-        // Set minimum date to today
-        document.getElementById('deliveryDate').min = new Date().toISOString().split('T')[0];
+        // ────────────────────────────────────────────────
+        // Dynamic Cart Summary + Real Calculations
+        // ────────────────────────────────────────────────
 
         let currentStep = 1;
         let shippingCost = 50;
 
+        function loadCartSummary() {
+            const cart = JSON.parse(localStorage.getItem('mff_cart') || '[]');
+            const container = document.querySelector('.checkout-summary-items');
+            container.innerHTML = '';
+
+            if (cart.length === 0) {
+                container.innerHTML = '<p style="text-align:center; padding:40px 0; color:#6b7280;">Your cart is empty</p>';
+                updateTotals(0);
+                return;
+            }
+
+            let subtotal = 0;
+
+            cart.forEach(item => {
+                const itemTotal = item.price * item.quantity;
+                subtotal += itemTotal;
+
+                const html = `
+                    <div class="summary-item" style="display:flex; align-items:center; gap:16px; padding-bottom:16px; margin-bottom:16px; border-bottom:1px solid #e5e7eb;">
+                        <div style="width:60px; height:60px; background:linear-gradient(135deg, #fce4ec, #f8bbd9); border-radius:8px; display:flex; align-items:center; justify-content:center; font-size:28px; flex-shrink:0;">
+                            ${item.emoji || '🌸'}
+                        </div>
+                        <div style="flex:1;">
+                            <div style="font-weight:600;">${item.name}</div>
+                            <div style="color:#6b7280; font-size:0.9rem;">Qty: ${item.quantity}</div>
+                        </div>
+                        <div style="font-weight:600; white-space:nowrap;">
+                            ₱${itemTotal.toLocaleString('en-PH')}
+                        </div>
+                    </div>
+                `;
+                container.insertAdjacentHTML('beforeend', html);
+            });
+
+            updateTotals(subtotal);
+        }
+
+        function updateTotals(subtotal) {
+            const tax = subtotal * 0.12;
+            const total = subtotal + shippingCost + tax;
+
+            document.getElementById('checkoutSubtotal').textContent = '₱' + subtotal.toLocaleString('en-PH', {minimumFractionDigits:2});
+            document.getElementById('checkoutShipping').textContent = shippingCost ? '₱' + shippingCost.toLocaleString('en-PH', {minimumFractionDigits:2}) : 'Free';
+            document.getElementById('checkoutTax').textContent = '₱' + tax.toLocaleString('en-PH', {minimumFractionDigits:2});
+            document.getElementById('checkoutTotal').textContent = '₱' + total.toLocaleString('en-PH', {minimumFractionDigits:2});
+        }
+
+        function updateShipping(cost) {
+            shippingCost = cost;
+            const subtotal = getCartSubtotal();
+            updateTotals(subtotal);
+        }
+
+        function getCartSubtotal() {
+            const cart = JSON.parse(localStorage.getItem('mff_cart') || '[]');
+            return cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
+        }
+
+        // ────────────────────────────────────────────────
+        // Step Navigation & Validation (unchanged from your code)
+        // ────────────────────────────────────────────────
+
         function nextStep(step) {
-            // Validate current step
             if (!validateStep(currentStep)) return;
-            
-            // Hide current step
             document.querySelector(`.checkout-step[data-step="${currentStep}"]`).classList.add('hidden');
-            
-            // Show next step
             currentStep = step;
             document.querySelector(`.checkout-step[data-step="${currentStep}"]`).classList.remove('hidden');
-            document.querySelector(`.checkout-step[data-step="${currentStep}"]`).classList.add('animate-fade-in');
-            
-            // Update progress
             updateProgress();
-            
-            // Scroll to top
             window.scrollTo(0, 0);
         }
 
@@ -377,7 +653,7 @@
             requiredFields.forEach(field => {
                 if (!field.value.trim()) {
                     isValid = false;
-                    field.style.borderColor = 'var(--error)';
+                    field.style.borderColor = 'var(--danger-500)';
                     field.addEventListener('input', function() {
                         this.style.borderColor = '';
                     }, { once: true });
@@ -385,7 +661,6 @@
             });
 
             if (!isValid) {
-                // Show toast or alert
                 const firstError = stepElement.querySelector('[required]:invalid');
                 if (firstError) firstError.focus();
             }
@@ -421,87 +696,67 @@
 
             const method = element.dataset.method;
             
-            // Show/hide GCash field
-            const gcashField = document.getElementById('gcashField');
-            if (gcashField) {
-                gcashField.style.display = method === 'gcash' ? 'block' : 'none';
-            }
-            
-            // Show/hide card fields
-            const cardFields = document.getElementById('cardFields');
-            if (cardFields) {
-                cardFields.style.display = method === 'card' ? 'block' : 'none';
-            }
-        }
-
-        function updateShipping(cost) {
-            shippingCost = cost;
-            updateTotals();
-        }
-
-        function updateTotals() {
-            const subtotal = 4000;
-            const tax = subtotal * 0.12;
-            const total = subtotal + shippingCost + tax;
-
-            document.getElementById('checkoutShipping').textContent = shippingCost === 0 ? 'FREE' : '₱' + shippingCost.toFixed(2);
-            document.getElementById('checkoutTotal').textContent = '₱' + total.toLocaleString('en-PH', {minimumFractionDigits: 2, maximumFractionDigits: 2});
+            document.getElementById('gcashField').style.display = method === 'gcash' ? 'block' : 'none';
+            document.getElementById('cardFields').style.display = method === 'card' ? 'block' : 'none';
         }
 
         function placeOrder() {
-            // Validate final step
-            const paymentMethod = document.querySelector('input[name="payment"]:checked').value;
-            
+            if (!validateStep(3)) return;
+
+            const paymentMethod = document.querySelector('input[name="payment"]:checked')?.value;
+            if (!paymentMethod) return;
+
+            // Additional validation for GCash/Card
             if (paymentMethod === 'gcash') {
-                const gcashNum = document.querySelector('#gcashField input');
-                if (!gcashNum || !gcashNum.value.trim()) {
-                    gcashNum.style.borderColor = 'var(--error)';
+                const gcashInput = document.querySelector('#gcashField input');
+                if (!gcashInput?.value.trim()) {
+                    gcashInput.style.borderColor = 'var(--danger-500)';
                     return;
                 }
             }
-            
+
             if (paymentMethod === 'card') {
-                const cardFields = document.querySelectorAll('#cardFields input[required]');
-                let valid = true;
-                cardFields.forEach(field => {
-                    if (!field.value.trim()) {
-                        valid = false;
-                        field.style.borderColor = 'var(--error)';
+                let cardValid = true;
+                document.querySelectorAll('#cardFields input[required]').forEach(el => {
+                    if (!el.value.trim()) {
+                        cardValid = false;
+                        el.style.borderColor = 'var(--danger-500)';
                     }
                 });
-                if (!valid) return;
+                if (!cardValid) return;
             }
 
-            // Simulate order placement
-            const orderId = 'FS-' + Date.now();
-            
-            // Save order to localStorage
+            const cart = JSON.parse(localStorage.getItem('mff_cart') || '[]');
+            if (cart.length === 0) {
+                alert("Your cart is empty.");
+                return;
+            }
+
+            const orderId = 'MFF-' + Date.now().toString().slice(-8);
+
             const order = {
                 id: orderId,
                 date: new Date().toISOString(),
                 status: 'pending',
-                items: [
-                    { name: 'Rose Bouquet Deluxe', qty: 2, price: 1250 },
-                    { name: 'Sunflower Sunshine Box', qty: 1, price: 850 },
-                    { name: 'Tulip Garden Collection', qty: 1, price: 650 }
-                ],
+                items: cart,
                 shipping: shippingCost,
-                total: 4000 + shippingCost + 480
+                subtotal: getCartSubtotal(),
+                tax: getCartSubtotal() * 0.12,
+                total: getCartSubtotal() + shippingCost + (getCartSubtotal() * 0.12),
+                paymentMethod
             };
-            
-            let orders = JSON.parse(localStorage.getItem('orders') || '[]');
+
+            let orders = JSON.parse(localStorage.getItem('mff_orders') || '[]');
             orders.push(order);
-            localStorage.setItem('orders', JSON.stringify(orders));
-            
-            // Clear cart
-            localStorage.removeItem('cart');
-            
-            // Show success and redirect
-            alert('Order placed successfully! Order ID: ' + orderId);
-            window.location.href = 'tracking.html?order=' + orderId;
+            localStorage.setItem('mff_orders', JSON.stringify(orders));
+
+            localStorage.removeItem('mff_cart');
+
+            alert(`Order placed successfully!\nOrder ID: ${orderId}\nTotal: ₱${order.total.toLocaleString('en-PH')}`);
+            window.location.href = `tracking.html?order=${orderId}`;
         }
 
-        // Payment option click handlers
+        // Payment option click handler
         document.querySelectorAll('.payment-option').forEach(option => {
             option.addEventListener('click', function(e) {
                 if (e.target.type !== 'radio') {
@@ -509,20 +764,23 @@
                 }
             });
         });
+
+        // Init
+        document.addEventListener('DOMContentLoaded', () => {
+            loadCartSummary();
+            updateProgress();
+            document.getElementById('deliveryDate').min = new Date().toISOString().split('T')[0];
+        });
+
+        // Theme color
+        (function() {
+            try {
+                const savedColor = localStorage.getItem('themeColor');
+                if (savedColor && savedColor.startsWith('#') && savedColor.length === 7) {
+                    document.documentElement.style.setProperty('--primary-500', savedColor);
+                }
+            } catch (err) {}
+        })();
     </script>
-    <script>
-    // Apply saved theme color on every page
-    (function() {
-        try {
-            const savedColor = localStorage.getItem('themeColor');
-            if (savedColor && savedColor.startsWith('#') && savedColor.length === 7) {
-                document.documentElement.style.setProperty('--primary-500', savedColor);
-            }
-        } catch (err) {
-            // Silent fail – don't break the page
-            console.warn('Theme color could not be applied', err);
-        }
-    })();
-</script>
 </body>
 </html>

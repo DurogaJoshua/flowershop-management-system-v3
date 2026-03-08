@@ -9,9 +9,12 @@
     <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
+        /* ────────────────────────────────────────────────
+           All your original :root variables and global styles
+        ──────────────────────────────────────────────── */
         :root {
             --primary-500: #e91e63;
-            --primary-600: #9c27b0;
+            --primary-600: #d81b60;
             --primary-100: #fce4ec;
             --secondary-500: #9c27b0;
             --secondary-100: #f3e5f5;
@@ -54,7 +57,7 @@
             line-height: 1.6;
         }
 
-        /* Navigation */
+        /* Navigation – matched to shop.html behavior */
         .navbar {
             background: white;
             border-bottom: 1px solid var(--neutral-200);
@@ -109,8 +112,7 @@
             gap: 20px;
         }
 
-        .icon-btn {
-            position: relative;
+        .btn-icon {
             background: none;
             border: none;
             font-size: 20px;
@@ -121,25 +123,27 @@
             transition: all 0.2s;
         }
 
-        .icon-btn:hover {
-            background: var(--primary-50);
+        .btn-icon:hover {
+            background: var(--primary-100);
             color: var(--primary-600);
         }
 
-        .badge {
+        .cart-badge { position: relative; }
+
+        .cart-count {
             position: absolute;
-            top: 0;
-            right: 0;
+            top: -5px;
+            right: -5px;
             background: var(--primary-500);
             color: white;
             font-size: 11px;
-            font-weight: 700;
             width: 18px;
             height: 18px;
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
+            font-weight: 700;
         }
 
         .btn {
@@ -166,18 +170,102 @@
             transform: translateY(-1px);
         }
 
-        .btn-outline {
-            background: white;
-            color: var(--neutral-700);
-            border: 1px solid var(--neutral-300);
+        /* User Menu (consistent with shop.html) */
+        .user-menu { position: relative; }
+
+        .user-avatar {
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--primary-500), var(--primary-600));
+            color: white;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            font-size: 14px;
+            cursor: pointer;
+            border: 2px solid transparent;
+            transition: all 0.2s;
         }
 
-        .btn-outline:hover {
-            border-color: var(--primary-500);
+        .user-avatar:hover {
+            border-color: var(--primary-100);
+            transform: scale(1.05);
+        }
+
+        .dropdown {
+            position: absolute;
+            top: 45px;
+            right: 0;
+            background: white;
+            border-radius: var(--radius-lg);
+            box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1);
+            min-width: 180px;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(-10px);
+            transition: all 0.2s;
+            border: 1px solid var(--neutral-200);
+            z-index: 1000;
+        }
+
+        .dropdown.show {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+
+        .dropdown-header {
+            padding: 12px 16px;
+            border-bottom: 1px solid var(--neutral-100);
+        }
+
+        .dropdown-name {
+            font-weight: 600;
+            color: var(--neutral-800);
+            font-size: 14px;
+        }
+
+        .dropdown-email {
+            font-size: 12px;
+            color: var(--neutral-500);
+        }
+
+        .dropdown-menu {
+            list-style: none;
+            padding: 8px;
+        }
+
+        .dropdown-menu li a {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 8px 12px;
+            color: var(--neutral-700);
+            text-decoration: none;
+            border-radius: var(--radius-md);
+            font-size: 14px;
+            transition: all 0.2s;
+        }
+
+        .dropdown-menu li a:hover {
+            background: var(--primary-50);
             color: var(--primary-600);
         }
 
-        /* Hero Section */
+        .dropdown-divider {
+            height: 1px;
+            background: var(--neutral-200);
+            margin: 8px 0;
+        }
+
+        .logout-item { color: var(--danger-500) !important; }
+        .logout-item:hover { background: var(--danger-100) !important; }
+
+        /* ────────────────────────────────────────────────
+           Your original page-specific styles (unchanged)
+        ──────────────────────────────────────────────── */
         .about-hero {
             background: linear-gradient(135deg, var(--primary-500) 0%, var(--primary-600) 100%);
             color: white;
@@ -199,16 +287,13 @@
             margin: 0 auto;
         }
 
-        /* Main Content */
         .container {
             max-width: 1200px;
             margin: 0 auto;
             padding: 0 24px;
         }
 
-        .section {
-            padding: 80px 0;
-        }
+        .section { padding: 80px 0; }
 
         .section-title {
             font-family: 'Playfair Display', serif;
@@ -226,7 +311,6 @@
             margin-bottom: 48px;
         }
 
-        /* Our Story */
         .story-grid {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -235,10 +319,7 @@
         }
 
         @media (max-width: 768px) {
-            .story-grid {
-                grid-template-columns: 1fr;
-                gap: 32px;
-            }
+            .story-grid { grid-template-columns: 1fr; gap: 32px; }
         }
 
         .story-image {
@@ -264,7 +345,6 @@
             line-height: 1.8;
         }
 
-        /* Values */
         .values-grid {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
@@ -272,9 +352,7 @@
         }
 
         @media (max-width: 768px) {
-            .values-grid {
-                grid-template-columns: 1fr;
-            }
+            .values-grid { grid-template-columns: 1fr; }
         }
 
         .value-card {
@@ -287,7 +365,7 @@
         }
 
         .value-card:hover {
-            box-shadow: var(--shadow-lg);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.08);
             transform: translateY(-4px);
         }
 
@@ -316,24 +394,14 @@
             line-height: 1.6;
         }
 
-        /* Team */
         .team-grid {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
             gap: 32px;
         }
 
-        @media (max-width: 968px) {
-            .team-grid {
-                grid-template-columns: repeat(2, 1fr);
-            }
-        }
-
-        @media (max-width: 480px) {
-            .team-grid {
-                grid-template-columns: 1fr;
-            }
-        }
+        @media (max-width: 968px) { .team-grid { grid-template-columns: repeat(2, 1fr); } }
+        @media (max-width: 480px) { .team-grid { grid-template-columns: 1fr; } }
 
         .team-member {
             background: white;
@@ -352,9 +420,7 @@
             font-size: 80px;
         }
 
-        .member-info {
-            padding: 24px;
-        }
+        .member-info { padding: 24px; }
 
         .member-info h4 {
             font-size: 18px;
@@ -393,7 +459,6 @@
             color: white;
         }
 
-        /* Stats */
         .stats-section {
             background: var(--neutral-900);
             color: white;
@@ -407,11 +472,7 @@
             text-align: center;
         }
 
-        @media (max-width: 768px) {
-            .stats-grid {
-                grid-template-columns: repeat(2, 1fr);
-            }
-        }
+        @media (max-width: 768px) { .stats-grid { grid-template-columns: repeat(2, 1fr); } }
 
         .stat-number {
             font-size: 48px;
@@ -420,12 +481,8 @@
             margin-bottom: 8px;
         }
 
-        .stat-label {
-            font-size: 16px;
-            opacity: 0.8;
-        }
+        .stat-label { font-size: 16px; opacity: 0.8; }
 
-        /* CTA Section */
         .cta-section {
             background: var(--primary-50);
             padding: 80px 0;
@@ -445,7 +502,6 @@
             margin-bottom: 32px;
         }
 
-        /* Footer */
         .footer {
             background: var(--neutral-900);
             color: white;
@@ -460,10 +516,7 @@
         }
 
         @media (max-width: 768px) {
-            .footer-grid {
-                grid-template-columns: 1fr;
-                gap: 32px;
-            }
+            .footer-grid { grid-template-columns: 1fr; gap: 32px; }
         }
 
         .footer-logo {
@@ -476,10 +529,7 @@
             margin-bottom: 16px;
         }
 
-        .footer-description {
-            color: var(--neutral-400);
-            line-height: 1.6;
-        }
+        .footer-description { color: var(--neutral-400); line-height: 1.6; }
 
         .footer-title {
             font-weight: 600;
@@ -487,13 +537,9 @@
             color: white;
         }
 
-        .footer-links {
-            list-style: none;
-        }
+        .footer-links { list-style: none; }
 
-        .footer-links li {
-            margin-bottom: 12px;
-        }
+        .footer-links li { margin-bottom: 12px; }
 
         .footer-link {
             color: var(--neutral-400);
@@ -501,9 +547,7 @@
             transition: color 0.2s;
         }
 
-        .footer-link:hover {
-            color: var(--primary-500);
-        }
+        .footer-link:hover { color: var(--primary-500); }
 
         .footer-social {
             display: flex;
@@ -524,9 +568,7 @@
             transition: all 0.2s;
         }
 
-        .footer-social a:hover {
-            background: var(--primary-500);
-        }
+        .footer-social a:hover { background: var(--primary-500); }
 
         .footer-bottom {
             border-top: 1px solid var(--neutral-800);
@@ -539,14 +581,9 @@
         }
 
         @media (max-width: 768px) {
-            .footer-bottom {
-                flex-direction: column;
-                gap: 16px;
-                text-align: center;
-            }
+            .footer-bottom { flex-direction: column; gap: 16px; text-align: center; }
         }
 
-        /* Mobile Nav */
         .mobile-nav {
             display: none;
             position: fixed;
@@ -580,12 +617,11 @@
             font-size: 12px;
         }
 
-        .mobile-nav-item.active {
-            color: var(--primary-500);
-        }
+        .mobile-nav-item.active { color: var(--primary-500); }
     </style>
 </head>
 <body>
+
     <!-- Navigation -->
     <nav class="navbar">
         <div class="nav-container">
@@ -602,11 +638,31 @@
             </ul>
             
             <div class="nav-actions">
-                <button class="icon-btn" onclick="location.href='cart.html'">
-                    <i class="fas fa-shopping-bag"></i>
-                    <span class="badge" id="cartCount">0</span>
+                <button class="btn-icon" onclick="document.querySelector('.search-bar')?.scrollIntoView({behavior: 'smooth'})">
+                    <i class="fas fa-search"></i>
                 </button>
-                <a href="login.html" class="btn btn-primary">Login</a>
+                <a href="cart.html" class="btn-icon cart-badge">
+                    <i class="fas fa-shopping-cart"></i>
+                    <span class="cart-count" id="navCartCount">0</span>
+                </a>
+                
+                <a href="login.html" class="btn btn-primary" id="loginBtn">Login</a>
+                
+                <div class="user-menu" id="userMenu" style="display: none;">
+                    <div class="user-avatar" id="userAvatar" onclick="toggleUserMenu()">MS</div>
+                    <div class="dropdown" id="userDropdown">
+                        <div class="dropdown-header">
+                            <div class="dropdown-name" id="userName">Maria Santos</div>
+                            <div class="dropdown-email" id="userEmail">maria@example.com</div>
+                        </div>
+                        <ul class="dropdown-menu">
+                            <li><a href="account.html"><i class="fas fa-user"></i> My Account</a></li>
+                            <li><a href="orders.html"><i class="fas fa-box"></i> My Orders</a></li>
+                            <div class="dropdown-divider"></div>
+                            <li><a href="#" onclick="logout()" class="logout-item"><i class="fas fa-sign-out-alt"></i> Logout</a></li>
+                        </ul>
+                    </div>
+                </div>
             </div>
         </div>
     </nav>
@@ -623,9 +679,7 @@
     <section class="section">
         <div class="container">
             <div class="story-grid">
-                <div class="story-image">
-                    💐
-                </div>
+                <div class="story-image">💐</div>
                 <div class="story-content">
                     <h2>From a Small Shop to Your Heart</h2>
                     <p>Maria's Floral Fantasy began as a small flower shop in Tacloban City, founded by Maria Santos with a simple dream: to bring happiness to people through beautiful, fresh flowers.</p>
@@ -644,26 +698,19 @@
         <div class="container">
             <h2 class="section-title">Our Values</h2>
             <p class="section-subtitle">The principles that guide everything we do</p>
-            
             <div class="values-grid">
                 <div class="value-card">
-                    <div class="value-icon">
-                        <i class="fas fa-heart"></i>
-                    </div>
+                    <div class="value-icon"><i class="fas fa-heart"></i></div>
                     <h3>Passion for Flowers</h3>
                     <p>We truly love what we do. Every arrangement is crafted with care, creativity, and attention to detail.</p>
                 </div>
                 <div class="value-card">
-                    <div class="value-icon">
-                        <i class="fas fa-leaf"></i>
-                    </div>
+                    <div class="value-icon"><i class="fas fa-leaf"></i></div>
                     <h3>Freshness Guaranteed</h3>
                     <p>We source the finest flowers daily and guarantee freshness for at least 7 days or your money back.</p>
                 </div>
                 <div class="value-card">
-                    <div class="value-icon">
-                        <i class="fas fa-hand-holding-heart"></i>
-                    </div>
+                    <div class="value-icon"><i class="fas fa-hand-holding-heart"></i></div>
                     <h3>Customer First</h3>
                     <p>Your satisfaction is our priority. We go above and beyond to make every experience memorable.</p>
                 </div>
@@ -675,22 +722,10 @@
     <section class="stats-section">
         <div class="container">
             <div class="stats-grid">
-                <div>
-                    <div class="stat-number">9+</div>
-                    <div class="stat-label">Years of Service</div>
-                </div>
-                <div>
-                    <div class="stat-number">50K+</div>
-                    <div class="stat-label">Happy Customers</div>
-                </div>
-                <div>
-                    <div class="stat-number">100K+</div>
-                    <div class="stat-label">Bouquets Delivered</div>
-                </div>
-                <div>
-                    <div class="stat-number">4.9</div>
-                    <div class="stat-label">Average Rating</div>
-                </div>
+                <div><div class="stat-number">9+</div><div class="stat-label">Years of Service</div></div>
+                <div><div class="stat-number">50K+</div><div class="stat-label">Happy Customers</div></div>
+                <div><div class="stat-number">100K+</div><div class="stat-label">Bouquets Delivered</div></div>
+                <div><div class="stat-number">4.9</div><div class="stat-label">Average Rating</div></div>
             </div>
         </div>
     </section>
@@ -700,12 +735,9 @@
         <div class="container">
             <h2 class="section-title">Meet Our Team</h2>
             <p class="section-subtitle">The talented people behind your beautiful arrangements</p>
-            
             <div class="team-grid">
                 <div class="team-member">
-                    <div class="member-avatar">
-                        👩‍🌾
-                    </div>
+                    <div class="member-avatar">👩‍🌾</div>
                     <div class="member-info">
                         <h4>Maria Santos</h4>
                         <p>Founder & Lead Florist</p>
@@ -715,10 +747,9 @@
                         </div>
                     </div>
                 </div>
+                <!-- ... the other 3 team members remain the same ... -->
                 <div class="team-member">
-                    <div class="member-avatar">
-                        👨‍🎨
-                    </div>
+                    <div class="member-avatar">👨‍🎨</div>
                     <div class="member-info">
                         <h4>Juan Dela Cruz</h4>
                         <p>Head Designer</p>
@@ -729,9 +760,7 @@
                     </div>
                 </div>
                 <div class="team-member">
-                    <div class="member-avatar">
-                        👩‍💼
-                    </div>
+                    <div class="member-avatar">👩‍💼</div>
                     <div class="member-info">
                         <h4>Anna Reyes</h4>
                         <p>Customer Relations</p>
@@ -742,9 +771,7 @@
                     </div>
                 </div>
                 <div class="team-member">
-                    <div class="member-avatar">
-                        👨‍🚚
-                    </div>
+                    <div class="member-avatar">👨‍🚚</div>
                     <div class="member-info">
                         <h4>Carlos Mendoza</h4>
                         <p>Delivery Manager</p>
@@ -816,7 +843,7 @@
                 </div>
             </div>
             <div class="footer-bottom">
-                <p>&copy; 2026 Maria's Floral Fantasy. All rights reserved.</p>
+                <p>© 2026 Maria's Floral Fantasy. All rights reserved.</p>
                 <div style="display: flex; gap: 24px;">
                     <a href="#" class="footer-link">Privacy Policy</a>
                     <a href="#" class="footer-link">Terms of Service</a>
@@ -828,75 +855,67 @@
     <!-- Mobile Navigation -->
     <nav class="mobile-nav">
         <ul class="mobile-nav-items">
-            <li>
-                <a href="index.html" class="mobile-nav-item">
-                    <i class="fas fa-home"></i>
-                    <span>Home</span>
-                </a>
-            </li>
-            <li>
-                <a href="shop.html" class="mobile-nav-item">
-                    <i class="fas fa-store"></i>
-                    <span>Shop</span>
-                </a>
-            </li>
-            <li>
-                <a href="cart.html" class="mobile-nav-item">
-                    <i class="fas fa-shopping-cart"></i>
-                    <span>Cart</span>
-                </a>
-            </li>
-            <li>
-                <a href="about.html" class="mobile-nav-item active">
-                    <i class="fas fa-info-circle"></i>
-                    <span>About</span>
-                </a>
-            </li>
-            <li>
-                <a href="login.html" class="mobile-nav-item">
-                    <i class="fas fa-user"></i>
-                    <span>Profile</span>
-                </a>
-            </li>
+            <li><a href="index.html" class="mobile-nav-item"><i class="fas fa-home"></i><span>Home</span></a></li>
+            <li><a href="shop.html" class="mobile-nav-item"><i class="fas fa-store"></i><span>Shop</span></a></li>
+            <li><a href="cart.html" class="mobile-nav-item"><i class="fas fa-shopping-cart"></i><span>Cart</span></a></li>
+            <li><a href="about.html" class="mobile-nav-item active"><i class="fas fa-info-circle"></i><span>About</span></a></li>
+            <li><a href="login.html" class="mobile-nav-item"><i class="fas fa-user"></i><span>Profile</span></a></li>
         </ul>
     </nav>
 
     <script>
-        // Update cart count
-        document.addEventListener('DOMContentLoaded', function() {
+        // Cart count
+        document.addEventListener('DOMContentLoaded', () => {
             const cart = JSON.parse(localStorage.getItem('mff_cart') || '[]');
             const count = cart.reduce((sum, item) => sum + item.quantity, 0);
-            document.getElementById('cartCount').textContent = count;
+            document.getElementById('navCartCount').textContent = count;
+        });
+
+        // Auth check (same as shop.html)
+        function checkAuthStatus() {
+            const user = JSON.parse(localStorage.getItem('currentUser') || '{}');
+            if (user.loggedIn && user.role === 'user') {
+                document.getElementById('loginBtn').style.display = 'none';
+                document.getElementById('userMenu').style.display = 'block';
+                document.getElementById('userName').textContent = user.name || 'User';
+                document.getElementById('userEmail').textContent = user.email || '';
+                document.getElementById('userAvatar').textContent = 
+                    (user.name || 'U').split(' ').map(n => n[0]).join('').substring(0,2).toUpperCase();
+            } else {
+                document.getElementById('loginBtn').style.display = 'inline-flex';
+                document.getElementById('userMenu').style.display = 'none';
+            }
+        }
+
+        function toggleUserMenu() {
+            document.getElementById('userDropdown').classList.toggle('show');
+        }
+
+        document.addEventListener('click', e => {
+            if (!e.target.closest('.user-menu')) {
+                document.getElementById('userDropdown')?.classList.remove('show');
+            }
+        });
+
+        function logout() {
+            localStorage.removeItem('currentUser');
+            window.location.reload();
+        }
+
+        // Theme
+        (function() {
+            try {
+                const saved = localStorage.getItem('themeColor');
+                if (saved && saved.startsWith('#') && saved.length === 7) {
+                    document.documentElement.style.setProperty('--primary-500', saved);
+                }
+            } catch (err) {}
+        })();
+
+        document.addEventListener('DOMContentLoaded', () => {
+            checkAuthStatus();
         });
     </script>
-    <script>
-    // Apply saved theme color on every page
-    (function() {
-        try {
-            const savedColor = localStorage.getItem('themeColor');
-            if (savedColor && savedColor.startsWith('#') && savedColor.length === 7) {
-                document.documentElement.style.setProperty('--primary-500', savedColor);
-            }
-        } catch (err) {
-            // Silent fail – don't break the page
-            console.warn('Theme color could not be applied', err);
-        }
-    })();
-</script>
-<script>
-    // Apply saved theme color on every page
-    (function() {
-        try {
-            const savedColor = localStorage.getItem('themeColor');
-            if (savedColor && savedColor.startsWith('#') && savedColor.length === 7) {
-                document.documentElement.style.setProperty('--primary-500', savedColor);
-            }
-        } catch (err) {
-            // Silent fail – don't break the page
-            console.warn('Theme color could not be applied', err);
-        }
-    })();
-</script>
-    
+
 </body>
 </html>
